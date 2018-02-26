@@ -1,8 +1,8 @@
-package es.ucm.fdi.launcher;
+package es.ucm.fdi.simobject;
 
 import java.util.ArrayList;
 
-public class Vehicles { // creo que hace falta
+public class Vehicle { // creo que hace falta
 		// hay que crear lo de id en SimObject.
 		private int localizacion;
 		private int velMaxima;
@@ -13,7 +13,7 @@ public class Vehicles { // creo que hace falta
 		private Carretera actual;
 		private int proxCruce;
 		
-		public Vehicles(int velM,ArrayList<String> cruc, String ide){
+		public Vehicle(int velM,ArrayList<String> cruc, String ide){
 			localizacion=0;
 			velMaxima=velM;
 			velActual=0;
@@ -50,7 +50,7 @@ public class Vehicles { // creo que hace falta
 		
 		void moverASiguienteCarretera(Carretera c){
 			proxCruce++;
-			actual=c.;
+			actual=c;
 			localizacion=0;
 		}
 }
