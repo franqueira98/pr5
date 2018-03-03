@@ -1,24 +1,25 @@
 package es.ucm.fdi.simobject;
 import java.util.ArrayList;
+import java.util.Map;
 
-public class Vehicle { // creo que hace falta
+public class Vehicle extends SimulationObject{ // creo que hace falta
 		// hay que crear lo de id en SimObject.
 		private int localizacion;
 		private int velMaxima;
 		private int velActual;
 		private int tiempoAveria;
-		private ArrayList<Junction> itinerario;
+		private ArrayList<Junction> itinerario; // no sería más comodo llevar carreteras?
 		private int kilometrage;//creo que también hace falta
 		private Road actual;
 		private int proxCruce;
 		
 		public Vehicle(int velM,ArrayList<Junction> cruc, String ide){
+			super(ide);
 			localizacion=0;
 			velMaxima=velM;
 			velActual=0;
 			tiempoAveria=0;
 			itinerario=cruc;
-			//id=ide; // esto creo que lo va a gestionar la superclase simobject
 			kilometrage=0;
 			proxCruce=0;
 		}
@@ -49,14 +50,23 @@ public class Vehicle { // creo que hace falta
 				tiempoAveria--;	
 			}
 			else if(localizacion==actual.getLongitud()){ // en este caso no avanza.
+				// creo que este caso hay que quitarlo porque ya se quita de la carretera cuando se llega al final
 			}
 			else{
 				if(localizacion+velActual>actual.getLongitud()){
 					kilometrage+=actual.getLongitud()-localizacion;
 					localizacion=actual.getLongitud();
 					velActual=0; // hay que hacer una comprobacion si ya se llego al final
+					actual.getFinal().entraVehiculo(this) // creo que seía mejor esta que la otra, porque así sabe carretera y coche.
 					itinerario.get(proxCruce).entraVehiculo(this); //El coche entra en cola para el cruce final de la carretera
-					// como sabe el cruce de que carretera viene?
+					// como sabe el cruce de que carretera viene? yo creo que la llamada la hará road de alguna manera
+				
+				}
+				else{
+					kilometrage+=velActual;
+					localizacion+=velActual;
+					
+					
 				}
 				
 			}
@@ -67,4 +77,14 @@ public class Vehicle { // creo que hace falta
 			actual=c;
 			localizacion=0;
 		}
-}
+		protected void fillReportDetails(Map<String, String> out){
+			out.put("speed",Integer.toString(velActual));
+			out.put("kilometrage",Integer.toString(kilometrage));
+			out.put("faulty",Integer.toString(tiempoAveria));
+			out.put("location","{"+actual.getId()+","+Integer.toString(localizacion)+"}");// No se si hay que hacer asi esto
+		}
+		protected String getReportHeader(){
+		
+		return "vehicle_report";
+		}
+	}

@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Junction {
+public class Junction extends SimulationObject{
 	private Map<Road,IncomingRoad> cola;
 	private List<IncomingRoad> semaforo;
 	
 	
 	
 	public Junction(String id){
-		
+		super(id);
 		cola = new HashMap<>();
 		semaforo=new ArrayList<>();
 	}
@@ -27,6 +27,14 @@ public class Junction {
 		
 		
 	}
+	protected void fillReportDetails(Map<String, String> out){
+		// falta por implementar
+		
+	}
+	protected String getReportHeader(){
+		
+		return "junction_report";
+		}
 	private class IncomingRoad{
 		private ArrayDeque<Vehicle> cola;
 		private boolean semaforo;
@@ -38,5 +46,6 @@ public class Junction {
 			cola.removeFirst(); // creo que hay que hacer comprobaciones antes de hacer esto.
 			
 		}
+	
 	}
 }
