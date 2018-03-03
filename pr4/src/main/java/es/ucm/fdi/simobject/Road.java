@@ -51,6 +51,7 @@ public class Road extends SimulationObject{
 	}
 	protected void fillReportDetails(Map<String, String> out){
 		
+		
 		// falta por implementar
 	}
 protected String getReportHeader(){

@@ -2,8 +2,7 @@ package es.ucm.fdi.simobject;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Vehicle extends SimulationObject{ // creo que hace falta
-		// hay que crear lo de id en SimObject.
+public class Vehicle extends SimulationObject{
 		private int localizacion;
 		private int velMaxima;
 		private int velActual;
