@@ -56,7 +56,7 @@ public class Vehicle extends SimulationObject{
 					kilometrage+=actual.getLongitud()-localizacion;
 					localizacion=actual.getLongitud();
 					velActual=0; // hay que hacer una comprobacion si ya se llego al final
-					actual.getFinal().entraVehiculo(this) // creo que seía mejor esta que la otra, porque así sabe carretera y coche.
+					actual.getFinal().entraVehiculo(this); // creo que seía mejor esta que la otra, porque así sabe carretera y coche.
 					itinerario.get(proxCruce).entraVehiculo(this); //El coche entra en cola para el cruce final de la carretera
 					// como sabe el cruce de que carretera viene? yo creo que la llamada la hará road de alguna manera
 				
