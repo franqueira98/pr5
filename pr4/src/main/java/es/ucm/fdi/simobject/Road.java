@@ -50,7 +50,11 @@ public class Road extends SimulationObject{
 		vehicles.removeValue(longitud,ent);		
 	}
 	protected void fillReportDetails(Map<String, String> out){
-		
+		String meter="";
+		for(Vehicle v:vehicles.innerValues()){
+			
+			
+		}
 		
 		// falta por implementar
 	}

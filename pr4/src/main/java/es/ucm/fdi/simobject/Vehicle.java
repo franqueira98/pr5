@@ -11,6 +11,7 @@ public class Vehicle extends SimulationObject{
 		private int kilometrage;//creo que también hace falta
 		private Road actual;
 		private int proxCruce;
+		private boolean haLlegado;
 		
 		public Vehicle(int velM,ArrayList<Junction> cruc, String ide){
 			super(ide);
@@ -21,6 +22,7 @@ public class Vehicle extends SimulationObject{
 			itinerario=cruc;
 			kilometrage=0;
 			proxCruce=0;
+			haLlegado=false;
 		}
 		public int getMaxSpeed(){
 			return velMaxima;
@@ -48,15 +50,12 @@ public class Vehicle extends SimulationObject{
 			if(tiempoAveria>0){
 				tiempoAveria--;	
 			}
-			else if(localizacion==actual.getLongitud()){ // en este caso no avanza.
-				// creo que este caso hay que quitarlo porque ya se quita de la carretera cuando se llega al final
-			}
-			else{
+			else if(!haLlegado){
 				if(localizacion+velActual>actual.getLongitud()){
 					kilometrage+=actual.getLongitud()-localizacion;
 					localizacion=actual.getLongitud();
 					velActual=0; // hay que hacer una comprobacion si ya se llego al final
-					actual.getFinal().entraVehiculo(this) // creo que seía mejor esta que la otra, porque así sabe carretera y coche.
+					actual.getFinal().entraVehiculo(this); // creo que seía mejor esta que la otra, porque así sabe carretera y coche.
 					itinerario.get(proxCruce).entraVehiculo(this); //El coche entra en cola para el cruce final de la carretera
 					// como sabe el cruce de que carretera viene? yo creo que la llamada la hará road de alguna manera
 				
@@ -70,7 +69,6 @@ public class Vehicle extends SimulationObject{
 				
 			}
 		}
-		
 		void moverASiguienteCarretera(Road c){
 			proxCruce++;
 			actual=c;
@@ -80,8 +78,15 @@ public class Vehicle extends SimulationObject{
 			out.put("speed",Integer.toString(velActual));
 			out.put("kilometrage",Integer.toString(kilometrage));
 			out.put("faulty",Integer.toString(tiempoAveria));
-			out.put("location","{"+actual.getId()+","+Integer.toString(localizacion)+"}");// No se si hay que hacer asi esto
+			out.put("location",getFillVehiculo());// No se si hay que hacer asi esto
 		}
+		//metodo auxiliar para que cada coche escriba la última linea, util para el de road.
+		protected String getFillVehiculo(){
+			return("{"+actual.getId()+", "+Integer.toString(localizacion)+"}");
+			
+			
+		}
+		
 		protected String getReportHeader(){
 		
 		return "vehicle_report";
