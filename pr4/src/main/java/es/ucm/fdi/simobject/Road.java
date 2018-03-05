@@ -10,7 +10,7 @@ public class Road extends SimulationObject{
 	private Junction start;
 	private Junction end;
 	private MultiTreeMap<Integer,Vehicle> vehicles;
-	
+	// necesita equals y hashcode
 	public Road(String ide,int lon,int maxv,Junction princ,Junction fin){
 		super(ide);
 		longitud=lon;
@@ -52,10 +52,11 @@ public class Road extends SimulationObject{
 	protected void fillReportDetails(Map<String, String> out){
 		String meter="";
 		for(Vehicle v:vehicles.innerValues()){
-			
+			meter+=v.getFillVehiculo()+" , ";
 			
 		}
-		
+		meter=meter.substring(0, meter.length() - 3);
+		out.put("state",meter);
 		// falta por implementar
 	}
 protected String getReportHeader(){

@@ -63,10 +63,7 @@ public class Vehicle extends SimulationObject{
 				else{
 					kilometrage+=velActual;
 					localizacion+=velActual;
-					
-					
 				}
-				
 			}
 		}
 		void moverASiguienteCarretera(Road c){
@@ -75,14 +72,14 @@ public class Vehicle extends SimulationObject{
 			localizacion=0;
 		}
 		protected void fillReportDetails(Map<String, String> out){
-			out.put("speed",Integer.toString(velActual));
-			out.put("kilometrage",Integer.toString(kilometrage));
-			out.put("faulty",Integer.toString(tiempoAveria));
-			out.put("location",getFillVehiculo());// No se si hay que hacer asi esto
+			out.put("speed",""+velActual);
+			out.put("kilometrage",""+kilometrage);
+			out.put("faulty",""+tiempoAveria);
+			out.put("location","("+actual.getId()+", "+localizacion+")");// No se si hay que hacer asi esto
 		}
 		//metodo auxiliar para que cada coche escriba la última linea, util para el de road.
 		protected String getFillVehiculo(){
-			return("{"+actual.getId()+", "+Integer.toString(localizacion)+"}");
+			return("("+id+", "+localizacion+")");
 			
 			
 		}
