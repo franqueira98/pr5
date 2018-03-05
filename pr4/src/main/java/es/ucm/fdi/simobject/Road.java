@@ -4,60 +4,72 @@ import java.util.Map;
 
 import es.ucm.fdi.util.MultiTreeMap;
 
-public class Road extends SimulationObject{
+public class Road extends SimulationObject {
 	private int longitud;
 	private int maxVel;
 	private Junction start;
 	private Junction end;
-	private MultiTreeMap<Integer,Vehicle> vehicles;
+	private MultiTreeMap<Integer, Vehicle> vehicles;
+
 	// necesita equals y hashcode
-	public Road(String ide,int lon,int maxv,Junction princ,Junction fin){
+	public Road(String ide, int lon, int maxv, Junction princ, Junction fin) {
 		super(ide);
-		longitud=lon;
-		maxVel=maxv;
-		vehicles=new MultiTreeMap<>((a,b)->a-b); //falta ver como recorrerlos para el metodo avanza
-		start=princ;
-		end=fin;
+		longitud = lon;
+		maxVel = maxv;
+		vehicles = new MultiTreeMap<>((a, b) -> a - b); // falta ver como
+														// recorrerlos para el
+														// metodo avanza
+		start = princ;
+		end = fin;
 	}
-	public Junction getPrincipio(){
+
+	public Junction getPrincipio() {
 		return start;
 	}
-	public Junction getFinal(){
+
+	public Junction getFinal() {
 		return end;
 	}
-	public int getLongitud(){
+
+	public int getLongitud() {
 		return longitud;
 	}
-	public void avanza(){
-		MultiTreeMap<Integer,Vehicle> nuevos=new MultiTreeMap<>((a,b)->a-b);
-		
-		for(Vehicle v:vehicles.innerValues()){
+
+	public void avanza() {
+		MultiTreeMap<Integer, Vehicle> nuevos = new MultiTreeMap<>((a, b) -> a
+				- b);
+
+		for (Vehicle v : vehicles.innerValues()) {
 			v.avanza();
 			nuevos.putValue(v.getLocation(), v);
 		}
-		vehicles=nuevos;
+		vehicles = nuevos;
 		// se encarga el recolector de basura de borrar el otro.
-		
+
 	}
-	public void entraVehiculo(Vehicle ent){
+
+	public void entraVehiculo(Vehicle ent) {
 		vehicles.putValue(0, ent);
-		
+
 	}
-	public void saleVehículo(Vehicle ent){
+
+	public void saleVehículo(Vehicle ent) {
 		end.entraVehiculo(ent);
-		vehicles.removeValue(longitud,ent);		
+		vehicles.removeValue(longitud, ent);
 	}
-	protected void fillReportDetails(Map<String, String> out){
-		String meter="";
-		for(Vehicle v:vehicles.innerValues()){
-			meter+=v.getFillVehiculo()+" , ";
-			
+
+	protected void fillReportDetails(Map<String, String> out) {
+		String meter = "";
+		for (Vehicle v : vehicles.innerValues()) {
+			meter += v.getFillVehiculo() + " , ";
+
 		}
-		meter=meter.substring(0, meter.length() - 3);
-		out.put("state",meter);
+		meter = meter.substring(0, meter.length() - 3);
+		out.put("state", meter);
 		// falta por implementar
 	}
-	protected String getReportHeader(){
+
+	protected String getReportHeader() {
 		return "[road_report]";
 	}
 }

@@ -20,11 +20,11 @@ public class Junction extends SimulationObject {
 	// hay que ver como gestionamos la creación de Roads e Incoming Roads.
 	public void entraVehiculo(Vehicle c) {
 		cola.get(c.getRoad()).cola.add(c);
-		
+
 	}
-	public void avanza(int lon){
-		
-		
+
+	public void avanza(int lon) {
+
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
