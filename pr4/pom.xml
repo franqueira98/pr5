@@ -6,11 +6,7 @@
 
     <groupId>es.ucm.fdi.tp</groupId>
     <artifactId>tp</artifactId>
-<<<<<<< HEAD
-    <version>1.0-SNAPSHOT</version>
-=======
     <version>1.0</version>
->>>>>>> afca15cbe5555a7612212299172a5f52966e434a
     <packaging>jar</packaging>
 
     <properties>
