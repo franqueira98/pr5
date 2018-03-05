@@ -85,7 +85,6 @@ public class Vehicle extends SimulationObject{
 		}
 		
 		protected String getReportHeader(){
-		
-		return "vehicle_report";
+			return "[vehicle_report]";
 		}
 	}

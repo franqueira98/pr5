@@ -22,9 +22,9 @@ public class Junction extends SimulationObject {
 		cola.get(c.getRoad()).cola.add(c);
 		
 	}
-
-	public void avanza(int lon) {
-
+	public void avanza(int lon){
+		
+		
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
@@ -34,7 +34,7 @@ public class Junction extends SimulationObject {
 
 	protected String getReportHeader() {
 
-		return "junction_report";
+		return "[junction_report]";
 	}
 
 	private class IncomingRoad {

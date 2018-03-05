@@ -7,7 +7,7 @@ import es.ucm.fdi.simobject.*;
 public class RoadMap {
 	// segun el profe es esta clase quien muve el coche a la siguiente road
 	// la profe tiene bastantes cosas diferentes a como lo dice el nuestro.
-	ArrayList <Vehicle>vehicles; // ArrayList lo mejor en este  caso no?
+	ArrayList<Vehicle> vehicles; // ArrayList lo mejor en este  caso no?
 	ArrayList<Road> roads;
 	ArrayList<Junction> junctions;
 	
