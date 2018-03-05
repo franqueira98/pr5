@@ -38,7 +38,7 @@ public class Vehicle extends SimulationObject {
 	public void setTiempoAveria(int n) {
 		tiempoAveria += n;
 	}
-
+	public Road getRoad(){return actual;}
 	public int getTiempoAveria() {
 		return tiempoAveria;
 	}
@@ -51,7 +51,7 @@ public class Vehicle extends SimulationObject {
 		return velActual;
 
 	}
-
+	public Junction nextJunction(){return itinerario.get(proxCruce);}
 	public void avanza() {
 		if (tiempoAveria > 0) {
 			tiempoAveria--;

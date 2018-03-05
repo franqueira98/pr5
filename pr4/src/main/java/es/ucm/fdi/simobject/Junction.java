@@ -10,11 +10,13 @@ import java.util.Map;
 public class Junction extends SimulationObject {
 	private Map<Road, IncomingRoad> cola;
 	private List<IncomingRoad> semaforo;
+	private List<Road> salientes;
 
 	public Junction(String id) {
 		super(id);
-		cola = new LinkedHashMap<>();
+		cola = new LinkedHashMap<>(); // porque Linked?
 		semaforo = new ArrayList<>();
+		salientes = new ArrayList<>();
 	}
 
 	// hay que ver como gestionamos la creación de Roads e Incoming Roads.
@@ -23,7 +25,41 @@ public class Junction extends SimulationObject {
 
 	}
 
-	public void avanza(int lon) {
+	public void insertarSalida(Road salida) {
+		salientes.add(salida);
+	}
+
+	public void avanza() { // porque tendría puesto con el int lon?
+		Vehicle aux;
+		boolean a = true;
+		int i;
+		for (i = 0; i < semaforo.size() && a; i++) {
+			if (semaforo.get(i).semaforoVerde) {
+				aux = semaforo.get(i).cola.getFirst();
+				for (int j = 0; j < salientes.size() && a; j++) { // porque no
+																	// iba a
+																	// poder
+																	// moverse?
+
+					if (salientes.get(j).getFinal() == aux.nextJunction()) {// caso
+																			// de
+																			// la
+																			// carretera
+																			// correcta
+						aux.moverASiguienteCarretera(salientes.get(j));
+						semaforo.get(i).cola.poll();// n ose si pop vale
+						a = false;
+					}
+				}
+				semaforo.get(i).semaforoVerde = false;
+
+			}
+
+		}
+		if (i == semaforo.size())
+			i = 0;
+
+		semaforo.get(i).semaforoVerde = true;
 
 	}
 
@@ -37,6 +73,7 @@ public class Junction extends SimulationObject {
 		return "[junction_report]";
 	}
 
+	// hay que ver como poner semaforo a verde solo de la primera carretera.
 	private class IncomingRoad {
 		// como se el identificador de esta carretera para el report
 		private ArrayDeque<Vehicle> cola;
