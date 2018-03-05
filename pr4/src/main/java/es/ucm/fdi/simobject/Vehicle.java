@@ -11,6 +11,7 @@ public class Vehicle extends SimulationObject{
 		private int kilometrage;//creo que también hace falta
 		private Road actual;
 		private int proxCruce;
+		private boolean haLlegado;
 		
 		public Vehicle(int velM,ArrayList<Junction> cruc, String ide){
 			super(ide);
@@ -21,6 +22,7 @@ public class Vehicle extends SimulationObject{
 			itinerario=cruc;
 			kilometrage=0;
 			proxCruce=0;
+			haLlegado=false;
 		}
 		public int getMaxSpeed(){
 			return velMaxima;
