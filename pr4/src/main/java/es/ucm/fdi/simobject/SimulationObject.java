@@ -20,7 +20,7 @@ public abstract class SimulationObject {
 		out.put ("id", id);
 		out.put("time", Integer.toString(time));
 		fillReportDetails(out);
-		}	
+		}
 
 	protected abstract void fillReportDetails(Map<String, String> out);
 	//protected abstract IniSection getReportSection();  // este metodo no se si hace falta

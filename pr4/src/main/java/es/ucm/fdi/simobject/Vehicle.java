@@ -85,7 +85,6 @@ public class Vehicle extends SimulationObject{
 			out.put("location","{"+actual.getId()+","+Integer.toString(localizacion)+"}");// No se si hay que hacer asi esto
 		}
 		protected String getReportHeader(){
-		
-		return "vehicle_report";
+			return "[vehicle_report]";
 		}
 	}

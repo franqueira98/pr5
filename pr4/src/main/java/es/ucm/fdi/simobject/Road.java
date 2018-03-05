@@ -23,12 +23,10 @@ public class Road extends SimulationObject{
 		return start;
 	}
 	public Junction getFinal(){
-		
 		return end;
 	}
 	public int getLongitud(){
 		return longitud;
-		
 	}
 	public void avanza(){
 		MultiTreeMap<Integer,Vehicle> nuevos=new MultiTreeMap<>((a,b)->a-b);
@@ -54,8 +52,7 @@ public class Road extends SimulationObject{
 		
 		// falta por implementar
 	}
-protected String getReportHeader(){
-		
-		return "road_report";
-		}
+	protected String getReportHeader(){
+		return "[road_report]";
+	}
 }

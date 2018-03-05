@@ -32,9 +32,8 @@ public class Junction extends SimulationObject{
 		
 	}
 	protected String getReportHeader(){
-		
-		return "junction_report";
-		}
+		return "[junction_report]";
+	}
 	private class IncomingRoad{
 		private ArrayDeque<Vehicle> cola;
 		private boolean semaforo;
