@@ -1,4 +1,4 @@
-package exceptions;
+package es.ucm.fdi.exceptions;
 
 public class SimulatorError extends RuntimeException {
 	

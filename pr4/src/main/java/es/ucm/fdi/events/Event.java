@@ -1,22 +1,16 @@
 package es.ucm.fdi.events;
 
-public class Event {
+import es.ucm.fdi.controller.RoadMap;
 
-	private int time;
-
-	// pero por ejemplo NewJunctionEvent no se le pasa ningun integer a la
-	// constructora
-	public Event(int t) {
-		time = t;
+public abstract class Event {
+	protected int time;
+	
+	public Event(int time) {
+		this.time = time;
 	}
-
-	public int getTime() {
-		return time;
-	}
-
-	public int compareTo(Event r) {
-
-		// no se que va a haber que poner aqui
-		return 0;
-	}
+	
+	public abstract void execute(RoadMap things);
+	
+	//etc
+	
 }

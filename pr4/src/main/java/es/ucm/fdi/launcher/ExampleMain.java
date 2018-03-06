@@ -1,9 +1,12 @@
 package es.ucm.fdi.launcher;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.cli.CommandLine;
@@ -14,6 +17,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import es.ucm.fdi.controller.Controller;
+import es.ucm.fdi.controller.TrafficSimulator;
 import es.ucm.fdi.ini.Ini;
 
 public class ExampleMain {
@@ -149,6 +154,12 @@ public class ExampleMain {
 		// TODO
 		// Add your code here. Note that the input argument where parsed and stored into
 		// corresponding fields.
+		OutputStream out;
+		if(_outFile != null) out = new FileOutputStream(_outFile);
+		else out = System.out;
+		if(_timeLimit == null) _timeLimit = _timeLimitDefaultValue;
+		Controller control = new Controller(new TrafficSimulator(out), new FileInputStream(_inFile), out, _timeLimit);
+		control.run();
 	}
 
 	private static void start(String[] args) throws IOException {
