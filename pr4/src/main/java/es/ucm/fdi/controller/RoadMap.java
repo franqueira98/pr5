@@ -40,6 +40,14 @@ public class RoadMap {
 
 	public void addJunction(Junction j) {junctions.add(j);}
 	
+	public String generateReport(){
+		String report = "";
+		for(Junction j : junctions) report += j.generateReport();
+		for(Road r : roads) report += r.generateReport();
+		for(Vehicle v : vehicles) report += v.generateReport();
+		return report;
+	}
+	
 	
 	/*
 	public Vehicle getVehicle(String ide) {

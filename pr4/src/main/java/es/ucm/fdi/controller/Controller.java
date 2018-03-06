@@ -15,6 +15,10 @@ import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.ini.IniSection;
 
 public class Controller {
+	private static EventBuilder[] avaliableEvents = { new VehicleEventBuilder(),
+		new RoadEventBuilder(), new JunctionEventBuilder(),
+		new MakeVehicleFaultyEventBuilder() };
+
 	private TrafficSimulator simulation;
 	private InputStream in;
 	private OutputStream out;
@@ -29,8 +33,7 @@ public class Controller {
 	}
 
 	public void run() throws IOException {
-		loadEvents();
-		// cargar elementos de eventos de este tiempo
+		simulation.run(ticks);
 	}
 
 	public void reset() {
@@ -40,10 +43,6 @@ public class Controller {
 	public void loadEvents() throws IOException {
 		Ini init = new Ini(in);
 		List<IniSection> list = init.getSections();
-
-		EventBuilder[] avaliableEvents = { new VehicleEventBuilder(),
-				new RoadEventBuilder(), new JunctionEventBuilder(),
-				new MakeVehicleFaultyEventBuilder() };
 
 		for (IniSection i : list) {
 			boolean found = false;

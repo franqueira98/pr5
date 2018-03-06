@@ -9,6 +9,8 @@ public abstract class Event {
 		this.time = time;
 	}
 	
+	public int getTime() {return time;}
+	
 	public abstract void execute(RoadMap things);
 	
 	//etc

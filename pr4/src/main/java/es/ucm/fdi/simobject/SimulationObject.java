@@ -22,6 +22,11 @@ public abstract class SimulationObject {
 		out.put("time", Integer.toString(time));
 		fillReportDetails(out);
 	}
+	
+	//Hay que ver como va el mapa, no me atrevi a hacerlo asi
+	public String generateReport(){
+		return null;
+	}
 
 	protected abstract void fillReportDetails(Map<String, String> out);
 
