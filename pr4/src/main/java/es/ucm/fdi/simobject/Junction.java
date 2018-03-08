@@ -94,14 +94,14 @@ public class Junction extends SimulationObject {
 			}
 			a.delete(aux2.length()-2,aux2.length()-1);//no se si es -1 o -2
 			//aux2=aux2.substring(0, aux2.length()-2);
-				a1.insert(1, "(");
-				a1.insert(2, ide);
-				a1.insert(2, ", ");
+				a1.append("(");
+				a1.append(ide);
+				a1.append(", ");
 				if(semaforoVerde)
-					a1.insert(5,"green");
+					a1.append("green");
 				else
-					a1.insert(3, "red");
-				a1.insert(1, "[");
+					a1.append("red");
+				a1.append("[");
 				a1.append(a);// no se cual de las dos hay que utilizar.
 				a1.append("]");
 				
