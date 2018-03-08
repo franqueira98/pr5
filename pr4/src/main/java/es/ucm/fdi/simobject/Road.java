@@ -35,11 +35,33 @@ public class Road extends SimulationObject {
 		return longitud;
 	}
 
+	public int calcularVelBase() {
+		long n = vehicles.sizeOfValues();
+		if (n < 1)
+			n = 1;
+		if (maxVel < (maxVel / n))
+			return maxVel;
+		return (maxVel / (int) n); // dudo que lleguemos a tener tanto coche
+	}
+
 	public void avanza() {
 		MultiTreeMap<Integer, Vehicle> nuevos = new MultiTreeMap<>((a, b) -> a
 				- b);
-
+		int velocidadBase = calcularVelBase();
+		int factorReduccion = 1;
+		int local = -1;
 		for (Vehicle v : vehicles.innerValues()) {
+			// manera óptima de saber si cuando conseguí el factor de Reduccion
+			// tenia la misma localizacion que el de ahora?
+			if (factorReduccion == 1 && local== -1) {
+				if (v.getTiempoAveria() != 0) {
+					local = v.getLocation();
+				}
+			} else if (local == v.getLocation()) {
+				factorReduccion = 2;
+				local=-1; //para que no entre en este if siempre.
+			}
+			if(v.getTiempoAveria()==0	)v.setVelocidadActual(velocidadBase / factorReduccion);
 			v.avanza();
 			nuevos.putValue(v.getLocation(), v);
 		}
@@ -53,7 +75,7 @@ public class Road extends SimulationObject {
 
 	}
 
-	public void saleVehículo(Vehicle ent) {
+	public void saleVehiculo(Vehicle ent) {
 		end.entraVehiculo(ent);
 		vehicles.removeValue(longitud, ent);
 	}

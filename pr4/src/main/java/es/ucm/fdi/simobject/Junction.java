@@ -76,10 +76,40 @@ public class Junction extends SimulationObject {
 	// hay que ver como poner semaforo a verde solo de la primera carretera.
 	private class IncomingRoad {
 		// como se el identificador de esta carretera para el report
+		// debería cambiar todos los strings por StringBuilder no?
 		private ArrayDeque<Vehicle> cola;
 		private String ide; // entender porque no hace falta
 		private boolean semaforoVerde;
 		// quite método de añadir y quitar el ultimo
-
+		protected String GeneraReport(){
+			String aux="",aux2="";
+			StringBuilder a=new StringBuilder();
+			StringBuilder a1=new StringBuilder();
+			for(int i=0;i<cola.size();i++)	{ // manera de hacer eficiente esto??
+				a.insert(2,cola.getFirst().getId());
+				a.insert(2,", ");
+				//aux2+=cola.getFirst().getId() +", ";
+				cola.push(cola.getFirst());
+				cola.pop();
+			}
+			a.delete(aux2.length()-2,aux2.length()-1);//no se si es -1 o -2
+			//aux2=aux2.substring(0, aux2.length()-2);
+				a1.insert(1, "(");
+				a1.insert(2, ide);
+				a1.insert(2, ", ");
+				if(semaforoVerde)
+					a1.insert(5,"green");
+				else
+					a1.insert(3, "red");
+				a1.insert(1, "[");
+				a1.append(a);// no se cual de las dos hay que utilizar.
+				a1.append("]");
+				
+			//aux="("+ide+", "+"green"+"["+aux2+"]";
+			
+			return aux;
+			
+		}
+		
 	}
 }

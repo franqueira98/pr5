@@ -38,41 +38,43 @@ public class Vehicle extends SimulationObject {
 	public void setTiempoAveria(int n) {
 		tiempoAveria += n;
 	}
-	public Road getRoad(){return actual;}
+
+	public Road getRoad() {
+		return actual;
+	}
+
 	public int getTiempoAveria() {
 		return tiempoAveria;
 	}
 
 	public void setVelocidadActual(int vel) {
-		velActual = vel;
+		if (vel > velMaxima)
+			velActual = velMaxima;
+		else
+			velActual = vel;
+		velActual=0;
 	}
 
 	public int getVelocidadActual() {
 		return velActual;
 
 	}
-	public Junction nextJunction(){return itinerario.get(proxCruce);}
+
+	public Junction nextJunction() {
+		return itinerario.get(proxCruce);
+	}
+
 	public void avanza() {
 		if (tiempoAveria > 0) {
 			tiempoAveria--;
 		} else if (!haLlegado) {
-			if (localizacion + velActual > actual.getLongitud()) {
+			if (localizacion + velActual >= actual.getLongitud()) {
 				kilometrage += actual.getLongitud() - localizacion;
 				localizacion = actual.getLongitud();
 				velActual = 0; // hay que hacer una comprobacion si ya se llego
 								// al final
-				actual.getFinal().entraVehiculo(this); // creo que seía mejor
-														// esta que la otra,
-														// porque así sabe
-														// carretera y coche.
-				itinerario.get(proxCruce).entraVehiculo(this); // El coche entra
-																// en cola para
-																// el cruce
-																// final de la
-																// carretera
-				// como sabe el cruce de que carretera viene? yo creo que la
-				// llamada la hará road de alguna manera
-
+				actual.getFinal().entraVehiculo(this); 
+				actual.saleVehiculo(this); // esta la usamos si queremos que lo elimine de la carretera
 			} else {
 				kilometrage += velActual;
 				localizacion += velActual;
@@ -84,20 +86,19 @@ public class Vehicle extends SimulationObject {
 		proxCruce++;
 		actual = c;
 		localizacion = 0;
+		if (proxCruce == itinerario.size())
+			haLlegado = true;
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
 		out.put("speed", "" + velActual);
 		out.put("kilometrage", "" + kilometrage);
 		out.put("faulty", "" + tiempoAveria);
-		out.put("location", "(" + actual.getId() + ", " + localizacion + ")");// No
-																				// se
-																				// si
-																				// hay
-																				// que
-																				// hacer
-																				// asi
-																				// esto
+		if (!haLlegado)
+			out.put("location", "(" + actual.getId() + ", " + localizacion
+					+ ")");
+		else
+			out.put("location", "arrived");
 	}
 
 	// metodo auxiliar para que cada coche escriba la última linea, util para el
