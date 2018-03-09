@@ -53,15 +53,16 @@ public class Road extends SimulationObject {
 		for (Vehicle v : vehicles.innerValues()) {
 			// manera óptima de saber si cuando conseguí el factor de Reduccion
 			// tenia la misma localizacion que el de ahora?
-			if (factorReduccion == 1 && local== -1) {
+			if (factorReduccion == 1 && local == -1) {
 				if (v.getTiempoAveria() != 0) {
 					local = v.getLocation();
 				}
 			} else if (local == v.getLocation()) {
 				factorReduccion = 2;
-				local=-1; //para que no entre en este if siempre.
+				local = -1; // para que no entre en este if siempre.
 			}
-			if(v.getTiempoAveria()==0	)v.setVelocidadActual(velocidadBase / factorReduccion);
+			if (v.getTiempoAveria() == 0)
+				v.setVelocidadActual(velocidadBase / factorReduccion);
 			v.avanza();
 			nuevos.putValue(v.getLocation(), v);
 		}
@@ -81,13 +82,15 @@ public class Road extends SimulationObject {
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
-		String meter = "";
+		StringBuilder meter = new StringBuilder();
 		for (Vehicle v : vehicles.innerValues()) {
-			meter += v.getFillVehiculo() + " , ";
+			// meter += v.getFillVehiculo() + " , ";
+			meter.append(v.getFillVehiculo() + " , ");
 
 		}
-		meter = meter.substring(0, meter.length() - 3);
-		out.put("state", meter);
+		// meter = meter.substring(0, meter.length() - 3);
+		meter.delete(meter.length() - 3, meter.length() - 1);
+		out.put("state", meter.toString());
 		// falta por implementar
 	}
 

@@ -38,7 +38,9 @@ public class Vehicle extends SimulationObject {
 	public void setTiempoAveria(int n) {
 		tiempoAveria += n;
 	}
-
+	public Junction getProxCruce(){
+		return itinerario.get(proxCruce);
+	}
 	public Road getRoad() {
 		return actual;
 	}
