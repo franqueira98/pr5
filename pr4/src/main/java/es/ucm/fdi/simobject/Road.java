@@ -64,7 +64,8 @@ public class Road extends SimulationObject {
 			if (v.getTiempoAveria() == 0)
 				v.setVelocidadActual(velocidadBase / factorReduccion);
 			v.avanza();
-			nuevos.putValue(v.getLocation(), v);
+			if (v.getLocation() != longitud)
+				nuevos.putValue(v.getLocation(), v);
 		}
 		vehicles = nuevos;
 		// se encarga el recolector de basura de borrar el otro.
@@ -77,7 +78,6 @@ public class Road extends SimulationObject {
 	}
 
 	public void saleVehiculo(Vehicle ent) {
-		end.entraVehiculo(ent);
 		vehicles.removeValue(longitud, ent);
 	}
 

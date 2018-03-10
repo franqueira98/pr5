@@ -35,7 +35,9 @@ public class newVehicleEvent extends Event {
 			}
 		}
 		it.add(things.getJunction(idJunc));
-		things.addVehicle(new Vehicle(maxSpeed, it, id));
+		Vehicle v=new Vehicle(maxSpeed, it, id);
+		v.avanza();
+		things.addVehicle(v);
 
 	}
 

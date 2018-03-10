@@ -10,7 +10,7 @@ public class Vehicle extends SimulationObject {
 	private int velActual;
 	private int tiempoAveria;
 	private List<Junction> itinerario; // no sería más comodo llevar
-											// carreteras?
+										// carreteras?
 	private int kilometrage;// creo que también hace falta
 	private Road actual;
 	private int proxCruce;
@@ -24,7 +24,7 @@ public class Vehicle extends SimulationObject {
 		tiempoAveria = 0;
 		itinerario = cruc;
 		kilometrage = 0;
-		proxCruce = 0;
+		proxCruce = 1;
 		haLlegado = false;
 	}
 
@@ -35,13 +35,16 @@ public class Vehicle extends SimulationObject {
 	public int getLocation() {
 		return localizacion;
 	}
-	public Junction segundoCruce(){return itinerario.get(1);}
+
 	public void setTiempoAveria(int n) {
 		tiempoAveria += n;
+		velActual=0;
 	}
-	public Junction getProxCruce(){
+
+	public Junction getProxCruce() {
 		return itinerario.get(proxCruce);
 	}
+
 	public Road getRoad() {
 		return actual;
 	}
@@ -55,7 +58,7 @@ public class Vehicle extends SimulationObject {
 			velActual = velMaxima;
 		else
 			velActual = vel;
-		velActual=0;
+		//velActual = 0;
 	}
 
 	public int getVelocidadActual() {
@@ -68,29 +71,39 @@ public class Vehicle extends SimulationObject {
 	}
 
 	public void avanza() {
-		if (tiempoAveria > 0) {
-			tiempoAveria--;
-		} else if (!haLlegado) {
-			if (localizacion + velActual >= actual.getLongitud()) {
-				kilometrage += actual.getLongitud() - localizacion;
-				localizacion = actual.getLongitud();
-				velActual = 0; // hay que hacer una comprobacion si ya se llego
-								// al final
-				actual.getFinal().entraVehiculo(this); 
-				actual.saleVehiculo(this); // esta la usamos si queremos que lo elimine de la carretera
-			} else {
-				kilometrage += velActual;
-				localizacion += velActual;
+		if (proxCruce == 1) {// acabas de empezar
+			itinerario.get(0).primerCruce(this);
+		} else {
+			if (tiempoAveria > 0) {
+				tiempoAveria--;
+			} else if (!haLlegado) {
+				if (localizacion + velActual >= actual.getLongitud()) {
+					kilometrage += actual.getLongitud() - localizacion;
+					localizacion = actual.getLongitud();
+					velActual = 0; // hay que hacer una comprobacion si ya se
+									// llego
+									// al final
+					if (proxCruce == itinerario.size())
+						haLlegado = true;
+					else
+						actual.getFinal().entraVehiculo(this);
+					actual.saleVehiculo(this); // esta la usamos si queremos que
+												// lo elimine de la carretera
+				} else {
+					kilometrage += velActual;
+					localizacion += velActual;
+				}
 			}
 		}
 	}
 
 	void moverASiguienteCarretera(Road c) {
+		if (proxCruce == itinerario.size()) // creo que sobra.
+			haLlegado = true;
+		else{
 		proxCruce++;
 		actual = c;
-		localizacion = 0;
-		if (proxCruce == itinerario.size())
-			haLlegado = true;
+		localizacion = 0;}
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {

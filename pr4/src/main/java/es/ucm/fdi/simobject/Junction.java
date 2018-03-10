@@ -27,7 +27,9 @@ public class Junction extends SimulationObject {
 
 	}
 	public void primerCruce(Vehicle v){
-		v.moverASiguienteCarretera(saberSaliente.get(v.segundoCruce()));
+		Road r=saberSaliente.get(v.getProxCruce());
+		r.entraVehiculo(v);
+		v.moverASiguienteCarretera(r);
 	}
 
 	public void insertSaliente(Junction c, Road r) {
@@ -53,19 +55,11 @@ public class Junction extends SimulationObject {
 			if (semaforo.get(i).semaforoVerde) {
 				if (!semaforo.get(i).cola.isEmpty()){
 				aux = semaforo.get(i).cola.getFirst();
-				aux.moverASiguienteCarretera(saberSaliente.get(aux
-						.getProxCruce()));
-				/*
-				 * for (int j = 0; j < salientes.size() && a; j++) { // porque
-				 * no // iba a // poder // moverse?
-				 * 
-				 * if (salientes.get(j).getFinal() == aux.nextJunction()) {//
-				 * caso // de // la // carretera // correcta
-				 * aux.moverASiguienteCarretera(salientes.get(j));
-				 * semaforo.get(i).cola.poll();// n ose si pop vale a = false; }
-				 * }
-				 */
-				semaforo.get(i).cola.pop();// no se si pop vale;
+				Road r=saberSaliente.get(aux
+						.getProxCruce());
+				r.entraVehiculo(aux);
+				aux.moverASiguienteCarretera(r);
+				semaforo.get(i).cola.pop();// me dio fallo por poner pop;
 				}
 				semaforo.get(i).semaforoVerde = false;
 
