@@ -49,7 +49,7 @@ public class RoadMap {
 	public void addVehicle(Vehicle v) {
 		mapVehicles.put(v.getId(), v);
 		vehicles.add(v);
-	} // habra que meterlo al mapa tambien n?
+	}
 
 	public void addRoad(Road r) {
 		mapRoads.put(r.getId(), r);
@@ -62,25 +62,14 @@ public class RoadMap {
 	}
 
 	public String generateReport() {
-		String report = "";
-		//???????????
+	
+		StringBuilder report = new StringBuilder();
 		for (Junction j : junctions)
-			report += j.generateReport();
+			report.append(j.generateReport());
 		for (Road r : roads)
-			report += r.generateReport();
+			report.append(r.generateReport());
 		for (Vehicle v : vehicles)
-			report += v.generateReport();
-		return report;
+			report.append(v.generateReport());
+		return report.toString();
 	}
-
-	/*
-	 * public Vehicle getVehicle(String ide) { for (Vehicle v : vehicles) { if
-	 * (v.getId().equals(ide)) return v; } return null; }
-	 * 
-	 * public Road getRoad(String ide) { for (Road r : roads) { if
-	 * (r.getId().equals(ide)) return r; } return null; }
-	 * 
-	 * public Junction getJunction(String ide) { for (Junction j : junctions) {
-	 * if (j.getId().equals(ide)) return j; } return null; }
-	 */
 }
