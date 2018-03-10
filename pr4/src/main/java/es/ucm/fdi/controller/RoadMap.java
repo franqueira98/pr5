@@ -47,14 +47,17 @@ public class RoadMap {
 	}
 
 	public void addVehicle(Vehicle v) {
+		mapVehicles.put(v.getId(), v);
 		vehicles.add(v);
 	} // habra que meterlo al mapa tambien n?
 
 	public void addRoad(Road r) {
+		mapRoads.put(r.getId(), r);
 		roads.add(r);
 	}
 
 	public void addJunction(Junction j) {
+		mapJunctions.put(j.getId(),j);
 		junctions.add(j);
 	}
 

@@ -34,11 +34,12 @@ public class newVehicleEvent extends Event {
 				idJunc = "";
 			}
 		}
+		it.add(things.getJunction(idJunc));
 		things.addVehicle(new Vehicle(maxSpeed, it, id));
 
 	}
 
-	public class Builder extends Event.Builder {
+	public static class Builder extends Event.Builder { //tuve que hacerlas estaticas
 
 		public Builder() {
 			super("new_vehicle");
@@ -57,7 +58,6 @@ public class newVehicleEvent extends Event {
 				int maxSpeed;
 				int time;
 				Map<String, String> sec = ini.getKeysMap();
-				String idJunc = "";
 				// habría que hacerlo diferente si queremos lanzar excep
 				// si nos ponen los datos en otro orden
 				time = Integer.parseInt(sec.get("time"));

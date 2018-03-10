@@ -5,19 +5,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import es.ucm.fdi.eventbuilders.EventBuilder;
-import es.ucm.fdi.eventbuilders.JunctionEventBuilder;
-import es.ucm.fdi.eventbuilders.MakeVehicleFaultyEventBuilder;
-import es.ucm.fdi.eventbuilders.RoadEventBuilder;
-import es.ucm.fdi.eventbuilders.VehicleEventBuilder;
-import es.ucm.fdi.events.Event;
+import es.ucm.fdi.events.*;
 import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.ini.IniSection;
 
 public class Controller {
-	private static EventBuilder[] avaliableEvents = { new VehicleEventBuilder(),
-		new RoadEventBuilder(), new JunctionEventBuilder(),
-		new MakeVehicleFaultyEventBuilder() };
+	private static Event.Builder[] avaliableEvents = { new newVehicleEvent.Builder(),
+		new newRoadEvent.Builder(), new newJunctionEvent.Builder(), // se cambia el nombre sin problema luego.
+		new MakeVehicleFaultyEvent.Builder() };
 
 	private TrafficSimulator simulation;
 	private InputStream in;
@@ -46,7 +41,7 @@ public class Controller {
 
 		for (IniSection i : list) {
 			boolean found = false;
-			for (EventBuilder eventB : avaliableEvents) {
+			for (Event.Builder eventB : avaliableEvents) {
 				if (i.getTag().equals(eventB.getTitle())) {
 					simulation.addEvent(eventB.parse(i));
 					found = true;

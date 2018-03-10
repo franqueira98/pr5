@@ -32,7 +32,8 @@ public class TrafficSimulator {
 		int timeLimit = timeCounter + numSteps - 1;
 		while(timeCounter <= timeLimit){
 			List<Event> nowEvents = events.get(timeCounter);
-			for(Event e : nowEvents) e.execute(objects);
+			if(nowEvents!=null)
+				for(Event e : nowEvents) e.execute(objects);
 			List<Road> roads = objects.getRoads();
 			for(Road r : roads) r.avanza();
 			List<Junction> junctions = objects.getJunctions();

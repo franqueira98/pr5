@@ -26,29 +26,32 @@ public class Junction extends SimulationObject {
 		saberInc.get(c.getRoad()).cola.add(c);
 
 	}
-
-	public void insertarSalida(Road salida) {
-		salientes.add(salida);
+	public void primerCruce(Vehicle v){
+		v.moverASiguienteCarretera(saberSaliente.get(v.segundoCruce()));
 	}
 
-	public void insertSalientes(Junction c, Road r) {
+	public void insertSaliente(Junction c, Road r) {
 		salientes.add(r);
 		saberSaliente.put(c, r);
 	}
 
 	public void insertEntrante(Road r) {
 		IncomingRoad s = new IncomingRoad(r.getId());
+		if(semaforo.isEmpty())s.semaforoVerde=true;
 		saberInc.put(r, s);
 		semaforo.add(s);
 
 	}
 
 	public void avanza() { // porque tendría puesto con el int lon?
+
+		if(!semaforo.isEmpty()){
 		Vehicle aux;
 		boolean a = true;
 		int i;
 		for (i = 0; i < semaforo.size() && a; i++) {
 			if (semaforo.get(i).semaforoVerde) {
+				if (!semaforo.get(i).cola.isEmpty()){
 				aux = semaforo.get(i).cola.getFirst();
 				aux.moverASiguienteCarretera(saberSaliente.get(aux
 						.getProxCruce()));
@@ -63,6 +66,7 @@ public class Junction extends SimulationObject {
 				 * }
 				 */
 				semaforo.get(i).cola.pop();// no se si pop vale;
+				}
 				semaforo.get(i).semaforoVerde = false;
 
 			}
@@ -70,9 +74,8 @@ public class Junction extends SimulationObject {
 		}
 		if (i == semaforo.size())
 			i = 0;
-
 		semaforo.get(i).semaforoVerde = true;
-
+		}
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
@@ -91,21 +94,18 @@ public class Junction extends SimulationObject {
 		return "[junction_report]";
 	}
 
-	// hay que ver como poner semaforo a verde solo de la primera carretera.
 	private class IncomingRoad {
-		// como se el identificador de esta carretera para el report
-		// debería cambiar todos los strings por StringBuilder no?
 		private ArrayDeque<Vehicle> cola;
-		private String ide; // entender porque no hace falta
+		private String ide;
 		private boolean semaforoVerde;
 
 		public IncomingRoad(String r) {
 			cola = new ArrayDeque<>();
 			ide = r;
-			semaforoVerde = false;// el primero hay que ponerlo a verde
+			semaforoVerde = false;
 		}
 
-		// quite método de añadir y quitar el ultimo
+	
 		protected String GeneraReport() {
 			// String aux = "", aux2 = "";
 			StringBuilder a = new StringBuilder();

@@ -23,7 +23,7 @@ public class newJunctionEvent extends Event {
 
 	}
 
-	public class Builder extends Event.Builder {
+	public static class Builder extends Event.Builder {
 
 		public Builder() {
 			super("new_junction");

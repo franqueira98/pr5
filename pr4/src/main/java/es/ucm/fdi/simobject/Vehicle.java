@@ -35,7 +35,7 @@ public class Vehicle extends SimulationObject {
 	public int getLocation() {
 		return localizacion;
 	}
-
+	public Junction segundoCruce(){return itinerario.get(1);}
 	public void setTiempoAveria(int n) {
 		tiempoAveria += n;
 	}

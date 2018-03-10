@@ -29,9 +29,10 @@ public class MakeVehicleFaultyEvent extends Event {
 				idVehicle += vehicles.charAt(i);
 
 		}
+		things.getVehicle(idVehicle).setTiempoAveria(tiempoAveria);
 	}
 
-	public class Builder extends Event.Builder {
+	public static class Builder extends Event.Builder {
 		public Builder() {
 			super("make_vehicle_faulty");
 		}

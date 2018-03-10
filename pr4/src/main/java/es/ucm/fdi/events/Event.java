@@ -13,7 +13,7 @@ public abstract class Event {
 	public int getTime() {return time;}
 	
 	public abstract void execute(RoadMap things);
-	public abstract class Builder{
+	public static abstract class Builder{
 		protected final String title;
 		
 		public Builder(String title) {

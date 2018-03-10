@@ -31,12 +31,12 @@ public class newRoadEvent extends Event {
 		a = things.getJunction(src);
 		b = things.getJunction(dest);
 		Road r = new Road(id, length, maxSpeed, a, b);
-		a.insertarSalida(r);
+		a.insertSaliente(b,r);
 		b.insertEntrante(r);
 		things.addRoad(r);
 	}
 
-	public class Builder extends Event.Builder {
+	public static class Builder extends Event.Builder {
 		public Builder() {
 			super("new_road");
 		}
