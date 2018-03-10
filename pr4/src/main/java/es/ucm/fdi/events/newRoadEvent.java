@@ -5,16 +5,17 @@ import java.util.Map;
 import es.ucm.fdi.controller.RoadMap;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.Junction;
+import es.ucm.fdi.simobject.Road;
 
 public class newRoadEvent extends Event {
 
 	String id;
 	int maxSpeed;
 	int length;
-	Junction src, dest;
+	String src, dest;
 
 	public newRoadEvent(int time, String id, int maxSpeed, int length,
-			Junction src, Junction dest) {
+			String src, String dest) {
 		super(time);
 		this.id = id;
 		this.maxSpeed = maxSpeed;
@@ -26,8 +27,13 @@ public class newRoadEvent extends Event {
 
 	@Override
 	public void execute(RoadMap things) {
-		// TODO Auto-generated method stub
-
+		Junction a, b;
+		a = things.getJunction(src);
+		b = things.getJunction(dest);
+		Road r = new Road(id, length, maxSpeed, a, b);
+		a.insertarSalida(r);
+		b.insertEntrante(r);
+		things.addRoad(r);
 	}
 
 	public class Builder extends Event.Builder {
@@ -48,16 +54,10 @@ public class newRoadEvent extends Event {
 				String ideJunctionSurc, ideJunctionDest;
 				ideJunctionSurc = sec.get("src");
 				ideJunctionDest = sec.get("dest");
-				// faltaría aquí la conexion con roadMap para conectar la
-				// carretera con las Junction.
 				length = Integer.parseInt(sec.get("length"));
 
-				return new newRoadEvent(time, ide, maxSpeed, length, j1, j2);// faltaría
-																				// pasar
-																				// los
-																				// id
-																				// a
-																				// Junction.
+				return new newRoadEvent(time, ide, maxSpeed, length,
+						ideJunctionSurc, ideJunctionDest);
 			}
 		}
 	}

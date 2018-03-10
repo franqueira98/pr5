@@ -1,6 +1,7 @@
 package es.ucm.fdi.simobject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Vehicle extends SimulationObject {
@@ -8,14 +9,14 @@ public class Vehicle extends SimulationObject {
 	private int velMaxima;
 	private int velActual;
 	private int tiempoAveria;
-	private ArrayList<Junction> itinerario; // no sería más comodo llevar
+	private List<Junction> itinerario; // no sería más comodo llevar
 											// carreteras?
 	private int kilometrage;// creo que también hace falta
 	private Road actual;
 	private int proxCruce;
 	private boolean haLlegado;
 
-	public Vehicle(int velM, ArrayList<Junction> cruc, String ide) {
+	public Vehicle(int velM, List<Junction> cruc, String ide) {
 		super(ide);
 		localizacion = 0;
 		velMaxima = velM;

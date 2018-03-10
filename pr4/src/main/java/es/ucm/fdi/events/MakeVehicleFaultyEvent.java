@@ -9,17 +9,26 @@ import es.ucm.fdi.simobject.Vehicle;
 
 public class MakeVehicleFaultyEvent extends Event {
 	int tiempoAveria;
-	List<Vehicle> vehicles;
+	String vehicles;
 
-	public MakeVehicleFaultyEvent(int time) {
+	public MakeVehicleFaultyEvent(int time, int tiempoAveria, String vehicles) {
 		super(time);
+		this.tiempoAveria = tiempoAveria;
+		this.vehicles = vehicles;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute(RoadMap things) {
-		// TODO Auto-generated method stub
+		String idVehicle = "";
+		for (int i = 0; i < vehicles.length(); i++) {
+			if (vehicles.charAt(i) == ',') {
+				things.getVehicle(idVehicle).setTiempoAveria(tiempoAveria);
+				idVehicle = "";
+			} else
+				idVehicle += vehicles.charAt(i);
 
+		}
 	}
 
 	public class Builder extends Event.Builder {
@@ -43,8 +52,7 @@ public class MakeVehicleFaultyEvent extends Event {
 				tiempoAveria = Integer.parseInt(sec.get("duration"));
 				listaIds = sec.get("vehicles");
 
-				// falta cambiar ese string de ids por una lista de cochees.
-				return null;
+				return new MakeVehicleFaultyEvent(time, tiempoAveria, listaIds);
 			}
 		}
 
