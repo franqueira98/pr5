@@ -1,19 +1,18 @@
 package es.ucm.fdi.events;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
 import es.ucm.fdi.ini.IniSection;
-import es.ucm.fdi.simobject.Junction;
+import es.ucm.fdi.simobject.Vehicle;
 
-public class newJunctionEvent extends Event {
-	String id;
+public class MakeVehicleFaultyEvent extends Event {
+	int tiempoAveria;
+	List<Vehicle> vehicles;
 
-	public newJunctionEvent(int time, String id) {
+	public MakeVehicleFaultyEvent(int time) {
 		super(time);
-		this.id = id;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -24,9 +23,8 @@ public class newJunctionEvent extends Event {
 	}
 
 	public class Builder extends Event.Builder {
-
 		public Builder() {
-			super("newJunctionEventBuilder");
+			super("MakeVehicleFaultyEventBuilder");
 		}
 
 		public String getTitle() {
@@ -34,15 +32,20 @@ public class newJunctionEvent extends Event {
 		}
 
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("new_junction")) {
+			if (!ini.getTag().equals("make_vehicle_faulty")) {
 				return null;
 			} else {
-				String ide;
 				int time;
+				int tiempoAveria;
+				String listaIds;
 				Map<String, String> sec = ini.getKeysMap();
 				time = Integer.parseInt(sec.get("time"));
-				ide = sec.get("id");
-				return new newJunctionEvent(time, ide);
+				tiempoAveria = Integer.parseInt(sec.get("duration"));
+				listaIds = sec.get("vehicles");
+
+				// falta cambiar ese string de ids por una lista de cochees.
+				return null;
+				// return new newJunctionEvent(time,ide);
 			}
 		}
 
