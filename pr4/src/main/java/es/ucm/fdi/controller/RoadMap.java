@@ -71,15 +71,4 @@ public class RoadMap {
 			report += v.generateReport();
 		return report;
 	}
-
-	/*
-	 * public Vehicle getVehicle(String ide) { for (Vehicle v : vehicles) { if
-	 * (v.getId().equals(ide)) return v; } return null; }
-	 * 
-	 * public Road getRoad(String ide) { for (Road r : roads) { if
-	 * (r.getId().equals(ide)) return r; } return null; }
-	 * 
-	 * public Junction getJunction(String ide) { for (Junction j : junctions) {
-	 * if (j.getId().equals(ide)) return j; } return null; }
-	 */
 }
