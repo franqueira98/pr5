@@ -24,7 +24,7 @@ public class MakeVehicleFaultyEvent extends Event {
 
 	public class Builder extends Event.Builder {
 		public Builder() {
-			super("MakeVehicleFaultyEventBuilder");
+			super("make_vehicle_faulty");
 		}
 
 		public String getTitle() {
@@ -45,7 +45,6 @@ public class MakeVehicleFaultyEvent extends Event {
 
 				// falta cambiar ese string de ids por una lista de cochees.
 				return null;
-				// return new newJunctionEvent(time,ide);
 			}
 		}
 

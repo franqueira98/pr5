@@ -26,7 +26,7 @@ public class newJunctionEvent extends Event {
 	public class Builder extends Event.Builder {
 
 		public Builder() {
-			super("newJunctionEventBuilder");
+			super("new_junction");
 		}
 
 		public String getTitle() {

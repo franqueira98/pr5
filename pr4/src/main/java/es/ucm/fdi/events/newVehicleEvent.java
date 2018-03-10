@@ -30,7 +30,7 @@ public class newVehicleEvent extends Event {
 	public class Builder extends Event.Builder {
 
 		public Builder() {
-			super("newVehicleEventBuilder");
+			super("new_vehicle");
 		}
 
 		public String getTitle() {

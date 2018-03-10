@@ -32,7 +32,7 @@ public class newRoadEvent extends Event {
 
 	public class Builder extends Event.Builder {
 		public Builder() {
-			super("newRoadEventBuilder");
+			super("new_road");
 		}
 
 		public Event parse(IniSection ini) {
