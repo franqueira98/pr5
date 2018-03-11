@@ -23,8 +23,9 @@ public class newVehicleEvent extends Event {
 	public void execute(RoadMap things) {
 		List<Junction> it = new ArrayList<>();
 		String[] junctions = itinerary.split(",");
-		for(String s : junctions) it.add(things.getJunction(s));
-		
+		for (String s : junctions)
+			it.add(things.getJunction(s));
+
 		Vehicle v = new Vehicle(maxSpeed, it, id);
 		v.avanza();
 		things.addVehicle(v);
@@ -36,15 +37,17 @@ public class newVehicleEvent extends Event {
 		public Builder() {
 			super("new_vehicle");
 		}
-		
+
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("new_vehicle")) return null;
+			if (!ini.getTag().equals("new_vehicle"))
+				return null;
 
 			Map<String, String> sec = ini.getKeysMap();
 			int time = Integer.parseInt(sec.get("time"));
 			String id = sec.get("id");
 			int maxSpeed = Integer.parseInt(sec.get("max_speed"));
 			String itinerary = sec.get("itinerary");
+
 			return new newVehicleEvent(time, id, maxSpeed, itinerary);
 		}
 	}

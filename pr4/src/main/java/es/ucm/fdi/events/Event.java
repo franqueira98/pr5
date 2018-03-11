@@ -5,13 +5,15 @@ import es.ucm.fdi.ini.IniSection;
 
 public abstract class Event {
 	protected int time;
-	
+
 	public Event(int time) {
 		this.time = time;
 	}
-	
-	public int getTime() {return time;}
-	
+
+	public int getTime() {
+		return time;
+	}
+
 	public abstract void execute(RoadMap things);
 
 	public static abstract class Builder {

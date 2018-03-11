@@ -26,13 +26,14 @@ public class newJunctionEvent extends Event {
 		}
 
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("new_junction")) return null;
-			
+			if (!ini.getTag().equals("new_junction"))
+				return null;
+
 			Map<String, String> sec = ini.getKeysMap();
 			int time = Integer.parseInt(sec.get("time"));
 			String id = sec.get("id");
+			
 			return new newJunctionEvent(time, id);
 		}
-
 	}
 }

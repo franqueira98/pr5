@@ -17,7 +17,7 @@ public class RoadMap {
 		this.vehicles = new ArrayList<>();
 		this.roads = new ArrayList<>();
 		this.junctions = new ArrayList<>();
-		this.map = new HashMap<>();;
+		this.map = new HashMap<>();
 	}
 
 	public Vehicle getVehicle(String id) {
@@ -43,8 +43,8 @@ public class RoadMap {
 	public List<Junction> getJunctions() {
 		return junctions;
 	}
-	
-	public List<SimObject> getJRV(){
+
+	public List<SimObject> getJRV() {
 		List<SimObject> list = new ArrayList<>();
 		list.addAll(junctions);
 		list.addAll(roads);
@@ -63,17 +63,17 @@ public class RoadMap {
 	}
 
 	public void addJunction(Junction j) {
-		map.put(j.getId(),j);
+		map.put(j.getId(), j);
 		junctions.add(j);
 	}
-	
+
 	public Ini generateReport(int time) {
 		Ini report = new Ini();
-		for (SimObject j : getJRV()){
-			Map<String,String> map = j.report(time);
+		for (SimObject j : getJRV()) {
+			Map<String, String> map = j.report(time);
 			IniSection section = new IniSection(map.get(""));
 			map.remove("");
-			map.forEach((k,v) -> section.setValue(k, v));
+			map.forEach((k, v) -> section.setValue(k, v));
 			report.addsection(section);
 		}
 		return report;

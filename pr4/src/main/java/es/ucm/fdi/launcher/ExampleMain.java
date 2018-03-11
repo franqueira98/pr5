@@ -18,7 +18,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import es.ucm.fdi.controller.Controller;
-import es.ucm.fdi.controller.TrafficSimulator;
 import es.ucm.fdi.ini.Ini;
 
 public class ExampleMain {

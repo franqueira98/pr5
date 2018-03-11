@@ -18,7 +18,7 @@ public class MakeVehicleFaultyEvent extends Event {
 	@Override
 	public void execute(RoadMap things) {
 		String[] arrayVehicles = vehicles.split(",");
-		for(String vehicle : arrayVehicles){
+		for (String vehicle : arrayVehicles) {
 			things.getVehicle(vehicle).setTiempoAveria(tiempoAveria);
 		}
 	}
@@ -29,7 +29,8 @@ public class MakeVehicleFaultyEvent extends Event {
 		}
 
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("make_vehicle_faulty")) return null;
+			if (!ini.getTag().equals("make_vehicle_faulty"))
+				return null;
 
 			Map<String, String> sec = ini.getKeysMap();
 			int time = Integer.parseInt(sec.get("time"));
@@ -38,6 +39,5 @@ public class MakeVehicleFaultyEvent extends Event {
 
 			return new MakeVehicleFaultyEvent(time, tiempoAveria, listaIds);
 		}
-
 	}
 }
