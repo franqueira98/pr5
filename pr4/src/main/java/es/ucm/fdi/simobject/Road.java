@@ -4,7 +4,7 @@ import java.util.Map;
 
 import es.ucm.fdi.util.MultiTreeMap;
 
-public class Road extends SimulationObject {
+public class Road extends SimObject {
 	private int longitud;
 	private int maxVel;
 	private Junction start;
@@ -84,9 +84,7 @@ public class Road extends SimulationObject {
 	protected void fillReportDetails(Map<String, String> out) {
 		StringBuilder meter = new StringBuilder();
 		for (Vehicle v : vehicles.innerValues()) {
-			// meter += v.getFillVehiculo() + " , ";
 			meter.append(v.getFillVehiculo() + " , ");
-
 		}
 		// meter = meter.substring(0, meter.length() - 3);
 		meter.delete(meter.length() - 3, meter.length() - 1);

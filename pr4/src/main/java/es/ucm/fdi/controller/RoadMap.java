@@ -2,6 +2,8 @@ package es.ucm.fdi.controller;
 
 import java.util.*;
 
+import es.ucm.fdi.ini.Ini;
+import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.*;
 
 public class RoadMap {
@@ -9,29 +11,25 @@ public class RoadMap {
 	private List<Road> roads;
 	private List<Junction> junctions;
 
-	private Map<String, Vehicle> mapVehicles;
-	private Map<String, Road> mapRoads;
-	private Map<String, Junction> mapJunctions;
+	private Map<String, SimObject> map;
 
 	public RoadMap() {
 		this.vehicles = new ArrayList<>();
 		this.roads = new ArrayList<>();
 		this.junctions = new ArrayList<>();
-		this.mapVehicles = new HashMap<>();
-		this.mapRoads = new HashMap<>();
-		this.mapJunctions = new HashMap<>();
+		this.map = new HashMap<>();;
 	}
 
 	public Vehicle getVehicle(String id) {
-		return mapVehicles.get(id);
+		return (Vehicle) map.get(id);
 	}
 
 	public Road getRoad(String id) {
-		return mapRoads.get(id);
+		return (Road) map.get(id);
 	}
 
 	public Junction getJunction(String id) {
-		return mapJunctions.get(id);
+		return (Junction) map.get(id);
 	}
 
 	public List<Vehicle> getVehicles() {
@@ -45,30 +43,39 @@ public class RoadMap {
 	public List<Junction> getJunctions() {
 		return junctions;
 	}
+	
+	public List<SimObject> getJRV(){
+		List<SimObject> list = new ArrayList<>();
+		list.addAll(junctions);
+		list.addAll(roads);
+		list.addAll(vehicles);
+		return list;
+	}
 
 	public void addVehicle(Vehicle v) {
-		mapVehicles.put(v.getId(), v);
+		map.put(v.getId(), v);
 		vehicles.add(v);
 	}
 
 	public void addRoad(Road r) {
-		mapRoads.put(r.getId(), r);
+		map.put(r.getId(), r);
 		roads.add(r);
 	}
 
 	public void addJunction(Junction j) {
-		mapJunctions.put(j.getId(),j);
+		map.put(j.getId(),j);
 		junctions.add(j);
 	}
-
-	public String generateReport() {
-		StringBuilder report = new StringBuilder();
-		for (Junction j : junctions)
-			report.append(j.generateReport());
-		for (Road r : roads)
-			report.append(r.generateReport());
-		for (Vehicle v : vehicles)
-			report.append(v.generateReport());
-		return report.toString();
+	
+	public Ini generateReport(int time) {
+		Ini report = new Ini();
+		for (SimObject j : getJRV()){
+			Map<String,String> map = j.report(time);
+			IniSection section = new IniSection(map.get(""));
+			map.remove("");
+			map.forEach((k,v) -> section.setValue(k, v));
+			report.addsection(section);
+		}
+		return report;
 	}
 }

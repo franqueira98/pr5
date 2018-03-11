@@ -17,17 +17,19 @@ public class Controller {
 
 	private TrafficSimulator simulation;
 	private InputStream in;
+	private OutputStream out;
 	private int ticks;
 
 	public Controller(InputStream in, OutputStream out, int ticks) {
 		this.in = in;
+		this.out = out;
 		this.ticks = ticks;
-		this.simulation = new TrafficSimulator(out);
+		this.simulation = new TrafficSimulator();
 	}
 
 	public void run() throws IOException {
 		loadEvents();
-		simulation.run(ticks);
+		simulation.run(ticks, out);
 	}
 
 	public void loadEvents() throws IOException {

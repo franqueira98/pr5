@@ -14,13 +14,11 @@ public class TrafficSimulator {
 	private RoadMap objects;
 	private MultiTreeMap<Integer,Event> events;
 	private int timeCounter;
-	private OutputStream out;
 	
-	public TrafficSimulator(OutputStream out) {
+	public TrafficSimulator() {
 		this.objects = new RoadMap();
 		this.events = new MultiTreeMap<>();
 		this.timeCounter = 0;
-		this.out = out;
 	}
 	
 	public void addEvent(Event e){
@@ -28,7 +26,7 @@ public class TrafficSimulator {
 		events.putValue(e.getTime(), e);
 	}
 	
-	public void run(int numSteps) throws IOException{
+	public void run(int numSteps, OutputStream out) throws IOException{
 		int timeLimit = timeCounter + numSteps - 1;
 		while(timeCounter <= timeLimit){
 			List<Event> nowEvents = events.get(timeCounter);
@@ -39,12 +37,7 @@ public class TrafficSimulator {
 			List<Junction> junctions = objects.getJunctions();
 			for(Junction j : junctions) j.avanza();
 			timeCounter++;
-			generateReport();
+			objects.generateReport(timeCounter).store(out);
 		}
-	}
-	
-	public void generateReport(){
-		Ini report = new Ini();
-		
 	}
 }

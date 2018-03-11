@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Junction extends SimulationObject {
+public class Junction extends SimObject {
 	private Map<Road, IncomingRoad> saberInc;
 	private List<IncomingRoad> semaforo;
 	private List<Road> salientes;
@@ -83,7 +83,6 @@ public class Junction extends SimulationObject {
 	}
 
 	protected String getReportHeader() {
-
 		return "junction_report";
 	}
 

@@ -3,7 +3,7 @@ package es.ucm.fdi.simobject;
 import java.util.List;
 import java.util.Map;
 
-public class Vehicle extends SimulationObject {
+public class Vehicle extends SimObject {
 	private int velMaxima;
 	private int velActual;
 	private int localizacion;
@@ -97,10 +97,11 @@ public class Vehicle extends SimulationObject {
 	void moverASiguienteCarretera(Road c) {
 		if (proxCruce == itinerario.size()) // creo que sobra.
 			haLlegado = true;
-		else{
-		proxCruce++;
-		actual = c;
-		localizacion = 0;}
+		else {
+			proxCruce++;
+			actual = c;
+			localizacion = 0;
+		}
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
