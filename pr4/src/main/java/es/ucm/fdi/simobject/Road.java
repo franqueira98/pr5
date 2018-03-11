@@ -87,7 +87,7 @@ public class Road extends SimObject {
 			meter.append(v.getFillVehiculo() + " , ");
 		}
 		// meter = meter.substring(0, meter.length() - 3);
-		meter.delete(meter.length() - 3, meter.length() - 1);
+		if(!vehicles.isEmpty())meter.delete(meter.length() - 3, meter.length() - 1);
 		out.put("state", meter.toString());
 		// falta por implementar
 	}

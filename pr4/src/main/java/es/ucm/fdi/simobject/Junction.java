@@ -25,8 +25,9 @@ public class Junction extends SimObject {
 		saberInc.get(c.getRoad()).cola.add(c);
 
 	}
-	public void primerCruce(Vehicle v){
-		Road r=saberSaliente.get(v.getProxCruce());
+
+	public void primerCruce(Vehicle v) {
+		Road r = saberSaliente.get(v.getProxCruce());
 		r.entraVehiculo(v);
 		v.moverASiguienteCarretera(r);
 	}
@@ -38,7 +39,8 @@ public class Junction extends SimObject {
 
 	public void insertEntrante(Road r) {
 		IncomingRoad s = new IncomingRoad(r.getId());
-		if(semaforo.isEmpty())s.semaforoVerde=true;
+		if (semaforo.isEmpty())
+			s.semaforoVerde = true;
 		saberInc.put(r, s);
 		semaforo.add(s);
 
@@ -46,28 +48,28 @@ public class Junction extends SimObject {
 
 	public void avanza() { // porque tendría puesto con el int lon?
 
-		if(!semaforo.isEmpty()){
-		Vehicle aux;
-		boolean a = true;
-		int i;
-		for (i = 0; i < semaforo.size() && a; i++) {
-			if (semaforo.get(i).semaforoVerde) {
-				if (!semaforo.get(i).cola.isEmpty()){
-				aux = semaforo.get(i).cola.getFirst();
-				Road r=saberSaliente.get(aux
-						.getProxCruce());
-				r.entraVehiculo(aux);
-				aux.moverASiguienteCarretera(r);
-				semaforo.get(i).cola.pop();// me dio fallo por poner pop;
+		if (!semaforo.isEmpty()) {
+			Vehicle aux;
+			boolean a = true;
+			int i;
+			for (i = 0; i < semaforo.size() && a; i++) {
+				if (semaforo.get(i).semaforoVerde) {
+					if (!semaforo.get(i).cola.isEmpty()) {
+						aux = semaforo.get(i).cola.getFirst();
+						Road r = saberSaliente.get(aux.getProxCruce());
+						r.entraVehiculo(aux);
+						aux.moverASiguienteCarretera(r);
+						semaforo.get(i).cola.pop();// me dio fallo por poner
+													// pop;
+					}
+					semaforo.get(i).semaforoVerde = false;
+
 				}
-				semaforo.get(i).semaforoVerde = false;
 
 			}
-
-		}
-		if (i == semaforo.size())
-			i = 0;
-		semaforo.get(i).semaforoVerde = true;
+			if (i == semaforo.size())
+				i = 0;
+			semaforo.get(i).semaforoVerde = true;
 		}
 	}
 
@@ -77,7 +79,7 @@ public class Junction extends SimObject {
 			reportJunct.append(semaforo.get(i).GeneraReport() + " , ");
 
 		}
-		reportJunct.delete(reportJunct.length() - 3, reportJunct.length() - 1);
+		if(semaforo.size()!=0)reportJunct.delete(reportJunct.length() - 3, reportJunct.length() - 1);
 
 		out.put("queues", reportJunct.toString());
 	}
@@ -97,34 +99,27 @@ public class Junction extends SimObject {
 			semaforoVerde = false;
 		}
 
-	
 		protected String GeneraReport() {
-			// String aux = "", aux2 = "";
 			StringBuilder a = new StringBuilder();
 			StringBuilder a1 = new StringBuilder();
-			for (int i = 0; i < cola.size(); i++) { // manera de hacer eficiente
-													// esto??
+			for (int i = 0; i < cola.size(); i++) {
 				a.insert(2, cola.getFirst().getId());
 				a.insert(2, ", ");
-				// aux2+=cola.getFirst().getId() +", ";
 				cola.push(cola.getFirst());
 				cola.pop();
 			}
-			a.delete(a.length() - 2, a.length() - 1);// no se si es -1 o
-														// -2
-			// aux2=aux2.substring(0, aux2.length()-2);
+			if(cola.size()!=0)a.delete(a.length() - 2, a.length() - 1);
+
 			a1.append("(");
 			a1.append(ide);
 			a1.append(", ");
 			if (semaforoVerde)
-				a1.append("green");
+				a1.append("green, ");
 			else
-				a1.append("red");
+				a1.append("red, ");
 			a1.append("[");
-			a1.append(a);// no se cual de las dos hay que utilizar.
-			a1.append("]");
-
-			// aux="("+ide+", "+"green"+"["+aux2+"]";
+			a1.append(a);
+			a1.append("])");
 
 			return a1.toString();
 
