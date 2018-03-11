@@ -32,9 +32,9 @@ public class Junction extends SimObject {
 		v.moverASiguienteCarretera(r);
 	}
 
-	public void insertSaliente(Junction c, Road r) {
+	public void insertSaliente(Road r) {
 		salientes.add(r);
-		saberSaliente.put(c, r);
+		saberSaliente.put(r.getFinal(), r);
 	}
 
 	public void insertEntrante(Road r) {

@@ -9,10 +9,11 @@ import es.ucm.fdi.simobject.Road;
 
 public class newRoadEvent extends Event {
 
-	String id;
-	int maxSpeed;
-	int length;
-	String src, dest;
+	private String id;
+	private int maxSpeed;
+	private int length;
+	private String src;
+	private String dest;
 
 	public newRoadEvent(int time, String id, int maxSpeed, int length,
 			String src, String dest) {
@@ -22,16 +23,14 @@ public class newRoadEvent extends Event {
 		this.length = length;
 		this.src = src;
 		this.dest = dest;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute(RoadMap things) {
-		Junction a, b;
-		a = things.getJunction(src);
-		b = things.getJunction(dest);
+		Junction a = things.getJunction(src);
+		Junction b = things.getJunction(dest);
 		Road r = new Road(id, length, maxSpeed, a, b);
-		a.insertSaliente(b,r);
+		a.insertSaliente(r);
 		b.insertEntrante(r);
 		things.addRoad(r);
 	}
@@ -42,23 +41,18 @@ public class newRoadEvent extends Event {
 		}
 
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("new_road")) {
-				return null;
-			} else {
-				String ide;
-				int time, maxSpeed, length;
-				Map<String, String> sec = ini.getKeysMap();
-				time = Integer.parseInt(sec.get("time"));
-				ide = sec.get("id");
-				maxSpeed = Integer.parseInt(sec.get("max_speed"));
-				String ideJunctionSurc, ideJunctionDest;
-				ideJunctionSurc = sec.get("src");
-				ideJunctionDest = sec.get("dest");
-				length = Integer.parseInt(sec.get("length"));
+			if (!ini.getTag().equals("new_road")) return null;
+			
+			Map<String, String> sec = ini.getKeysMap();
+			int time = Integer.parseInt(sec.get("time"));
+			String id = sec.get("id");
+			String ideJunctionSurc = sec.get("src");
+			String ideJunctionDest = sec.get("dest");
+			int maxSpeed = Integer.parseInt(sec.get("max_speed"));
+			int length = Integer.parseInt(sec.get("length"));
 
-				return new newRoadEvent(time, ide, maxSpeed, length,
-						ideJunctionSurc, ideJunctionDest);
-			}
+			return new newRoadEvent(time, id, maxSpeed, length,
+					ideJunctionSurc, ideJunctionDest);
 		}
 	}
 }

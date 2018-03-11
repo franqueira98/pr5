@@ -12,13 +12,11 @@ public class newJunctionEvent extends Event {
 	public newJunctionEvent(int time, String id) {
 		super(time);
 		this.id = id;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute(RoadMap things) {
 		things.addJunction(new Junction(id));
-
 	}
 
 	public static class Builder extends Event.Builder {
@@ -27,19 +25,13 @@ public class newJunctionEvent extends Event {
 			super("new_junction");
 		}
 
-		public String getTitle() {
-			return title;
-		}
-
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("new_junction")) {
-				return null;
-			} else {
-				Map<String, String> sec = ini.getKeysMap();
-				int time = Integer.parseInt(sec.get("time"));
-				String ide = sec.get("id");
-				return new newJunctionEvent(time, ide);
-			}
+			if (!ini.getTag().equals("new_junction")) return null;
+			
+			Map<String, String> sec = ini.getKeysMap();
+			int time = Integer.parseInt(sec.get("time"));
+			String id = sec.get("id");
+			return new newJunctionEvent(time, id);
 		}
 
 	}

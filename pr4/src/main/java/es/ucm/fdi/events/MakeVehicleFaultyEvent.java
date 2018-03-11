@@ -13,21 +13,14 @@ public class MakeVehicleFaultyEvent extends Event {
 		super(time);
 		this.tiempoAveria = tiempoAveria;
 		this.vehicles = vehicles;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute(RoadMap things) {
-		String idVehicle = "";
-		for (int i = 0; i < vehicles.length(); i++) {
-			if (vehicles.charAt(i) == ',') {
-				things.getVehicle(idVehicle).setTiempoAveria(tiempoAveria);
-				idVehicle = "";
-			} else
-				idVehicle += vehicles.charAt(i);
-
+		String[] arrayVehicles = vehicles.split(",");
+		for(String vehicle : arrayVehicles){
+			things.getVehicle(vehicle).setTiempoAveria(tiempoAveria);
 		}
-		things.getVehicle(idVehicle).setTiempoAveria(tiempoAveria);
 	}
 
 	public static class Builder extends Event.Builder {
@@ -35,24 +28,15 @@ public class MakeVehicleFaultyEvent extends Event {
 			super("make_vehicle_faulty");
 		}
 
-		public String getTitle() {
-			return title;
-		}
-
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("make_vehicle_faulty")) {
-				return null;
-			} else {
-				int time;
-				int tiempoAveria;
-				String listaIds;
-				Map<String, String> sec = ini.getKeysMap();
-				time = Integer.parseInt(sec.get("time"));
-				tiempoAveria = Integer.parseInt(sec.get("duration"));
-				listaIds = sec.get("vehicles");
+			if (!ini.getTag().equals("make_vehicle_faulty")) return null;
 
-				return new MakeVehicleFaultyEvent(time, tiempoAveria, listaIds);
-			}
+			Map<String, String> sec = ini.getKeysMap();
+			int time = Integer.parseInt(sec.get("time"));
+			int tiempoAveria = Integer.parseInt(sec.get("duration"));
+			String listaIds = sec.get("vehicles");
+
+			return new MakeVehicleFaultyEvent(time, tiempoAveria, listaIds);
 		}
 
 	}
