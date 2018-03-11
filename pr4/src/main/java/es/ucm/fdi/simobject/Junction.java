@@ -20,10 +20,8 @@ public class Junction extends SimObject {
 		saberSaliente = new HashMap<>();
 	}
 
-	// hay que ver como gestionamos la creación de Roads e Incoming Roads.
 	public void entraVehiculo(Vehicle c) {
 		saberInc.get(c.getRoad()).cola.add(c);
-
 	}
 
 	public void primerCruce(Vehicle v) {
@@ -46,26 +44,22 @@ public class Junction extends SimObject {
 
 	}
 
-	public void avanza() { // porque tendría puesto con el int lon?
-
+	public void avanza() {
 		if (!semaforo.isEmpty()) {
-			Vehicle aux;
-			boolean a = true;
+			boolean found = false;
 			int i;
-			for (i = 0; i < semaforo.size() && a; i++) {
+			for (i = 0; i < semaforo.size() && !found; i++) {
 				if (semaforo.get(i).semaforoVerde) {
 					if (!semaforo.get(i).cola.isEmpty()) {
-						aux = semaforo.get(i).cola.getFirst();
-						Road r = saberSaliente.get(aux.getProxCruce());
-						r.entraVehiculo(aux);
-						aux.moverASiguienteCarretera(r);
-						semaforo.get(i).cola.pop();// me dio fallo por poner
-													// pop;
+						Vehicle aux = semaforo.get(i).cola.getFirst();
+						Road saliente = saberSaliente.get(aux.getProxCruce());
+						saliente.entraVehiculo(aux);
+						aux.moverASiguienteCarretera(saliente);
+						semaforo.get(i).cola.pop();
 					}
 					semaforo.get(i).semaforoVerde = false;
-
+					found = true;
 				}
-
 			}
 			if (i == semaforo.size())
 				i = 0;
@@ -75,11 +69,10 @@ public class Junction extends SimObject {
 
 	protected void fillReportDetails(Map<String, String> out) {
 		StringBuilder reportJunct = new StringBuilder();
-		for (int i = 0; i < semaforo.size(); i++) {
-			reportJunct.append(semaforo.get(i).GeneraReport() + " , ");
+		semaforo.forEach(r -> reportJunct.append(r.GeneraReport() + " , "));
 
-		}
-		if(semaforo.size()!=0)reportJunct.delete(reportJunct.length() - 3, reportJunct.length() - 1);
+		if (semaforo.size() != 0)
+			reportJunct.delete(reportJunct.length() - 3, reportJunct.length());
 
 		out.put("queues", reportJunct.toString());
 	}
@@ -90,40 +83,31 @@ public class Junction extends SimObject {
 
 	private class IncomingRoad {
 		private ArrayDeque<Vehicle> cola;
-		private String ide;
+		private String id;
 		private boolean semaforoVerde;
 
 		public IncomingRoad(String r) {
 			cola = new ArrayDeque<>();
-			ide = r;
+			id = r;
 			semaforoVerde = false;
 		}
 
 		protected String GeneraReport() {
-			StringBuilder a = new StringBuilder();
-			StringBuilder a1 = new StringBuilder();
-			for (int i = 0; i < cola.size(); i++) {
-				a.insert(2, cola.getFirst().getId());
-				a.insert(2, ", ");
-				cola.push(cola.getFirst());
-				cola.pop();
-			}
-			if(cola.size()!=0)a.delete(a.length() - 2, a.length() - 1);
+			StringBuilder vehiculosCola = new StringBuilder();
+			cola.forEach(v -> vehiculosCola.append(v.getId() + ", "));
+			if (cola.size() != 0)
+				vehiculosCola.delete(vehiculosCola.length() - 2,
+						vehiculosCola.length());
 
-			a1.append("(");
-			a1.append(ide);
-			a1.append(", ");
+			StringBuilder r = new StringBuilder();
+			r.append("(" + id + ", ");
 			if (semaforoVerde)
-				a1.append("green, ");
+				r.append("green, ");
 			else
-				a1.append("red, ");
-			a1.append("[");
-			a1.append(a);
-			a1.append("])");
+				r.append("red, ");
+			r.append("[" + vehiculosCola + "])");
 
-			return a1.toString();
-
+			return r.toString();
 		}
-
 	}
 }

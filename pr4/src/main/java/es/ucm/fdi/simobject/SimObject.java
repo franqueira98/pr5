@@ -1,6 +1,6 @@
 package es.ucm.fdi.simobject;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class SimObject {
@@ -15,7 +15,7 @@ public abstract class SimObject {
 	}
 
 	public Map<String, String> report(int time) {
-		Map<String, String> out = new HashMap<>();
+		Map<String, String> out = new LinkedHashMap<>();
 		out.put("", getReportHeader());
 		out.put("id", id);
 		out.put("time", "" + time);

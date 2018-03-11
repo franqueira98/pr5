@@ -68,8 +68,6 @@ public class Road extends SimObject {
 				nuevos.putValue(v.getLocation(), v);
 		}
 		vehicles = nuevos;
-		// se encarga el recolector de basura de borrar el otro.
-
 	}
 
 	public void entraVehiculo(Vehicle ent) {
@@ -86,8 +84,8 @@ public class Road extends SimObject {
 		for (Vehicle v : vehicles.innerValues()) {
 			meter.append(v.getFillVehiculo() + " , ");
 		}
-		// meter = meter.substring(0, meter.length() - 3);
-		if(!vehicles.isEmpty())meter.delete(meter.length() - 3, meter.length() - 1);
+		
+		if(!vehicles.isEmpty()) meter.delete(meter.length() - 3, meter.length());
 		out.put("state", meter.toString());
 		// falta por implementar
 	}

@@ -95,7 +95,7 @@ public class Vehicle extends SimObject {
 	}
 
 	void moverASiguienteCarretera(Road c) {
-		if (proxCruce == itinerario.size()) // creo que sobra.
+		if (proxCruce == itinerario.size())
 			haLlegado = true;
 		else {
 			proxCruce++;
