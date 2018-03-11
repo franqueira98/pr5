@@ -1,7 +1,5 @@
 package es.ucm.fdi.events;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
@@ -37,11 +35,9 @@ public class newJunctionEvent extends Event {
 			if (!ini.getTag().equals("new_junction")) {
 				return null;
 			} else {
-				String ide;
-				int time;
 				Map<String, String> sec = ini.getKeysMap();
-				time = Integer.parseInt(sec.get("time"));
-				ide = sec.get("id");
+				int time = Integer.parseInt(sec.get("time"));
+				String ide = sec.get("id");
 				return new newJunctionEvent(time, ide);
 			}
 		}

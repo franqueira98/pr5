@@ -95,6 +95,6 @@ public class Road extends SimulationObject {
 	}
 
 	protected String getReportHeader() {
-		return "[road_report]";
+		return "road_report";
 	}
 }

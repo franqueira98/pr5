@@ -62,7 +62,6 @@ public class RoadMap {
 	}
 
 	public String generateReport() {
-	
 		StringBuilder report = new StringBuilder();
 		for (Junction j : junctions)
 			report.append(j.generateReport());

@@ -158,8 +158,7 @@ public class ExampleMain {
 		if(_outFile != null) out = new FileOutputStream(_outFile);
 		else out = System.out;
 		if(_timeLimit == null) _timeLimit = _timeLimitDefaultValue;
-		Controller control = new Controller(new TrafficSimulator(out), new FileInputStream(_inFile), out, _timeLimit);
-		control.loadEvents();
+		Controller control = new Controller(new FileInputStream(_inFile), out, _timeLimit);
 		control.run();
 	}
 

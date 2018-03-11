@@ -1,11 +1,9 @@
 package es.ucm.fdi.events;
 
-import java.util.List;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
 import es.ucm.fdi.ini.IniSection;
-import es.ucm.fdi.simobject.Vehicle;
 
 public class MakeVehicleFaultyEvent extends Event {
 	int tiempoAveria;

@@ -3,7 +3,6 @@ package es.ucm.fdi.simobject;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,7 +84,7 @@ public class Junction extends SimulationObject {
 
 	protected String getReportHeader() {
 
-		return "[junction_report]";
+		return "junction_report";
 	}
 
 	private class IncomingRoad {

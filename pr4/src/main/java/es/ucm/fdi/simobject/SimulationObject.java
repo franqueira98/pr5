@@ -1,9 +1,6 @@
 package es.ucm.fdi.simobject;
 
-import java.io.OutputStream;
 import java.util.Map;
-
-import es.ucm.fdi.ini.IniSection;
 
 public abstract class SimulationObject {
 	protected String id;

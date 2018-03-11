@@ -2,10 +2,10 @@ package es.ucm.fdi.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Writer;
 import java.util.*;
 
 import es.ucm.fdi.events.Event;
+import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.simobject.Junction;
 import es.ucm.fdi.simobject.Road;
 import es.ucm.fdi.util.MultiTreeMap;
@@ -39,13 +39,12 @@ public class TrafficSimulator {
 			List<Junction> junctions = objects.getJunctions();
 			for(Junction j : junctions) j.avanza();
 			timeCounter++;
-			//algo mas en el report?
-			out.write(objects.generateReport().getBytes());
+			generateReport();
 		}
 	}
 	
-	public void reset(){
-		//Hace algo?
+	public void generateReport(){
+		Ini report = new Ini();
+		
 	}
-	
 }

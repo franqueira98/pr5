@@ -10,29 +10,24 @@ import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.ini.IniSection;
 
 public class Controller {
-	private static Event.Builder[] avaliableEvents = { new newVehicleEvent.Builder(),
-		new newRoadEvent.Builder(), new newJunctionEvent.Builder(), // se cambia el nombre sin problema luego.
-		new MakeVehicleFaultyEvent.Builder() };
+	private static Event.Builder[] avaliableEvents = {
+			new newVehicleEvent.Builder(), new newRoadEvent.Builder(),
+			new newJunctionEvent.Builder(),
+			new MakeVehicleFaultyEvent.Builder() };
 
 	private TrafficSimulator simulation;
 	private InputStream in;
-	private OutputStream out;
 	private int ticks;
 
-	public Controller(TrafficSimulator simulation, InputStream in,
-			OutputStream out, int ticks) {
-		this.simulation = simulation;
+	public Controller(InputStream in, OutputStream out, int ticks) {
 		this.in = in;
-		this.out = out;
 		this.ticks = ticks;
+		this.simulation = new TrafficSimulator(out);
 	}
 
 	public void run() throws IOException {
+		loadEvents();
 		simulation.run(ticks);
-	}
-
-	public void reset() {
-		// No se si sirve de algo
 	}
 
 	public void loadEvents() throws IOException {
@@ -48,8 +43,8 @@ public class Controller {
 				}
 			}
 
-			if(!found) throw new IllegalArgumentException();
+			if (!found)
+				throw new IllegalArgumentException();
 		}
 	}
-	
 }

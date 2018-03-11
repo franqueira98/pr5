@@ -1,19 +1,17 @@
 package es.ucm.fdi.simobject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Vehicle extends SimulationObject {
-	private int localizacion;
 	private int velMaxima;
 	private int velActual;
-	private int tiempoAveria;
-	private List<Junction> itinerario; // no sería más comodo llevar
-										// carreteras?
-	private int kilometrage;// creo que también hace falta
-	private Road actual;
+	private int localizacion;
+	private List<Junction> itinerario;
 	private int proxCruce;
+	private Road actual;
+	private int tiempoAveria;
+	private int kilometrage;
 	private boolean haLlegado;
 
 	public Vehicle(int velM, List<Junction> cruc, String ide) {
@@ -58,7 +56,6 @@ public class Vehicle extends SimulationObject {
 			velActual = velMaxima;
 		else
 			velActual = vel;
-		//velActual = 0;
 	}
 
 	public int getVelocidadActual() {
@@ -125,6 +122,6 @@ public class Vehicle extends SimulationObject {
 	}
 
 	protected String getReportHeader() {
-		return "[vehicle_report]";
+		return "vehicle_report";
 	}
 }
