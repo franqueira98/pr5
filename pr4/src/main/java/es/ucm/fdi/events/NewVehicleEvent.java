@@ -5,6 +5,7 @@ import es.ucm.fdi.simobject.*;
 import java.util.*;
 
 import es.ucm.fdi.controller.RoadMap;
+import es.ucm.fdi.exceptions.SimulatorError;
 import es.ucm.fdi.ini.IniSection;
 
 public class NewVehicleEvent extends Event {
@@ -21,6 +22,10 @@ public class NewVehicleEvent extends Event {
 
 	@Override
 	public void execute(RoadMap things) {
+		Vehicle saved = things.getVehicle(id);
+		if (saved != null)
+			throw new SimulatorError("Id repeated: " + id);
+		
 		List<Junction> it = new ArrayList<>();
 		String[] junctions = itinerary.split(",");
 		if(junctions.length<2) throw new IllegalArgumentException();

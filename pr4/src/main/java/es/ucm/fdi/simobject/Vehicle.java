@@ -92,7 +92,7 @@ public class Vehicle extends SimObject {
 		proxCruce++;
 		actual = r;
 		localizacion = 0;
-		velActual = 0; //esto me lo dijo él
+		velActual = 0;
 	}
 	
 	void arrived(){

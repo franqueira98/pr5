@@ -3,6 +3,7 @@ package es.ucm.fdi.events;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
+import es.ucm.fdi.exceptions.SimulatorError;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.Junction;
 
@@ -16,6 +17,9 @@ public class NewJunctionEvent extends Event {
 
 	@Override
 	public void execute(RoadMap things) {
+		Junction saved = things.getJunction(id);
+		if (saved != null)
+			throw new SimulatorError("Id repeated: " + id);
 		things.addJunction(new Junction(id));
 	}
 
@@ -34,7 +38,7 @@ public class NewJunctionEvent extends Event {
 			String id = sec.get("id");
 			if (!isValidId(id))
 				throw new IllegalArgumentException();
-			
+
 			return new NewJunctionEvent(time, id);
 		}
 	}
