@@ -6,10 +6,10 @@ import java.util.Map;
 public class Vehicle extends SimObject {
 	private int velMaxima;
 	private int velActual;
+	private Road actual;
 	private int localizacion;
 	private List<Junction> itinerario;
 	private int proxCruce;
-	private Road actual;
 	private int tiempoAveria;
 	private int kilometrage;
 	private boolean haLlegado;
@@ -78,7 +78,7 @@ public class Vehicle extends SimObject {
 				if (proxCruce == itinerario.size())
 					haLlegado = true;
 				else
-					actual.getFinal().entraVehiculo(this);
+					actual.getFinal().newVehicle(this);
 				actual.saleVehiculo(this); // esta la usamos si queremos que
 											// lo elimine de la carretera
 			} else {

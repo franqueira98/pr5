@@ -35,8 +35,8 @@ public class NewRoadEvent extends Event {
 		Junction a = things.getJunction(src);
 		Junction b = things.getJunction(dest);
 		Road r = new Road(id, length, maxSpeed, a, b);
-		a.insertSaliente(r);
-		b.insertEntrante(r);
+		a.newOutgoing(r);
+		b.newIncoming(r);
 		things.addRoad(r);
 	}
 

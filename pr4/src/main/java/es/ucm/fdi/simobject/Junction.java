@@ -10,7 +10,6 @@ public class Junction extends SimObject {
 	private Map<Road, IncomingRoad> saberInc;
 	private List<IncomingRoad> entrantes;
 	private int semaforo;
-	private List<Road> salientes;
 	private Map<Junction, Road> saberSaliente;
 
 	public Junction(String id) {
@@ -18,20 +17,18 @@ public class Junction extends SimObject {
 		saberInc = new HashMap<>();
 		entrantes = new ArrayList<>();
 		semaforo = 0;
-		salientes = new ArrayList<>();
 		saberSaliente = new HashMap<>();
 	}
 
-	public void entraVehiculo(Vehicle c) {
+	public void newVehicle(Vehicle c) {
 		saberInc.get(c.getRoad()).cola.add(c);
 	}
 
-	public void insertSaliente(Road r) {
-		salientes.add(r);
+	public void newOutgoing(Road r) {
 		saberSaliente.put(r.getFinal(), r);
 	}
 
-	public void insertEntrante(Road r) {
+	public void newIncoming(Road r) {
 		IncomingRoad ir = new IncomingRoad(r.getId());
 		if (entrantes.isEmpty())
 			ir.semaforoVerde = true;
