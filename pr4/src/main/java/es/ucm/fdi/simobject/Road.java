@@ -35,7 +35,7 @@ public class Road extends SimObject {
 
 	public void newVehicle(Vehicle v) {
 		vehicles.putValue(0, v);
-		v.newRoad(this);
+		v.changeRoad(this);
 	}
 
 	public void saleVehiculo(Vehicle v) {

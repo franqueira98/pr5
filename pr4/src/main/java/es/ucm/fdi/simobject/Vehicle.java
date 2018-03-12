@@ -22,7 +22,7 @@ public class Vehicle extends SimObject {
 		tiempoAveria = 0;
 		itinerario = cruc;
 		kilometrage = 0;
-		proxCruce = 0;
+		proxCruce = 1;
 		haLlegado = false;
 	}
 
@@ -72,15 +72,9 @@ public class Vehicle extends SimObject {
 			if (localizacion + velActual >= actual.getLongitud()) {
 				kilometrage += actual.getLongitud() - localizacion;
 				localizacion = actual.getLongitud();
-				velActual = 0; // hay que hacer una comprobacion si ya se
-								// llego
-								// al final
-				if (proxCruce == itinerario.size())
-					haLlegado = true;
-				else
-					actual.getFinal().newVehicle(this);
-				actual.saleVehiculo(this); // esta la usamos si queremos que
-											// lo elimine de la carretera
+				velActual = 0;
+				
+				actual.getFinal().newVehicle(this);
 			} else {
 				kilometrage += velActual;
 				localizacion += velActual;
@@ -88,7 +82,7 @@ public class Vehicle extends SimObject {
 		}
 	}
 
-	void newRoad(Road r) {
+	void changeRoad(Road r) {
 		proxCruce++;
 		actual = r;
 		localizacion = 0;

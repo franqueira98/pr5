@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
  * that is, newer values with the same key will be stored after any other values
  * with the same key.
  */
+@SuppressWarnings("serial")
 public class MultiTreeMap<K, V> extends TreeMap<K, ArrayList<V>> {
 
     public MultiTreeMap() {}
@@ -42,7 +43,12 @@ public class MultiTreeMap<K, V> extends TreeMap<K, ArrayList<V>> {
         if ( ! containsKey(key)) {
             return false;
         }
-        return get(key).remove(value);
+        ArrayList<V> bucket = get(key);
+        boolean removed = bucket.remove(value);
+        if(bucket.isEmpty()){
+        	remove(key);
+        }
+        return removed;
     }
 
     /**
