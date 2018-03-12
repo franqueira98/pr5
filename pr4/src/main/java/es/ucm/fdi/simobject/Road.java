@@ -82,7 +82,6 @@ public class Road extends SimObject {
 		if (!vehicles.isEmpty())
 			meter.delete(meter.length() - 1, meter.length());
 		out.put("state", meter.toString());
-		// falta por implementar
 	}
 
 	protected String getReportHeader() {
