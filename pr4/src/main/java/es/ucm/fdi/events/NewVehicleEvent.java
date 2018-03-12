@@ -23,13 +23,13 @@ public class NewVehicleEvent extends Event {
 	public void execute(RoadMap things) {
 		List<Junction> it = new ArrayList<>();
 		String[] junctions = itinerary.split(",");
+		if(junctions.length<2) throw new IllegalArgumentException();
 		for (String s : junctions)
 			it.add(things.getJunction(s));
 
 		Vehicle v = new Vehicle(maxSpeed, it, id);
-		v.avanza();
 		things.addVehicle(v);
-
+		v.getProxCruce().moveToNextRoad(v);
 	}
 
 	public static class Builder extends Event.Builder {

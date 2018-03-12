@@ -43,13 +43,13 @@ public class TrafficSimulator {
 			for (Junction j : junctions)
 				j.avanza();
 			timeCounter++;
-			objects.generateReport(timeCounter).store(out);
+			generateReport(timeCounter).store(out);
 		}
 	}
 	
 	public Ini generateReport(int time) {
 		Ini report = new Ini();
-		for (SimObject j : getJRV()) {
+		for (SimObject j : objects.getJRV()) {
 			Map<String, String> map = j.report(time);
 			IniSection section = new IniSection(map.get(""));
 			map.remove("");

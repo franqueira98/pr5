@@ -33,6 +33,15 @@ public class Road extends SimObject {
 		return longitud;
 	}
 
+	public void newVehicle(Vehicle v) {
+		vehicles.putValue(0, v);
+		v.newRoad(this);
+	}
+
+	public void saleVehiculo(Vehicle v) {
+		vehicles.removeValue(longitud, v);
+	}
+
 	public int calcularVelBase() {
 		long n = vehicles.sizeOfValues();
 		if (n < 1)
@@ -66,15 +75,6 @@ public class Road extends SimObject {
 				nuevos.putValue(v.getLocation(), v);
 		}
 		vehicles = nuevos;
-	}
-
-	public void entraVehiculo(Vehicle ent) {
-		vehicles.putValue(0, ent);
-
-	}
-
-	public void saleVehiculo(Vehicle ent) {
-		vehicles.removeValue(longitud, ent);
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {

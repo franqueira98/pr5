@@ -26,34 +26,36 @@ public class Junction extends SimObject {
 		saberInc.get(c.getRoad()).cola.add(c);
 	}
 
-	public void primerCruce(Vehicle v) {
-		Road r = saberSaliente.get(v.getProxCruce());
-		r.entraVehiculo(v);
-		v.moverASiguienteCarretera(r);
-	}
-
 	public void insertSaliente(Road r) {
 		salientes.add(r);
 		saberSaliente.put(r.getFinal(), r);
 	}
 
 	public void insertEntrante(Road r) {
-		IncomingRoad s = new IncomingRoad(r.getId());
+		IncomingRoad ir = new IncomingRoad(r.getId());
 		if (entrantes.isEmpty())
-			s.semaforoVerde = true;
-		saberInc.put(r, s);
-		entrantes.add(s);
+			ir.semaforoVerde = true;
+		saberInc.put(r, ir);
+		entrantes.add(ir);
+	}
 
+	public void moveToNextRoad(Vehicle v) {
+		Junction nextJunction = v.getProxCruce();
+		if (nextJunction != null) {
+			Road r = saberSaliente.get(nextJunction);
+			r.newVehicle(v);
+		} else
+			v.arrived();
 	}
 
 	public void avanza() {
 		if (!entrantes.isEmpty()) {
-			if (!entrantes.get(semaforo).cola.isEmpty()) {
-				Vehicle vSaliente = entrantes.get(semaforo).cola.getFirst();
-				Road rSaliente = saberSaliente.get(vSaliente.getProxCruce());
-				rSaliente.entraVehiculo(vSaliente);
-				vSaliente.moverASiguienteCarretera(rSaliente);
-				entrantes.get(semaforo).cola.pop();
+			IncomingRoad roadGreen = entrantes.get(semaforo);
+			if (!roadGreen.cola.isEmpty()) {
+				Vehicle lucky = roadGreen.cola.getFirst();
+				lucky.getRoad().saleVehiculo(lucky);
+				roadGreen.cola.pop();
+				moveToNextRoad(lucky);
 			}
 			entrantes.get(semaforo).semaforoVerde = false;
 			semaforo++;

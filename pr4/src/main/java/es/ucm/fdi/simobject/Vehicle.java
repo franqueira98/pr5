@@ -22,7 +22,7 @@ public class Vehicle extends SimObject {
 		tiempoAveria = 0;
 		itinerario = cruc;
 		kilometrage = 0;
-		proxCruce = 1;
+		proxCruce = 0;
 		haLlegado = false;
 	}
 
@@ -36,11 +36,14 @@ public class Vehicle extends SimObject {
 
 	public void setTiempoAveria(int n) {
 		tiempoAveria += n;
-		velActual=0;
+		velActual = 0;
 	}
 
 	public Junction getProxCruce() {
-		return itinerario.get(proxCruce);
+		if (proxCruce != itinerario.size())
+			return itinerario.get(proxCruce);
+		else
+			return null;
 	}
 
 	public Road getRoad() {
@@ -60,48 +63,40 @@ public class Vehicle extends SimObject {
 
 	public int getVelocidadActual() {
 		return velActual;
-
-	}
-
-	public Junction nextJunction() {
-		return itinerario.get(proxCruce);
 	}
 
 	public void avanza() {
-		if (proxCruce == 1) {// acabas de empezar
-			itinerario.get(0).primerCruce(this);
+		if (tiempoAveria > 0) {
+			tiempoAveria--;
 		} else {
-			if (tiempoAveria > 0) {
-				tiempoAveria--;
-			} else if (!haLlegado) {
-				if (localizacion + velActual >= actual.getLongitud()) {
-					kilometrage += actual.getLongitud() - localizacion;
-					localizacion = actual.getLongitud();
-					velActual = 0; // hay que hacer una comprobacion si ya se
-									// llego
-									// al final
-					if (proxCruce == itinerario.size())
-						haLlegado = true;
-					else
-						actual.getFinal().entraVehiculo(this);
-					actual.saleVehiculo(this); // esta la usamos si queremos que
-												// lo elimine de la carretera
-				} else {
-					kilometrage += velActual;
-					localizacion += velActual;
-				}
+			if (localizacion + velActual >= actual.getLongitud()) {
+				kilometrage += actual.getLongitud() - localizacion;
+				localizacion = actual.getLongitud();
+				velActual = 0; // hay que hacer una comprobacion si ya se
+								// llego
+								// al final
+				if (proxCruce == itinerario.size())
+					haLlegado = true;
+				else
+					actual.getFinal().entraVehiculo(this);
+				actual.saleVehiculo(this); // esta la usamos si queremos que
+											// lo elimine de la carretera
+			} else {
+				kilometrage += velActual;
+				localizacion += velActual;
 			}
 		}
 	}
 
-	void moverASiguienteCarretera(Road c) {
-		if (proxCruce == itinerario.size())
-			haLlegado = true;
-		else {
-			proxCruce++;
-			actual = c;
-			localizacion = 0;
-		}
+	void newRoad(Road r) {
+		proxCruce++;
+		actual = r;
+		localizacion = 0;
+		velActual = 0; //esto me lo dijo él
+	}
+	
+	void arrived(){
+		haLlegado = true;
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
@@ -115,8 +110,6 @@ public class Vehicle extends SimObject {
 			out.put("location", "arrived");
 	}
 
-	// metodo auxiliar para que cada coche escriba la última linea, util para el
-	// de road.
 	protected String getFillVehiculo() {
 		return ("(" + id + ", " + localizacion + ")");
 
