@@ -11,7 +11,6 @@ public class Road extends SimObject {
 	private Junction end;
 	private MultiTreeMap<Integer, Vehicle> vehicles;
 
-	// necesita equals y hashcode
 	public Road(String ide, int lon, int maxv, Junction princ, Junction fin) {
 		super(ide);
 		longitud = lon;
@@ -38,7 +37,7 @@ public class Road extends SimObject {
 		v.changeRoad(this);
 	}
 
-	public void saleVehiculo(Vehicle v) {
+	public void removeVehicle(Vehicle v) {
 		vehicles.removeValue(longitud, v);
 	}
 
@@ -48,7 +47,7 @@ public class Road extends SimObject {
 			n = 1;
 		if (maxVel < (maxVel / n))
 			return maxVel;
-		return (maxVel / (int) n); // dudo que lleguemos a tener tanto coche
+		return (maxVel / (int) n);
 	}
 
 	public void avanza() {
@@ -58,21 +57,18 @@ public class Road extends SimObject {
 		int factorReduccion = 1;
 		int local = -1;
 		for (Vehicle v : vehicles.innerValues()) {
-			// manera óptima de saber si cuando conseguí el factor de Reduccion
-			// tenia la misma localizacion que el de ahora?
 			if (factorReduccion == 1 && local == -1) {
 				if (v.getTiempoAveria() != 0) {
 					local = v.getLocation();
 				}
-			} else if (local == v.getLocation()) {
+			} else if (local != v.getLocation()) {
 				factorReduccion = 2;
-				local = -1; // para que no entre en este if siempre.
+				local = -1;
 			}
 			if (v.getTiempoAveria() == 0)
 				v.setVelocidadActual(velocidadBase / factorReduccion);
 			v.avanza();
-			if (v.getLocation() != longitud)
-				nuevos.putValue(v.getLocation(), v);
+			nuevos.putValue(v.getLocation(), v);
 		}
 		vehicles = nuevos;
 	}
@@ -80,10 +76,11 @@ public class Road extends SimObject {
 	protected void fillReportDetails(Map<String, String> out) {
 		StringBuilder meter = new StringBuilder();
 		for (Vehicle v : vehicles.innerValues()) {
-			meter.append(v.getFillVehiculo() + " , ");
+			meter.append(v.getFillVehiculo() + ",");
 		}
 		
-		if(!vehicles.isEmpty()) meter.delete(meter.length() - 3, meter.length());
+		if (!vehicles.isEmpty())
+			meter.delete(meter.length() - 1, meter.length());
 		out.put("state", meter.toString());
 		// falta por implementar
 	}

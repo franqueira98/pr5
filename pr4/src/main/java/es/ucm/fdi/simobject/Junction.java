@@ -50,7 +50,7 @@ public class Junction extends SimObject {
 			IncomingRoad roadGreen = entrantes.get(semaforo);
 			if (!roadGreen.cola.isEmpty()) {
 				Vehicle lucky = roadGreen.cola.getFirst();
-				lucky.getRoad().saleVehiculo(lucky);
+				lucky.getRoad().removeVehicle(lucky);
 				roadGreen.cola.pop();
 				moveToNextRoad(lucky);
 			}
@@ -64,10 +64,10 @@ public class Junction extends SimObject {
 
 	protected void fillReportDetails(Map<String, String> out) {
 		StringBuilder reportJunct = new StringBuilder();
-		entrantes.forEach(r -> reportJunct.append(r.GeneraReport() + " , "));
+		entrantes.forEach(r -> reportJunct.append(r.GeneraReport() + ", "));
 
 		if (entrantes.size() != 0)
-			reportJunct.delete(reportJunct.length() - 3, reportJunct.length());
+			reportJunct.delete(reportJunct.length() - 2, reportJunct.length());
 
 		out.put("queues", reportJunct.toString());
 	}
@@ -89,9 +89,9 @@ public class Junction extends SimObject {
 
 		protected String GeneraReport() {
 			StringBuilder vehiculosCola = new StringBuilder();
-			cola.forEach(v -> vehiculosCola.append(v.getId() + ", "));
+			cola.forEach(v -> vehiculosCola.append(v.getId() + ","));
 			if (cola.size() != 0)
-				vehiculosCola.delete(vehiculosCola.length() - 2,
+				vehiculosCola.delete(vehiculosCola.length() - 1,
 						vehiculosCola.length());
 
 			StringBuilder r = new StringBuilder();
