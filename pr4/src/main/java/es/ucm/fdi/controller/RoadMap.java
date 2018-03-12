@@ -2,8 +2,6 @@ package es.ucm.fdi.controller;
 
 import java.util.*;
 
-import es.ucm.fdi.ini.Ini;
-import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.*;
 
 public class RoadMap {
@@ -21,15 +19,21 @@ public class RoadMap {
 	}
 
 	public Vehicle getVehicle(String id) {
-		return (Vehicle) map.get(id);
+		SimObject obj = map.get(id);
+		if(obj instanceof Vehicle) return (Vehicle) obj;
+		else return null;
 	}
 
 	public Road getRoad(String id) {
-		return (Road) map.get(id);
+		SimObject obj = map.get(id);
+		if(obj instanceof Road) return (Road) obj;
+		else return null;
 	}
 
 	public Junction getJunction(String id) {
-		return (Junction) map.get(id);
+		SimObject obj = map.get(id);
+		if(obj instanceof Junction) return (Junction) obj;
+		else return null;
 	}
 
 	public List<Vehicle> getVehicles() {
@@ -65,17 +69,5 @@ public class RoadMap {
 	public void addJunction(Junction j) {
 		map.put(j.getId(), j);
 		junctions.add(j);
-	}
-
-	public Ini generateReport(int time) {
-		Ini report = new Ini();
-		for (SimObject j : getJRV()) {
-			Map<String, String> map = j.report(time);
-			IniSection section = new IniSection(map.get(""));
-			map.remove("");
-			map.forEach((k, v) -> section.setValue(k, v));
-			report.addsection(section);
-		}
-		return report;
 	}
 }

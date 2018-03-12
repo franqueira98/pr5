@@ -5,8 +5,11 @@ import java.io.OutputStream;
 import java.util.*;
 
 import es.ucm.fdi.events.Event;
+import es.ucm.fdi.ini.Ini;
+import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.Junction;
 import es.ucm.fdi.simobject.Road;
+import es.ucm.fdi.simobject.SimObject;
 import es.ucm.fdi.util.MultiTreeMap;
 
 public class TrafficSimulator {
@@ -42,5 +45,17 @@ public class TrafficSimulator {
 			timeCounter++;
 			objects.generateReport(timeCounter).store(out);
 		}
+	}
+	
+	public Ini generateReport(int time) {
+		Ini report = new Ini();
+		for (SimObject j : getJRV()) {
+			Map<String, String> map = j.report(time);
+			IniSection section = new IniSection(map.get(""));
+			map.remove("");
+			map.forEach((k, v) -> section.setValue(k, v));
+			report.addsection(section);
+		}
+		return report;
 	}
 }
