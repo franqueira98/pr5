@@ -8,14 +8,16 @@ import java.util.Map;
 
 public class Junction extends SimObject {
 	private Map<Road, IncomingRoad> saberInc;
-	private List<IncomingRoad> semaforo;
+	private List<IncomingRoad> entrantes;
+	private int semaforo;
 	private List<Road> salientes;
 	private Map<Junction, Road> saberSaliente;
 
 	public Junction(String id) {
 		super(id);
-		saberInc = new HashMap<>(); // el profe puso Linked
-		semaforo = new ArrayList<>();
+		saberInc = new HashMap<>();
+		entrantes = new ArrayList<>();
+		semaforo = 0;
 		salientes = new ArrayList<>();
 		saberSaliente = new HashMap<>();
 	}
@@ -37,41 +39,35 @@ public class Junction extends SimObject {
 
 	public void insertEntrante(Road r) {
 		IncomingRoad s = new IncomingRoad(r.getId());
-		if (semaforo.isEmpty())
+		if (entrantes.isEmpty())
 			s.semaforoVerde = true;
 		saberInc.put(r, s);
-		semaforo.add(s);
+		entrantes.add(s);
 
 	}
 
 	public void avanza() {
-		if (!semaforo.isEmpty()) {
-			boolean found = false;
-			int i;
-			for (i = 0; i < semaforo.size() && !found; i++) {
-				if (semaforo.get(i).semaforoVerde) {
-					if (!semaforo.get(i).cola.isEmpty()) {
-						Vehicle aux = semaforo.get(i).cola.getFirst();
-						Road saliente = saberSaliente.get(aux.getProxCruce());
-						saliente.entraVehiculo(aux);
-						aux.moverASiguienteCarretera(saliente);
-						semaforo.get(i).cola.pop();
-					}
-					semaforo.get(i).semaforoVerde = false;
-					found = true;
-				}
+		if (!entrantes.isEmpty()) {
+			if (!entrantes.get(semaforo).cola.isEmpty()) {
+				Vehicle vSaliente = entrantes.get(semaforo).cola.getFirst();
+				Road rSaliente = saberSaliente.get(vSaliente.getProxCruce());
+				rSaliente.entraVehiculo(vSaliente);
+				vSaliente.moverASiguienteCarretera(rSaliente);
+				entrantes.get(semaforo).cola.pop();
 			}
-			if (i == semaforo.size())
-				i = 0;
-			semaforo.get(i).semaforoVerde = true;
+			entrantes.get(semaforo).semaforoVerde = false;
+			semaforo++;
+			if (semaforo == entrantes.size())
+				semaforo = 0;
+			entrantes.get(semaforo).semaforoVerde = true;
 		}
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
 		StringBuilder reportJunct = new StringBuilder();
-		semaforo.forEach(r -> reportJunct.append(r.GeneraReport() + " , "));
+		entrantes.forEach(r -> reportJunct.append(r.GeneraReport() + " , "));
 
-		if (semaforo.size() != 0)
+		if (entrantes.size() != 0)
 			reportJunct.delete(reportJunct.length() - 3, reportJunct.length());
 
 		out.put("queues", reportJunct.toString());

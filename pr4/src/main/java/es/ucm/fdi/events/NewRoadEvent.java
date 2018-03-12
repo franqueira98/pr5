@@ -7,7 +7,7 @@ import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.Junction;
 import es.ucm.fdi.simobject.Road;
 
-public class newRoadEvent extends Event {
+public class NewRoadEvent extends Event {
 
 	private String id;
 	private int maxSpeed;
@@ -15,7 +15,7 @@ public class newRoadEvent extends Event {
 	private String src;
 	private String dest;
 
-	public newRoadEvent(int time, String id, int maxSpeed, int length,
+	public NewRoadEvent(int time, String id, int maxSpeed, int length,
 			String src, String dest) {
 		super(time);
 		this.id = id;
@@ -45,14 +45,16 @@ public class newRoadEvent extends Event {
 				return null;
 
 			Map<String, String> sec = ini.getKeysMap();
-			int time = Integer.parseInt(sec.get("time"));
 			String id = sec.get("id");
+			if (!isValidId(id))
+				throw new IllegalArgumentException();
+			int time = Integer.parseInt(sec.get("time"));
 			String ideJunctionSurc = sec.get("src");
 			String ideJunctionDest = sec.get("dest");
 			int maxSpeed = Integer.parseInt(sec.get("max_speed"));
 			int length = Integer.parseInt(sec.get("length"));
 
-			return new newRoadEvent(time, id, maxSpeed, length,
+			return new NewRoadEvent(time, id, maxSpeed, length,
 					ideJunctionSurc, ideJunctionDest);
 		}
 	}

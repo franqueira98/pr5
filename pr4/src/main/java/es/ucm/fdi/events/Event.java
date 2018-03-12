@@ -26,6 +26,10 @@ public abstract class Event {
 		public String getTitle() {
 			return title;
 		}
+		
+		boolean isValidId(String id){
+			return id.matches("[a-zA-Z0-9_]+");
+		}
 
 		public abstract Event parse(IniSection ini);
 

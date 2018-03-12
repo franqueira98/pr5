@@ -7,12 +7,12 @@ import java.util.*;
 import es.ucm.fdi.controller.RoadMap;
 import es.ucm.fdi.ini.IniSection;
 
-public class newVehicleEvent extends Event {
+public class NewVehicleEvent extends Event {
 	private String id;
 	private int maxSpeed;
 	private String itinerary;
 
-	public newVehicleEvent(int time, String id, int maxSpeed, String itinerary) {
+	public NewVehicleEvent(int time, String id, int maxSpeed, String itinerary) {
 		super(time);
 		this.id = id;
 		this.maxSpeed = maxSpeed;
@@ -43,12 +43,14 @@ public class newVehicleEvent extends Event {
 				return null;
 
 			Map<String, String> sec = ini.getKeysMap();
-			int time = Integer.parseInt(sec.get("time"));
 			String id = sec.get("id");
+			if (!isValidId(id))
+				throw new IllegalArgumentException();
+			int time = Integer.parseInt(sec.get("time"));
 			int maxSpeed = Integer.parseInt(sec.get("max_speed"));
 			String itinerary = sec.get("itinerary");
 
-			return new newVehicleEvent(time, id, maxSpeed, itinerary);
+			return new NewVehicleEvent(time, id, maxSpeed, itinerary);
 		}
 	}
 }

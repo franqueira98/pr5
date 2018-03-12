@@ -6,10 +6,10 @@ import es.ucm.fdi.controller.RoadMap;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.Junction;
 
-public class newJunctionEvent extends Event {
+public class NewJunctionEvent extends Event {
 	String id;
 
-	public newJunctionEvent(int time, String id) {
+	public NewJunctionEvent(int time, String id) {
 		super(time);
 		this.id = id;
 	}
@@ -32,8 +32,10 @@ public class newJunctionEvent extends Event {
 			Map<String, String> sec = ini.getKeysMap();
 			int time = Integer.parseInt(sec.get("time"));
 			String id = sec.get("id");
+			if (!isValidId(id))
+				throw new IllegalArgumentException();
 			
-			return new newJunctionEvent(time, id);
+			return new NewJunctionEvent(time, id);
 		}
 	}
 }

@@ -11,8 +11,8 @@ import es.ucm.fdi.ini.IniSection;
 
 public class Controller {
 	private static Event.Builder[] avaliableEvents = {
-			new newVehicleEvent.Builder(), new newRoadEvent.Builder(),
-			new newJunctionEvent.Builder(),
+			new NewVehicleEvent.Builder(), new NewRoadEvent.Builder(),
+			new NewJunctionEvent.Builder(),
 			new MakeVehicleFaultyEvent.Builder() };
 
 	private TrafficSimulator simulation;
