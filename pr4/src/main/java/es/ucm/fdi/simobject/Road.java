@@ -67,7 +67,7 @@ public class Road extends SimObject {
 			}
 			if (v.getTiempoAveria() == 0)
 				v.setVelocidadActual(velocidadBase / factorReduccion);
-			v.avanza();
+			if(v.getLocation() < longitud) v.avanza();
 			nuevos.putValue(v.getLocation(), v);
 		}
 		vehicles = nuevos;

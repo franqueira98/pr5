@@ -34,7 +34,9 @@ public class NewJunctionEvent extends Event {
 				return null;
 
 			Map<String, String> sec = ini.getKeysMap();
-			int time = Integer.parseInt(sec.get("time"));
+			int time = 0;
+			if (sec.containsKey("time"))
+				time = Integer.parseInt(sec.get("time"));
 			String id = sec.get("id");
 			if (!isValidId(id))
 				throw new IllegalArgumentException();

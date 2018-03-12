@@ -31,7 +31,7 @@ public class NewRoadEvent extends Event {
 		Road saved = things.getRoad(id);
 		if (saved != null)
 			throw new SimulatorError("Id repeated: " + id);
-		
+
 		Junction a = things.getJunction(src);
 		Junction b = things.getJunction(dest);
 		Road r = new Road(id, length, maxSpeed, a, b);
@@ -53,7 +53,9 @@ public class NewRoadEvent extends Event {
 			String id = sec.get("id");
 			if (!isValidId(id))
 				throw new IllegalArgumentException();
-			int time = Integer.parseInt(sec.get("time"));
+			int time = 0;
+			if (sec.containsKey("time"))
+				time = Integer.parseInt(sec.get("time"));
 			String ideJunctionSurc = sec.get("src");
 			String ideJunctionDest = sec.get("dest");
 			int maxSpeed = Integer.parseInt(sec.get("max_speed"));

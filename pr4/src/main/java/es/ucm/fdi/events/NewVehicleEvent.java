@@ -25,10 +25,11 @@ public class NewVehicleEvent extends Event {
 		Vehicle saved = things.getVehicle(id);
 		if (saved != null)
 			throw new SimulatorError("Id repeated: " + id);
-		
+
 		List<Junction> it = new ArrayList<>();
 		String[] junctions = itinerary.split(",");
-		if(junctions.length<2) throw new IllegalArgumentException();
+		if (junctions.length < 2)
+			throw new IllegalArgumentException();
 		for (String s : junctions)
 			it.add(things.getJunction(s));
 
@@ -51,7 +52,9 @@ public class NewVehicleEvent extends Event {
 			String id = sec.get("id");
 			if (!isValidId(id))
 				throw new IllegalArgumentException();
-			int time = Integer.parseInt(sec.get("time"));
+			int time = 0;
+			if (sec.containsKey("time"))
+				time = Integer.parseInt(sec.get("time"));
 			int maxSpeed = Integer.parseInt(sec.get("max_speed"));
 			String itinerary = sec.get("itinerary");
 

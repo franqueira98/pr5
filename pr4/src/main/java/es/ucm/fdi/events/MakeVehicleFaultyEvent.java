@@ -33,7 +33,9 @@ public class MakeVehicleFaultyEvent extends Event {
 				return null;
 
 			Map<String, String> sec = ini.getKeysMap();
-			int time = Integer.parseInt(sec.get("time"));
+			int time = 0;
+			if (sec.containsKey("time"))
+				time = Integer.parseInt(sec.get("time"));
 			int tiempoAveria = Integer.parseInt(sec.get("duration"));
 			String listaIds = sec.get("vehicles");
 
