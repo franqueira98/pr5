@@ -1,9 +1,6 @@
 package es.ucm.fdi.simobject;
 
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.NavigableSet;
-
 import es.ucm.fdi.util.MultiTreeMap;
 
 public class Road extends SimObject {
@@ -53,42 +50,20 @@ public class Road extends SimObject {
 	}
 
 	public void avanza() {
-		MultiTreeMap<Integer, Vehicle> nuevos = new MultiTreeMap<>((a, b) -> a
-				- b);
+		MultiTreeMap<Integer, Vehicle> nuevos = new MultiTreeMap<>((a, b) -> b-a);
 		int velocidadBase = calcularVelBase();
 		int factorReduccion = 1;
-		//int local = -1;
 		for (Vehicle v : vehicles.innerValues()) {
-			/*
-			if (factorReduccion == 1 && local == -1) {
-				if (v.getTiempoAveria() != 0) {
-					local = v.getLocation();
-				}
-			} else if (local != v.getLocation()) {
-				factorReduccion = 2;
-				local = -1;
-			}*/
 			if(factorReduccion == 1)
 				if(v.getTiempoAveria() != 0)
 					factorReduccion=2;
-			if (v.getTiempoAveria() == 0)
-				v.setVelocidadActual(velocidadBase / factorReduccion);
-			if(v.getLocation() < longitud) v.avanza();
-			nuevos.putValue(v.getLocation(), v);
-		}/*
-		NavigableSet<Integer> locations = vehicles.descendingKeySet();
-		for(int here : locations){
-			ArrayList<Vehicle> vehiclesInTime = vehicles.get(here);
-			for(Vehicle v : vehiclesInTime){
-				if(factorReduccion == 1)
-					if(v.getTiempoAveria() != 0)
-						factorReduccion=2;
+			if(v.getLocation() < longitud){
 				if (v.getTiempoAveria() == 0)
 					v.setVelocidadActual(velocidadBase / factorReduccion);
-				if(v.getLocation() < longitud) v.avanza();
-				nuevos.putValue(v.getLocation(), v);
+				v.avanza();
 			}
-		}*/
+			nuevos.putValue(v.getLocation(), v);
+		}
 		vehicles = nuevos;
 	}
 

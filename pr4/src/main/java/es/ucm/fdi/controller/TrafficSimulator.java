@@ -40,13 +40,14 @@ public class TrafficSimulator {
 			for (Road r : roads)
 				r.avanza();
 			List<Junction> junctions = objects.getJunctions();
-			for (Junction j : junctions)
-				j.avanza();
+			if (timeCounter != 0)
+				for (Junction j : junctions)
+					j.avanza();
 			timeCounter++;
 			generateReport(timeCounter).store(out);
 		}
 	}
-	
+
 	public Ini generateReport(int time) {
 		Ini report = new Ini();
 		for (SimObject j : objects.getJRV()) {

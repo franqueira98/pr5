@@ -64,10 +64,10 @@ public class Junction extends SimObject {
 
 	protected void fillReportDetails(Map<String, String> out) {
 		StringBuilder reportJunct = new StringBuilder();
-		entrantes.forEach(r -> reportJunct.append(r.GeneraReport() + ", "));
+		entrantes.forEach(r -> reportJunct.append(r.GeneraReport() + ","));
 
 		if (entrantes.size() != 0)
-			reportJunct.delete(reportJunct.length() - 2, reportJunct.length());
+			reportJunct.delete(reportJunct.length() - 1, reportJunct.length());
 
 		out.put("queues", reportJunct.toString());
 	}
