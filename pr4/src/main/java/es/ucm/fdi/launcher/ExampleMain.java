@@ -129,7 +129,7 @@ public class ExampleMain {
 		});
 
 		for (File file : files) {
-			test(file.getAbsolutePath(), file.getAbsolutePath() + ".out", file.getAbsolutePath() + ".eout",100);
+			test(file.getAbsolutePath(), file.getAbsolutePath() + ".out", file.getAbsolutePath() + ".eout",10);
 		}
 
 	}

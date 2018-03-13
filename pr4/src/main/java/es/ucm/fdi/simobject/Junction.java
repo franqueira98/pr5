@@ -95,11 +95,11 @@ public class Junction extends SimObject {
 						vehiculosCola.length());
 
 			StringBuilder r = new StringBuilder();
-			r.append("(" + id + ", ");
+			r.append("(" + id + ",");
 			if (semaforoVerde)
-				r.append("green, ");
+				r.append("green,");
 			else
-				r.append("red, ");
+				r.append("red,");
 			r.append("[" + vehiculosCola + "])");
 
 			return r.toString();

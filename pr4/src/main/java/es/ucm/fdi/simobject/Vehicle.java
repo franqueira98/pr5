@@ -98,14 +98,14 @@ public class Vehicle extends SimObject {
 		out.put("kilometrage", "" + kilometrage);
 		out.put("faulty", "" + tiempoAveria);
 		if (!haLlegado)
-			out.put("location", "(" + actual.getId() + ", " + localizacion
+			out.put("location", "(" + actual.getId() + "," + localizacion
 					+ ")");
 		else
 			out.put("location", "arrived");
 	}
 
 	protected String getFillVehiculo() {
-		return ("(" + id + ", " + localizacion + ")");
+		return ("(" + id + "," + localizacion + ")");
 
 	}
 
