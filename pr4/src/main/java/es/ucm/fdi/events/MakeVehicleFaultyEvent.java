@@ -37,8 +37,6 @@ public class MakeVehicleFaultyEvent extends Event {
 		}
 
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("make_vehicle_faulty"))
-				return null;
 			try {
 				Map<String, String> sec = ini.getKeysMap();
 				int tiempoAveria = Integer.parseInt(sec.get("duration"));

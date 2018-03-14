@@ -55,9 +55,6 @@ public class NewRoadEvent extends Event {
 		}
 
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("new_road"))
-				return null;
-
 			try {
 				Map<String, String> sec = ini.getKeysMap();
 				String id = sec.get("id");

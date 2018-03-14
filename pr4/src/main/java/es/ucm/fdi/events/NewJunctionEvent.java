@@ -29,8 +29,6 @@ public class NewJunctionEvent extends Event {
 		}
 
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("new_junction"))
-				return null;
 			try {
 				Map<String, String> sec = ini.getKeysMap();
 				String id = sec.get("id");

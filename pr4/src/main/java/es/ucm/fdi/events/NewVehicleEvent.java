@@ -45,15 +45,13 @@ public class NewVehicleEvent extends Event {
 	}
 
 	public static class Builder extends Event.Builder {
+		private static NewCarEvent.Builder[] avaliableSubEvents = {new NewCarEvent.Builder()};
 
 		public Builder() {
 			super("new_vehicle");
 		}
 
 		public Event parse(IniSection ini) {
-			if (!ini.getTag().equals("new_vehicle"))
-				return null;
-
 			try {
 				Map<String, String> sec = ini.getKeysMap();
 				String id = sec.get("id");
@@ -69,7 +67,7 @@ public class NewVehicleEvent extends Event {
 					throw new Exception();
 				int maxSpeed = Integer.parseInt(sec.get("max_speed"));
 				String itinerary = sec.get("itinerary");
-
+				
 				return new NewVehicleEvent(time, id, maxSpeed, itinerary);
 			} catch (IllegalArgumentException e) {
 				throw e;
