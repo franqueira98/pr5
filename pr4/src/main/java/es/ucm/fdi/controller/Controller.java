@@ -15,6 +15,7 @@ public class Controller {
 	private static Event.Builder[] avaliableEvents = {
 			new NewVehicleEvent.Builder(), new NewCarEvent.Builder(),
 			new NewBikeEvent.Builder(), new NewRoadEvent.Builder(),
+			new NewHighwayEvent.Builder(), new NewDirtEvent.Builder(),
 			new NewJunctionEvent.Builder(),
 			new MakeVehicleFaultyEvent.Builder() };
 

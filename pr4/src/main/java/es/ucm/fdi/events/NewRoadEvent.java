@@ -69,6 +69,7 @@ public class NewRoadEvent extends Event {
 				int maxSpeed = Integer.parseInt(map.get("max_speed"));
 				if (maxSpeed <= 0)
 					throw new IllegalArgumentException("No positive max speed");
+				
 				int length = Integer.parseInt(map.get("length"));
 				if (length <= 0)
 					throw new IllegalArgumentException("No positive length");
