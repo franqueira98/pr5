@@ -45,8 +45,6 @@ public class NewVehicleEvent extends Event {
 	}
 
 	public static class Builder extends Event.Builder {
-		private static NewCarEvent.Builder[] avaliableSubEvents = {new NewCarEvent.Builder()};
-
 		public Builder() {
 			super("new_vehicle");
 		}
