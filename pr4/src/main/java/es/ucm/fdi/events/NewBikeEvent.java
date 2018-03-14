@@ -6,25 +6,20 @@ import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
 import es.ucm.fdi.exceptions.SimulatorError;
-import es.ucm.fdi.simobject.Car;
+import es.ucm.fdi.simobject.Bike;
 import es.ucm.fdi.simobject.Junction;
 import es.ucm.fdi.simobject.Vehicle;
 
-public class NewCarEvent extends NewVehicleEvent {
+public class NewBikeEvent extends NewVehicleEvent {
 
 	protected int resistanceKm;
 	protected double faultProbability;
 	protected int maxFaultDuration;
 	protected long seed;
 
-	public NewCarEvent(int time, String id, int maxSpeed,
-			String[] junctions, int resistanceKm, double faultProbability,
-			int maxFaultDuration, long seed) {
+	public NewBikeEvent(int time, String id, int maxSpeed,
+			String[] junctions) {
 		super(time, id, maxSpeed, junctions);
-		this.resistanceKm = resistanceKm;
-		this.faultProbability = faultProbability;
-		this.maxFaultDuration = maxFaultDuration;
-		this.seed = seed;
 	}
 
 
@@ -42,7 +37,7 @@ public class NewCarEvent extends NewVehicleEvent {
 		}
 		
 		//Esto ya no es comun:
-		Vehicle v = new Car(maxSpeed, it, id, "car", resistanceKm, faultProbability, maxFaultDuration, seed);
+		Vehicle v = new Bike(maxSpeed, it, id, "bike");
 		//Esto vuelve a ser comun:
 		
 		things.addVehicle(v);
@@ -52,7 +47,7 @@ public class NewCarEvent extends NewVehicleEvent {
 	public static class Builder extends Event.Builder {
 
 		public Builder() {
-			super("new_vehicle", "car");
+			super("new_vehicle", "bike");
 		}
 
 		public Event fill(Map<String, String> map) {
@@ -81,26 +76,8 @@ public class NewCarEvent extends NewVehicleEvent {
 					throw new SimulatorError("Missing destination");
 				
 				//Hasta aqui es comun
-				int resistanceKm = Integer.parseInt(map.get("resistance"));
-				if (resistanceKm <= 0)
-					throw new IllegalArgumentException("No positive resistance");
 				
-				double faultProbability = Double.parseDouble(map.get("fault_probability"));
-				if (faultProbability < 0)
-					throw new IllegalArgumentException("Negative fault_probability");
-				
-				int maxFaultDuration = Integer.parseInt(map.get("max_fault_duration"));
-				if (maxFaultDuration <= 0)
-					throw new IllegalArgumentException("No positive max_fault_duration");
-				
-				long seed = System.currentTimeMillis();
-				if(map.containsKey(seed))
-					seed = Long.parseLong(map.get("seed"));
-				if (seed <= 0)
-					throw new IllegalArgumentException("No positive seed");
-				
-
-				return new NewCarEvent(time, id, maxSpeed, junctions, resistanceKm, faultProbability, maxFaultDuration, seed);
+				return new NewBikeEvent(time, id, maxSpeed, junctions);
 			} catch (IllegalArgumentException e) {
 				throw e;
 			} catch (Exception e) {

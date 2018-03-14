@@ -13,7 +13,8 @@ import es.ucm.fdi.ini.IniSection;
 
 public class Controller {
 	private static Event.Builder[] avaliableEvents = {
-			new NewVehicleEvent.Builder(), new NewRoadEvent.Builder(),
+			new NewVehicleEvent.Builder(), new NewCarEvent.Builder(),
+			new NewBikeEvent.Builder(), new NewRoadEvent.Builder(),
 			new NewJunctionEvent.Builder(),
 			new MakeVehicleFaultyEvent.Builder() };
 
@@ -48,10 +49,11 @@ public class Controller {
 
 		for (IniSection i : list) {
 			boolean found = false;
-			Map<String,String> map = i.getKeysMap();
+			Map<String, String> map = i.getKeysMap();
 			String type = map.getOrDefault("type", "");
 			for (Event.Builder eventB : avaliableEvents) {
-				if (i.getTag().equals(eventB.getTitle()) && type.equals(eventB.getType())) {
+				if (i.getTag().equals(eventB.getTitle())
+						&& type.equals(eventB.getType())) {
 					simulation.addEvent(eventB.fill(map));
 					found = true;
 				}

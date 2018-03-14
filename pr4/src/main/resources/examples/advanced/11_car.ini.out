@@ -31,6 +31,7 @@ state = (v2,5)
 [vehicle_report]
 id = v2
 time = 2
+type = bike
 speed = 5
 kilometrage = 5
 faulty = 0
@@ -54,6 +55,7 @@ state = (v2,10)
 [vehicle_report]
 id = v2
 time = 3
+type = bike
 speed = 5
 kilometrage = 10
 faulty = 0
@@ -77,6 +79,7 @@ state = (v2,15)
 [vehicle_report]
 id = v2
 time = 4
+type = bike
 speed = 5
 kilometrage = 15
 faulty = 0
@@ -100,6 +103,7 @@ state = (v2,20)
 [vehicle_report]
 id = v2
 time = 5
+type = bike
 speed = 5
 kilometrage = 20
 faulty = 0
@@ -123,6 +127,7 @@ state = (v2,25)
 [vehicle_report]
 id = v2
 time = 6
+type = bike
 speed = 5
 kilometrage = 25
 faulty = 0
@@ -146,6 +151,7 @@ state = (v2,30)
 [vehicle_report]
 id = v2
 time = 7
+type = bike
 speed = 5
 kilometrage = 30
 faulty = 0
@@ -169,6 +175,7 @@ state = (v2,35)
 [vehicle_report]
 id = v2
 time = 8
+type = bike
 speed = 5
 kilometrage = 35
 faulty = 0
@@ -192,6 +199,7 @@ state = (v2,40)
 [vehicle_report]
 id = v2
 time = 9
+type = bike
 speed = 5
 kilometrage = 40
 faulty = 0
@@ -215,6 +223,7 @@ state = (v2,45)
 [vehicle_report]
 id = v2
 time = 10
+type = bike
 speed = 5
 kilometrage = 45
 faulty = 0
