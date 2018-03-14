@@ -4,11 +4,11 @@ import java.util.Map;
 import es.ucm.fdi.util.MultiTreeMap;
 
 public class Road extends SimObject {
-	private int longitud;
-	private int maxVel;
-	private Junction start;
-	private Junction end;
-	private MultiTreeMap<Integer, Vehicle> vehicles;
+	protected int longitud;
+	protected int maxVel;
+	protected Junction start;
+	protected Junction end;
+	protected MultiTreeMap<Integer, Vehicle> vehicles;
 
 	public Road(String ide, int lon, int maxv, Junction princ, Junction fin) {
 		super(ide);
@@ -17,10 +17,6 @@ public class Road extends SimObject {
 		vehicles = new MultiTreeMap<>((a, b) -> a - b);
 		start = princ;
 		end = fin;
-	}
-
-	public Junction getPrincipio() {
-		return start;
 	}
 
 	public Junction getFinal() {

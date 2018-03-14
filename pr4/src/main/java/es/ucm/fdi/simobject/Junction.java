@@ -9,10 +9,10 @@ import java.util.Map;
 import es.ucm.fdi.exceptions.SimulatorError;
 
 public class Junction extends SimObject {
-	private Map<Road, IncomingRoad> saberInc;
-	private List<IncomingRoad> entrantes;
-	private int semaforo;
-	private Map<Junction, Road> saberSaliente;
+	protected Map<Road, IncomingRoad> saberInc;
+	protected List<IncomingRoad> entrantes;
+	protected int semaforo;
+	protected Map<Junction, Road> saberSaliente;
 
 	public Junction(String id) {
 		super(id);
@@ -80,10 +80,10 @@ public class Junction extends SimObject {
 		return "junction_report";
 	}
 
-	private class IncomingRoad {
-		private ArrayDeque<Vehicle> cola;
-		private String id;
-		private boolean semaforoVerde;
+	protected class IncomingRoad {
+		protected ArrayDeque<Vehicle> cola;
+		protected String id;
+		protected boolean semaforoVerde;
 
 		public IncomingRoad(String r) {
 			cola = new ArrayDeque<>();

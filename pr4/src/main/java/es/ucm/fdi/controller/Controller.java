@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 import es.ucm.fdi.events.*;
 import es.ucm.fdi.ini.Ini;
@@ -47,9 +48,11 @@ public class Controller {
 
 		for (IniSection i : list) {
 			boolean found = false;
+			Map<String,String> map = i.getKeysMap();
+			String type = map.getOrDefault("type", "");
 			for (Event.Builder eventB : avaliableEvents) {
-				if (i.getTag().equals(eventB.getTitle())) {
-					simulation.addEvent(eventB.parse(i));
+				if (i.getTag().equals(eventB.getTitle()) && type.equals(eventB.getType())) {
+					simulation.addEvent(eventB.fill(map));
 					found = true;
 				}
 			}

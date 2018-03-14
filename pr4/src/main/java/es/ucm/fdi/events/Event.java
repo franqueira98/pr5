@@ -1,10 +1,11 @@
 package es.ucm.fdi.events;
 
+import java.util.Map;
+
 import es.ucm.fdi.controller.RoadMap;
-import es.ucm.fdi.ini.IniSection;
 
 public abstract class Event {
-	protected int time;
+	private int time;
 
 	public Event(int time) {
 		this.time = time;
@@ -18,20 +19,25 @@ public abstract class Event {
 
 	public static abstract class Builder {
 		protected final String title;
+		protected final String type;
 
-		public Builder(String title) {
+		public Builder(String title, String type) {
 			this.title = title;
+			this.type = type;
 		}
 
 		public String getTitle() {
 			return title;
 		}
-		
-		boolean isValidId(String id){
+
+		public String getType() {
+			return type;
+		}
+
+		boolean isValidId(String id) {
 			return id.matches("[a-zA-Z0-9_]+");
 		}
 
-		public abstract Event parse(IniSection ini);
-
+		public abstract Event fill(Map<String, String> map);
 	}
 }

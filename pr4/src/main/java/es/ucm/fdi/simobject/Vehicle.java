@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 public class Vehicle extends SimObject {
-	private int velMaxima;
-	private int velActual;
-	private Road actual;
-	private int localizacion;
-	private List<Junction> itinerario;
-	private int proxCruce;
-	private int tiempoAveria;
-	private int kilometrage;
-	private boolean haLlegado;
+	protected int velMaxima;
+	protected int velActual;
+	protected Road actual;
+	protected int localizacion;
+	protected List<Junction> itinerario;
+	protected int proxCruce;
+	protected int tiempoAveria;
+	protected int kilometrage;
+	protected boolean haLlegado;
 
 	public Vehicle(int velM, List<Junction> cruc, String ide) {
 		super(ide);
@@ -24,10 +24,6 @@ public class Vehicle extends SimObject {
 		kilometrage = 0;
 		proxCruce = 1;
 		haLlegado = false;
-	}
-
-	public int getMaxSpeed() {
-		return velMaxima;
 	}
 
 	public int getLocation() {
@@ -61,10 +57,6 @@ public class Vehicle extends SimObject {
 			velActual = vel;
 	}
 
-	public int getVelocidadActual() {
-		return velActual;
-	}
-
 	public void avanza() {
 		if (tiempoAveria > 0) {
 			tiempoAveria--;
@@ -82,14 +74,14 @@ public class Vehicle extends SimObject {
 		}
 	}
 
-	void changeRoad(Road r) {
+	public void changeRoad(Road r) {
 		proxCruce++;
 		actual = r;
 		localizacion = 0;
 		velActual = 0;
 	}
 	
-	void arrived(){
+	public void arrived(){
 		haLlegado = true;
 	}
 

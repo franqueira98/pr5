@@ -4,17 +4,16 @@ import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
 import es.ucm.fdi.exceptions.SimulatorError;
-import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.Junction;
 import es.ucm.fdi.simobject.Road;
 
 public class NewRoadEvent extends Event {
 
-	private String id;
-	private int maxSpeed;
-	private int length;
-	private String src;
-	private String dest;
+	protected String id;
+	protected int maxSpeed;
+	protected int length;
+	protected String src;
+	protected String dest;
 
 	public NewRoadEvent(int time, String id, int maxSpeed, int length,
 			String src, String dest) {
@@ -37,12 +36,6 @@ public class NewRoadEvent extends Event {
 			throw new SimulatorError("Roads are not rainbows!: " + id + "=("
 					+ src + "," + dest + ")");
 
-		if (maxSpeed <= 0)
-			throw new SimulatorError("Road seems under construction");
-
-		if (length <= 0)
-			throw new SimulatorError("You should meet Einstein");
-
 		Road r = new Road(id, length, maxSpeed, a, b);
 		a.newOutgoing(r);
 		b.newIncoming(r);
@@ -51,26 +44,34 @@ public class NewRoadEvent extends Event {
 
 	public static class Builder extends Event.Builder {
 		public Builder() {
-			super("new_road");
+			super("new_road", "");
 		}
 
-		public Event parse(IniSection ini) {
+		public Event fill(Map<String, String> map) {
 			try {
-				Map<String, String> sec = ini.getKeysMap();
-				String id = sec.get("id");
+				String id = map.get("id");
 				if (!isValidId(id))
 					throw new IllegalArgumentException("Invalid id");
 
 				int time = 0;
-				if (sec.containsKey("time"))
-					time = Integer.parseInt(sec.get("time"));
-				
-				if(!sec.containsKey("src")) throw new Exception();
-				String ideJunctionSurc = sec.get("src");
-				if(!sec.containsKey("dest")) throw new Exception();
-				String ideJunctionDest = sec.get("dest");
-				int maxSpeed = Integer.parseInt(sec.get("max_speed"));
-				int length = Integer.parseInt(sec.get("length"));
+				if (map.containsKey("time"))
+					time = Integer.parseInt(map.get("time"));
+				if (time < 0)
+					throw new IllegalArgumentException("Negative time");
+
+				if (!map.containsKey("src"))
+					throw new Exception();
+				String ideJunctionSurc = map.get("src");
+				if (!map.containsKey("dest"))
+					throw new Exception();
+				String ideJunctionDest = map.get("dest");
+
+				int maxSpeed = Integer.parseInt(map.get("max_speed"));
+				if (maxSpeed <= 0)
+					throw new IllegalArgumentException("No positive max speed");
+				int length = Integer.parseInt(map.get("length"));
+				if (length <= 0)
+					throw new IllegalArgumentException("No positive length");
 
 				return new NewRoadEvent(time, id, maxSpeed, length,
 						ideJunctionSurc, ideJunctionDest);
