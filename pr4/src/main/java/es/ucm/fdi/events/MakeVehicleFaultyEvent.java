@@ -3,7 +3,9 @@ package es.ucm.fdi.events;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
+import es.ucm.fdi.exceptions.SimulatorError;
 import es.ucm.fdi.ini.IniSection;
+import es.ucm.fdi.simobject.Vehicle;
 
 public class MakeVehicleFaultyEvent extends Event {
 	int tiempoAveria;
@@ -18,8 +20,14 @@ public class MakeVehicleFaultyEvent extends Event {
 	@Override
 	public void execute(RoadMap things) {
 		String[] arrayVehicles = vehicles.split(",");
+		if (tiempoAveria < 0)
+			throw new SimulatorError(
+					"You want to travel back in time and crash a vehicle? Really?");
+		
 		for (String vehicle : arrayVehicles) {
-			things.getVehicle(vehicle).setTiempoAveria(tiempoAveria);
+			Vehicle unlucky = things.getVehicle(vehicle);
+			if(unlucky == null) throw new SimulatorError("Hitting the air");
+			unlucky.setTiempoAveria(tiempoAveria);
 		}
 	}
 
@@ -31,15 +39,22 @@ public class MakeVehicleFaultyEvent extends Event {
 		public Event parse(IniSection ini) {
 			if (!ini.getTag().equals("make_vehicle_faulty"))
 				return null;
+			try {
+				Map<String, String> sec = ini.getKeysMap();
+				int tiempoAveria = Integer.parseInt(sec.get("duration"));
 
-			Map<String, String> sec = ini.getKeysMap();
-			int time = 0;
-			if (sec.containsKey("time"))
-				time = Integer.parseInt(sec.get("time"));
-			int tiempoAveria = Integer.parseInt(sec.get("duration"));
-			String listaIds = sec.get("vehicles");
-
-			return new MakeVehicleFaultyEvent(time, tiempoAveria, listaIds);
+				int time = 0;
+				if (sec.containsKey("time"))
+					time = Integer.parseInt(sec.get("time"));
+				
+				if(!sec.containsKey("vehicles")) throw new Exception();
+				String listaIds = sec.get("vehicles");
+				
+				return new MakeVehicleFaultyEvent(time, tiempoAveria, listaIds);
+			} catch (Exception e) {
+				throw new IllegalArgumentException(
+						"Incorrect arguments for make_vehicle_faulty");
+			}
 		}
 	}
 }

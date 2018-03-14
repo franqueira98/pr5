@@ -28,12 +28,21 @@ public class NewRoadEvent extends Event {
 
 	@Override
 	public void execute(RoadMap things) {
-		Road saved = things.getRoad(id);
-		if (saved != null)
-			throw new SimulatorError("Id repeated: " + id);
+		if (things.getObject(id) != null)
+			throw new SimulatorError("Ups, " + id + " already exists");
 
 		Junction a = things.getJunction(src);
 		Junction b = things.getJunction(dest);
+		if (a == null || b == null)
+			throw new SimulatorError("Roads are not rainbows!: " + id + "=("
+					+ src + "," + dest + ")");
+
+		if (maxSpeed <= 0)
+			throw new SimulatorError("Road seems under construction");
+
+		if (length <= 0)
+			throw new SimulatorError("You should meet Einstein");
+
 		Road r = new Road(id, length, maxSpeed, a, b);
 		a.newOutgoing(r);
 		b.newIncoming(r);
@@ -49,20 +58,31 @@ public class NewRoadEvent extends Event {
 			if (!ini.getTag().equals("new_road"))
 				return null;
 
-			Map<String, String> sec = ini.getKeysMap();
-			String id = sec.get("id");
-			if (!isValidId(id))
-				throw new IllegalArgumentException();
-			int time = 0;
-			if (sec.containsKey("time"))
-				time = Integer.parseInt(sec.get("time"));
-			String ideJunctionSurc = sec.get("src");
-			String ideJunctionDest = sec.get("dest");
-			int maxSpeed = Integer.parseInt(sec.get("max_speed"));
-			int length = Integer.parseInt(sec.get("length"));
+			try {
+				Map<String, String> sec = ini.getKeysMap();
+				String id = sec.get("id");
+				if (!isValidId(id))
+					throw new IllegalArgumentException("Invalid id");
 
-			return new NewRoadEvent(time, id, maxSpeed, length,
-					ideJunctionSurc, ideJunctionDest);
+				int time = 0;
+				if (sec.containsKey("time"))
+					time = Integer.parseInt(sec.get("time"));
+				
+				if(!sec.containsKey("src")) throw new Exception();
+				String ideJunctionSurc = sec.get("src");
+				if(!sec.containsKey("dest")) throw new Exception();
+				String ideJunctionDest = sec.get("dest");
+				int maxSpeed = Integer.parseInt(sec.get("max_speed"));
+				int length = Integer.parseInt(sec.get("length"));
+
+				return new NewRoadEvent(time, id, maxSpeed, length,
+						ideJunctionSurc, ideJunctionDest);
+			} catch (IllegalArgumentException e) {
+				throw e;
+			} catch (Exception e) {
+				throw new IllegalArgumentException(
+						"Incorrect arguments for new_road");
+			}
 		}
 	}
 }

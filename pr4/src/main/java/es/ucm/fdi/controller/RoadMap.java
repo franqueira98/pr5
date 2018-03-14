@@ -20,20 +20,30 @@ public class RoadMap {
 
 	public Vehicle getVehicle(String id) {
 		SimObject obj = map.get(id);
-		if(obj instanceof Vehicle) return (Vehicle) obj;
-		else return null;
+		if (obj instanceof Vehicle)
+			return (Vehicle) obj;
+		else
+			return null;
 	}
 
 	public Road getRoad(String id) {
 		SimObject obj = map.get(id);
-		if(obj instanceof Road) return (Road) obj;
-		else return null;
+		if (obj instanceof Road)
+			return (Road) obj;
+		else
+			return null;
 	}
 
 	public Junction getJunction(String id) {
 		SimObject obj = map.get(id);
-		if(obj instanceof Junction) return (Junction) obj;
-		else return null;
+		if (obj instanceof Junction)
+			return (Junction) obj;
+		else
+			return null;
+	}
+	
+	public SimObject getObject(String id) {
+		return map.get(id);
 	}
 
 	public List<Vehicle> getVehicles() {

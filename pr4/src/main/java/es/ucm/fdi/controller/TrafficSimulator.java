@@ -25,7 +25,7 @@ public class TrafficSimulator {
 
 	public void addEvent(Event e) {
 		if (e.getTime() < timeCounter)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("We don't travel back in time!");
 		events.putValue(e.getTime(), e);
 	}
 

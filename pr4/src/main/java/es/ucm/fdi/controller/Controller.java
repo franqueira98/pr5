@@ -7,6 +7,7 @@ import java.util.List;
 
 import es.ucm.fdi.events.*;
 import es.ucm.fdi.ini.Ini;
+import es.ucm.fdi.ini.IniError;
 import es.ucm.fdi.ini.IniSection;
 
 public class Controller {
@@ -28,8 +29,16 @@ public class Controller {
 	}
 
 	public void run() throws IOException {
-		loadEvents();
-		simulation.run(ticks, out);
+		try {
+			loadEvents();
+			simulation.run(ticks, out);
+		} catch (IOException e) {
+			System.out.println("Problems loading/saving");
+		} catch (IniError e) {
+			System.out.println("Problems loading/saving: " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void loadEvents() throws IOException {
@@ -46,7 +55,8 @@ public class Controller {
 			}
 
 			if (!found)
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException(
+						"Not sure about what is this: " + i.getTag());
 		}
 	}
 }

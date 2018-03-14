@@ -22,16 +22,22 @@ public class NewVehicleEvent extends Event {
 
 	@Override
 	public void execute(RoadMap things) {
-		Vehicle saved = things.getVehicle(id);
-		if (saved != null)
-			throw new SimulatorError("Id repeated: " + id);
+		if (things.getObject(id) != null)
+			throw new SimulatorError("Ups, " + id + " already exists");
 
 		List<Junction> it = new ArrayList<>();
 		String[] junctions = itinerary.split(",");
 		if (junctions.length < 2)
-			throw new IllegalArgumentException();
-		for (String s : junctions)
-			it.add(things.getJunction(s));
+			throw new SimulatorError("Missing destination");
+		for (String s : junctions) {
+			Junction step = things.getJunction(s);
+			if (step == null)
+				throw new SimulatorError("A vehicle goes over ghost junctions");
+			it.add(step);
+		}
+
+		if (maxSpeed <= 0)
+			throw new SimulatorError("Destination is moving away");
 
 		Vehicle v = new Vehicle(maxSpeed, it, id);
 		things.addVehicle(v);
@@ -48,17 +54,29 @@ public class NewVehicleEvent extends Event {
 			if (!ini.getTag().equals("new_vehicle"))
 				return null;
 
-			Map<String, String> sec = ini.getKeysMap();
-			String id = sec.get("id");
-			if (!isValidId(id))
-				throw new IllegalArgumentException();
-			int time = 0;
-			if (sec.containsKey("time"))
-				time = Integer.parseInt(sec.get("time"));
-			int maxSpeed = Integer.parseInt(sec.get("max_speed"));
-			String itinerary = sec.get("itinerary");
+			try {
+				Map<String, String> sec = ini.getKeysMap();
+				String id = sec.get("id");
+				if (!isValidId(id))
+					throw new IllegalArgumentException("Invalid id");
 
-			return new NewVehicleEvent(time, id, maxSpeed, itinerary);
+				int time = 0;
+				if (sec.containsKey("time"))
+					time = Integer.parseInt(sec.get("time"));
+
+				if (!(sec.containsKey("max_speed") && sec
+						.containsKey("itinerary")))
+					throw new Exception();
+				int maxSpeed = Integer.parseInt(sec.get("max_speed"));
+				String itinerary = sec.get("itinerary");
+
+				return new NewVehicleEvent(time, id, maxSpeed, itinerary);
+			} catch (IllegalArgumentException e) {
+				throw e;
+			} catch (Exception e) {
+				throw new IllegalArgumentException(
+						"Incorrect arguments for new_vehicle");
+			}
 		}
 	}
 }

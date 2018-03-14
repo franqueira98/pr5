@@ -17,9 +17,8 @@ public class NewJunctionEvent extends Event {
 
 	@Override
 	public void execute(RoadMap things) {
-		Junction saved = things.getJunction(id);
-		if (saved != null)
-			throw new SimulatorError("Id repeated: " + id);
+		if (things.getObject(id) != null)
+			throw new SimulatorError("Ups, " + id + " already exists");
 		things.addJunction(new Junction(id));
 	}
 
@@ -32,16 +31,23 @@ public class NewJunctionEvent extends Event {
 		public Event parse(IniSection ini) {
 			if (!ini.getTag().equals("new_junction"))
 				return null;
+			try {
+				Map<String, String> sec = ini.getKeysMap();
+				String id = sec.get("id");
+				if (!isValidId(id))
+					throw new IllegalArgumentException("Invalid id");
 
-			Map<String, String> sec = ini.getKeysMap();
-			int time = 0;
-			if (sec.containsKey("time"))
-				time = Integer.parseInt(sec.get("time"));
-			String id = sec.get("id");
-			if (!isValidId(id))
-				throw new IllegalArgumentException();
+				int time = 0;
+				if (sec.containsKey("time"))
+					time = Integer.parseInt(sec.get("time"));
 
-			return new NewJunctionEvent(time, id);
+				return new NewJunctionEvent(time, id);
+			} catch (IllegalArgumentException e) {
+				throw e;
+			} catch (Exception e) {
+				throw new IllegalArgumentException(
+						"Incorrect arguments for new_junction");
+			}
 		}
 	}
 }
