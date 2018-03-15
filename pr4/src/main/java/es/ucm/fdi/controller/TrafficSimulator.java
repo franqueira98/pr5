@@ -46,7 +46,7 @@ public class TrafficSimulator {
 					j.avanza();
 				else j.preparaSemaforo();
 			timeCounter++;
-			generateReport(out);
+			generateReport(out);;
 		}
 	}
 	
