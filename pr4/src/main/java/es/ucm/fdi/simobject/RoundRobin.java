@@ -1,0 +1,93 @@
+package es.ucm.fdi.simobject;
+
+import java.util.Map;
+
+public class RoundRobin extends Junction {
+	
+	protected int minTime;
+	protected int maxTime;
+	protected String type;
+
+	public RoundRobin(String id, int minTime, int maxTime, String type) {
+		super(id);
+		this.minTime = minTime;
+		this.maxTime = maxTime;
+		this.type = type;
+	}
+	
+	public void newIncoming(Road r) {
+		IncomingRoad ir = new IncomingRoad(r.getId(),maxTime);
+		if (entrantes.isEmpty())
+			ir.semaforoVerde = true;
+		saberInc.put(r, ir);
+		entrantes.add(ir);
+	}
+	
+	public void avanza() {
+		if (!entrantes.isEmpty()) {
+			IncomingRoad roadGreen = (IncomingRoad) entrantes.get(semaforo);
+			if (!roadGreen.cola.isEmpty()) {
+				Vehicle lucky = roadGreen.cola.getFirst();
+				lucky.getRoad().removeVehicle(lucky);
+				roadGreen.cola.pop();
+				roadGreen.used++;
+				moveToNextRoad(lucky);
+			}
+			
+			roadGreen.timeUnitsUsed++;
+			if(roadGreen.timeUnitsUsed == roadGreen.timeInterval)
+				avanzaSemaforo();
+		}
+	}
+	
+	public void avanzaSemaforo(){
+		IncomingRoad roadGreen = (IncomingRoad) entrantes.get(semaforo);
+		roadGreen.semaforoVerde = false;
+		
+		if(roadGreen.used == roadGreen.timeUnitsUsed){
+			if(roadGreen.timeInterval + 1 < maxTime) roadGreen.timeInterval++;
+			else roadGreen.timeInterval = maxTime;
+		}
+		if(roadGreen.used == 0){
+			if(roadGreen.timeInterval - 1 < minTime) roadGreen.timeInterval = minTime;
+			else roadGreen.timeInterval--;
+		}
+		
+		roadGreen.timeUnitsUsed = 0;
+		
+		semaforo++;
+		if (semaforo == entrantes.size())
+			semaforo = 0;
+		entrantes.get(semaforo).semaforoVerde = true;
+	}
+	
+	public void preparaSemaforo(){
+
+	}
+	
+	protected void fillReportDetails(Map<String, String> out) {
+		super.fillReportDetails(out);
+		out.put("type", type);
+	}
+	
+	protected class IncomingRoad extends Junction.IncomingRoad {
+		
+		protected int timeInterval;
+		protected int timeUnitsUsed;
+		protected int used;
+		
+		public IncomingRoad(String r, int maxTime) {
+			super(r);
+			this.timeInterval = maxTime;
+			this.timeUnitsUsed = 0;
+			this.used = 0;
+		}
+		
+		protected String semaforoReport(){
+			StringBuilder r = new StringBuilder();
+			r.append(super.semaforoReport());
+			if(semaforoVerde) r.append(":" + (timeInterval - timeUnitsUsed));
+			return r.toString();
+		}
+	}
+}

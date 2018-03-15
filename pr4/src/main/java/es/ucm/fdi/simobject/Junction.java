@@ -58,12 +58,21 @@ public class Junction extends SimObject {
 				roadGreen.cola.pop();
 				moveToNextRoad(lucky);
 			}
-			entrantes.get(semaforo).semaforoVerde = false;
-			semaforo++;
-			if (semaforo == entrantes.size())
-				semaforo = 0;
-			entrantes.get(semaforo).semaforoVerde = true;
+			avanzaSemaforo();
 		}
+	}
+	
+	public void avanzaSemaforo(){
+		IncomingRoad roadGreen = entrantes.get(semaforo);
+		roadGreen.semaforoVerde = false;
+		semaforo++;
+		if (semaforo == entrantes.size())
+			semaforo = 0;
+		entrantes.get(semaforo).semaforoVerde = true;
+	}
+	
+	public void preparaSemaforo(){
+
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
@@ -100,12 +109,18 @@ public class Junction extends SimObject {
 
 			StringBuilder r = new StringBuilder();
 			r.append("(" + id + ",");
-			if (semaforoVerde)
-				r.append("green,");
-			else
-				r.append("red,");
-			r.append("[" + vehiculosCola + "])");
+			r.append(semaforoReport());
+			r.append(",[" + vehiculosCola + "])");
 
+			return r.toString();
+		}
+		
+		protected String semaforoReport(){
+			StringBuilder r = new StringBuilder();
+			if (semaforoVerde)
+				r.append("green");
+			else
+				r.append("red");
 			return r.toString();
 		}
 	}

@@ -12,11 +12,6 @@ import es.ucm.fdi.simobject.Vehicle;
 
 public class NewBikeEvent extends NewVehicleEvent {
 
-	protected int resistanceKm;
-	protected double faultProbability;
-	protected int maxFaultDuration;
-	protected long seed;
-
 	public NewBikeEvent(int time, String id, int maxSpeed,
 			String[] junctions) {
 		super(time, id, maxSpeed, junctions);

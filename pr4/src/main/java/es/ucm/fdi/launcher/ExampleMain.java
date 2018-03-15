@@ -127,10 +127,10 @@ public class ExampleMain {
 				return name.endsWith(".ini");
 			}
 		});
-		//File file =files[9];
-		for (File file : files) {
+		File file =files[3];
+		//for (File file : files) {
 			test(file.getAbsolutePath(), file.getAbsolutePath() + ".out", file.getAbsolutePath() + ".eout",10);
-		}
+		//}
 
 	}
 

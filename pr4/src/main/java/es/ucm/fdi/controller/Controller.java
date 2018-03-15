@@ -16,7 +16,8 @@ public class Controller {
 			new NewVehicleEvent.Builder(), new NewCarEvent.Builder(),
 			new NewBikeEvent.Builder(), new NewRoadEvent.Builder(),
 			new NewHighwayEvent.Builder(), new NewDirtEvent.Builder(),
-			new NewJunctionEvent.Builder(),
+			new NewJunctionEvent.Builder(), new NewRoundRobinEvent.Builder(),
+			new NewMostCrowedEvent.Builder(),
 			new MakeVehicleFaultyEvent.Builder() };
 
 	private TrafficSimulator simulation;
@@ -41,6 +42,7 @@ public class Controller {
 			System.out.println("Problems loading/saving: " + e.getMessage());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
