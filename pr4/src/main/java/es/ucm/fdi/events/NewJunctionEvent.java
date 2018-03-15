@@ -22,7 +22,7 @@ public class NewJunctionEvent extends Event {
 		things.addJunction(new Junction(id));
 	}
 
-	public static class Builder extends Event.Builder {
+	public static class Builder implements Event.Builder {
 		
 		public boolean canParse(String title, String type){
 			return "new_junction".equals(title) && "".equals(type);

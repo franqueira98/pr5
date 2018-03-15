@@ -49,7 +49,7 @@ public class NewCarEvent extends NewVehicleEvent {
 		things.getJunction(junctions[0]).moveToNextRoad(v);
 	}
 
-	public static class Builder extends Event.Builder {
+	public static class Builder implements Event.Builder {
 		
 		public boolean canParse(String title, String type){
 			return "new_vehicle".equals(title) && "car".equals(type);

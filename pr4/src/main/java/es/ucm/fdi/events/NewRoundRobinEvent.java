@@ -25,7 +25,7 @@ public class NewRoundRobinEvent extends NewJunctionEvent {
 		things.addJunction(new RoundRobin(id,minTime,maxTime, "rr"));
 	}
 	
-	public static class Builder extends Event.Builder {
+	public static class Builder implements Event.Builder {
 		
 		public boolean canParse(String title, String type){
 			return "new_junction".equals(title) && "rr".equals(type);

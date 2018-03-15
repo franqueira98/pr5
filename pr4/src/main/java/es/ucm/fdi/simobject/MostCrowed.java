@@ -49,10 +49,9 @@ public class MostCrowed extends Junction {
 			}
 		}
 		semaforo = max;
+		
 		moreVehicles.semaforoVerde = true;
-		max = moreVehicles.cola.size() / 2;
-		max = Math.max(1,  max);
-		moreVehicles.timeInterval = max;
+		moreVehicles.timeInterval = Math.max(moreVehicles.cola.size() / 2, 1);
 		moreVehicles.timeUnitsUsed = 0;
 	}
 	

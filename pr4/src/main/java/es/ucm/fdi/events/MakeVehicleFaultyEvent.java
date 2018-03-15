@@ -29,7 +29,7 @@ public class MakeVehicleFaultyEvent extends Event {
 		}
 	}
 
-	public static class Builder extends Event.Builder {
+	public static class Builder implements Event.Builder {
 		
 		public boolean canParse(String title, String type){
 			return "make_vehicle_faulty".equals(title) && "".equals(type);

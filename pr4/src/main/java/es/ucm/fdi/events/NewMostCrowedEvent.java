@@ -20,7 +20,7 @@ public class NewMostCrowedEvent extends NewJunctionEvent {
 		things.addJunction(new MostCrowed(id,"mc"));
 	}
 	
-	public static class Builder extends Event.Builder {
+	public static class Builder implements Event.Builder {
 		
 		public boolean canParse(String title, String type){
 			return "new_junction".equals(title) && "mc".equals(type);

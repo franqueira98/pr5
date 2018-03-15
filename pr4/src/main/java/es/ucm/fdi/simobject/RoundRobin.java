@@ -44,14 +44,12 @@ public class RoundRobin extends Junction {
 		IncomingRoad roadGreen = (IncomingRoad) entrantes.get(semaforo);
 		roadGreen.semaforoVerde = false;
 		
-		if(roadGreen.used == roadGreen.timeUnitsUsed){
-			if(roadGreen.timeInterval + 1 < maxTime) roadGreen.timeInterval++;
-			else roadGreen.timeInterval = maxTime;
-		}
-		if(roadGreen.used == 0){
-			if(roadGreen.timeInterval - 1 < minTime) roadGreen.timeInterval = minTime;
-			else roadGreen.timeInterval--;
-		}
+		if(roadGreen.used == roadGreen.timeUnitsUsed)
+			roadGreen.timeInterval = Math.min(roadGreen.timeInterval + 1, maxTime);
+		
+		if(roadGreen.used == 0)
+			roadGreen.timeInterval = Math.max(roadGreen.timeInterval - 1, minTime);
+		
 		
 		roadGreen.timeUnitsUsed = 0;
 		

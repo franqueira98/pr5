@@ -96,7 +96,7 @@ public class Vehicle extends SimObject {
 			out.put("location", "arrived");
 	}
 
-	protected String getFillVehiculo() {
+	public String getFillVehiculo() {
 		return ("(" + id + "," + localizacion + ")");
 
 	}

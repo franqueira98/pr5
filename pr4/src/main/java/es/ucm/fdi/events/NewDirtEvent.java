@@ -35,7 +35,7 @@ public class NewDirtEvent extends NewRoadEvent {
 		things.addRoad(r);
 	}
 
-	public static class Builder extends Event.Builder {
+	public static class Builder implements Event.Builder {
 		
 		public boolean canParse(String title, String type){
 			return "new_road".equals(title) && "dirt".equals(type);

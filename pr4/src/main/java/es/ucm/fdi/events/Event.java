@@ -17,11 +17,11 @@ public abstract class Event {
 
 	public abstract void execute(RoadMap things);
 
-	public static abstract class Builder {
+	public interface Builder {
 		
 		public abstract boolean canParse(String title, String type);
 
-		boolean isValidId(String id) {
+		default boolean isValidId(String id) {
 			return id.matches("[a-zA-Z0-9_]+");
 		}
 		

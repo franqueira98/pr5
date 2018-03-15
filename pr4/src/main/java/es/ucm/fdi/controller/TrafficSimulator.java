@@ -50,8 +50,8 @@ public class TrafficSimulator {
 		}
 	}
 	
-	private void addSectionsFor(Iterable<SimObject> it, Ini report) {
-		for (SimObject j : objects.getJRV()) {
+	private void addSectionsFor(List<? extends SimObject> it, Ini report) {
+		for (SimObject j : it) {
 			Map<String, String> map = j.report(timeCounter);
 			IniSection section = new IniSection(map.get(""));
 			map.remove("");
@@ -62,6 +62,9 @@ public class TrafficSimulator {
 
 	public void generateReport(OutputStream out) throws IOException {
 		Ini report = new Ini();
+		addSectionsFor(objects.getJunctions(), report);
+		addSectionsFor(objects.getRoads(), report);
+		addSectionsFor(objects.getVehicles(), report);
 		report.store(out);
 	}
 }
