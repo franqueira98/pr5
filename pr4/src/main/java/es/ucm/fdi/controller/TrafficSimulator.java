@@ -46,19 +46,19 @@ public class TrafficSimulator {
 					j.avanza();
 				else j.preparaSemaforo();
 			timeCounter++;
-			generateReport(timeCounter).store(out);
+			generateReport(out);
 		}
 	}
 
-	public Ini generateReport(int time) {
+	public void generateReport(OutputStream out) throws IOException {
 		Ini report = new Ini();
 		for (SimObject j : objects.getJRV()) {
-			Map<String, String> map = j.report(time);
+			Map<String, String> map = j.report(timeCounter);
 			IniSection section = new IniSection(map.get(""));
 			map.remove("");
 			map.forEach((k, v) -> section.setValue(k, v));
 			report.addsection(section);
 		}
-		return report;
+		report.store(out);
 	}
 }
