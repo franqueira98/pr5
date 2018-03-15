@@ -117,12 +117,10 @@ public class Junction extends SimObject {
 		}
 		
 		protected String semaforoReport(){
-			StringBuilder r = new StringBuilder();
 			if (semaforoVerde)
-				r.append("green");
+				return("green");
 			else
-				r.append("red");
-			return r.toString();
+				return("red");
 		}
 	}
 }

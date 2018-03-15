@@ -14,7 +14,7 @@ public class Road extends SimObject {
 		super(ide);
 		longitud = lon;
 		maxVel = maxv;
-		vehicles = new MultiTreeMap<>((a, b) -> a - b);
+		vehicles = new MultiTreeMap<>((a, b) -> b - a);
 		start = princ;
 		end = fin;
 	}
