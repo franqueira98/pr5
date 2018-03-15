@@ -80,7 +80,7 @@ public class Vehicle extends SimObject {
 		localizacion = 0;
 		velActual = 0;
 	}
-	
+
 	public void arrived(){
 		haLlegado = true;
 	}
