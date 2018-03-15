@@ -21,9 +21,9 @@ public class NewMostCrowedEvent extends NewJunctionEvent {
 	}
 	
 	public static class Builder extends Event.Builder {
-
-		public Builder() {
-			super("new_junction", "mc");
+		
+		public boolean canParse(String title, String type){
+			return "new_junction".equals(title) && "mc".equals(type);
 		}
 
 		public Event fill(Map<String, String> map) {

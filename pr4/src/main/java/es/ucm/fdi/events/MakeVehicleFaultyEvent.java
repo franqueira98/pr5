@@ -30,8 +30,9 @@ public class MakeVehicleFaultyEvent extends Event {
 	}
 
 	public static class Builder extends Event.Builder {
-		public Builder() {
-			super("make_vehicle_faulty", "");
+		
+		public boolean canParse(String title, String type){
+			return "make_vehicle_faulty".equals(title) && "".equals(type);
 		}
 
 		public Event fill(Map<String, String> map) {

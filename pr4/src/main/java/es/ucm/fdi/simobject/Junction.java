@@ -36,9 +36,10 @@ public class Junction extends SimObject {
 			ir.semaforoVerde = true;
 		saberInc.put(r, ir);
 		entrantes.add(ir);
+		semaforo = entrantes.size()-1;
 	}
 
-	public void moveToNextRoad(Vehicle v) {
+	public void moveToNextRoad(Vehicle v) { //vehicle
 		Junction nextJunction = v.getProxCruce();
 		if (nextJunction != null) {
 			Road r = saberSaliente.get(nextJunction);

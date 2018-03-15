@@ -23,11 +23,11 @@ public class NewJunctionEvent extends Event {
 	}
 
 	public static class Builder extends Event.Builder {
-
-		public Builder() {
-			super("new_junction", "");
+		
+		public boolean canParse(String title, String type){
+			return "new_junction".equals(title) && "".equals(type);
 		}
-
+		
 		public Event fill(Map<String, String> map) {
 			try {
 				String id = map.get("id");

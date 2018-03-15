@@ -39,8 +39,9 @@ public class NewHighwayEvent extends NewRoadEvent {
 	}
 
 	public static class Builder extends Event.Builder {
-		public Builder() {
-			super("new_road", "lanes");
+		
+		public boolean canParse(String title, String type){
+			return "new_road".equals(title) && "lanes".equals(type);
 		}
 
 		public Event fill(Map<String, String> map) {

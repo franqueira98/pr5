@@ -40,9 +40,9 @@ public class NewBikeEvent extends NewVehicleEvent {
 	}
 
 	public static class Builder extends Event.Builder {
-
-		public Builder() {
-			super("new_vehicle", "bike");
+		
+		public boolean canParse(String title, String type){
+			return "new_vehicle".equals(title) && "bike".equals(type);
 		}
 
 		public Event fill(Map<String, String> map) {

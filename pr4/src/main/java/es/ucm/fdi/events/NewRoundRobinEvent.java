@@ -26,9 +26,9 @@ public class NewRoundRobinEvent extends NewJunctionEvent {
 	}
 	
 	public static class Builder extends Event.Builder {
-
-		public Builder() {
-			super("new_junction", "rr");
+		
+		public boolean canParse(String title, String type){
+			return "new_junction".equals(title) && "rr".equals(type);
 		}
 
 		public Event fill(Map<String, String> map) {

@@ -18,26 +18,13 @@ public abstract class Event {
 	public abstract void execute(RoadMap things);
 
 	public static abstract class Builder {
-		protected final String title;
-		protected final String type;
-
-		public Builder(String title, String type) {
-			this.title = title;
-			this.type = type;
-		}
-
-		public String getTitle() {
-			return title;
-		}
-
-		public String getType() {
-			return type;
-		}
+		
+		public abstract boolean canParse(String title, String type);
 
 		boolean isValidId(String id) {
 			return id.matches("[a-zA-Z0-9_]+");
 		}
-
+		
 		public abstract Event fill(Map<String, String> map);
 	}
 }

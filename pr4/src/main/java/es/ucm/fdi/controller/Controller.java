@@ -53,12 +53,11 @@ public class Controller {
 		for (IniSection i : list) {
 			boolean found = false;
 			Map<String, String> map = i.getKeysMap();
-			String type = map.getOrDefault("type", "");
-			for (Event.Builder eventB : avaliableEvents) {
-				if (i.getTag().equals(eventB.getTitle())
-						&& type.equals(eventB.getType())) {
-					simulation.addEvent(eventB.fill(map));
+			for (Event.Builder b : avaliableEvents) {
+				if (b.canParse(i.getTag(), map.getOrDefault("type", ""))) {
+					simulation.addEvent(b.fill(map));
 					found = true;
+					break;
 				}
 			}
 

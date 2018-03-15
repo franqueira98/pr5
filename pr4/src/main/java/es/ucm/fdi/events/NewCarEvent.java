@@ -50,9 +50,9 @@ public class NewCarEvent extends NewVehicleEvent {
 	}
 
 	public static class Builder extends Event.Builder {
-
-		public Builder() {
-			super("new_vehicle", "car");
+		
+		public boolean canParse(String title, String type){
+			return "new_vehicle".equals(title) && "car".equals(type);
 		}
 
 		public Event fill(Map<String, String> map) {

@@ -58,14 +58,6 @@ public class RoadMap {
 		return junctions;
 	}
 
-	public List<SimObject> getJRV() {
-		List<SimObject> list = new ArrayList<>();
-		list.addAll(junctions);
-		list.addAll(roads);
-		list.addAll(vehicles);
-		return list;
-	}
-
 	public void addVehicle(Vehicle v) {
 		map.put(v.getId(), v);
 		vehicles.add(v);
