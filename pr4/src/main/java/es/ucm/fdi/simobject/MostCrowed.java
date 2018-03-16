@@ -13,10 +13,9 @@ public class MostCrowed extends Junction {
 	
 	public void newIncoming(Road r) {
 		IncomingRoad ir = new IncomingRoad(r.getId());
-		if (entrantes.isEmpty())
-			ir.semaforoVerde = true;
 		saberInc.put(r, ir);
 		entrantes.add(ir);
+		avanzaSemaforo();
 	}
 
 	public void avanza() {
@@ -28,14 +27,15 @@ public class MostCrowed extends Junction {
 				roadGreen.cola.pop();
 				moveToNextRoad(lucky);
 			}
-
+			
 			roadGreen.timeUnitsUsed++;
+			
 			if (roadGreen.timeUnitsUsed == roadGreen.timeInterval) 
 				avanzaSemaforo();
 		}
 	}
 	
-	public void avanzaSemaforo(){
+	protected void avanzaSemaforo(){
 		IncomingRoad roadGreen = (IncomingRoad) entrantes.get(semaforo);
 		roadGreen.semaforoVerde = false;
 
@@ -53,10 +53,6 @@ public class MostCrowed extends Junction {
 		moreVehicles.semaforoVerde = true;
 		moreVehicles.timeInterval = Math.max(moreVehicles.cola.size() / 2, 1);
 		moreVehicles.timeUnitsUsed = 0;
-	}
-	
-	public void preparaSemaforo(){
-		if(!entrantes.isEmpty()) avanzaSemaforo();
 	}
 	
 	protected void fillReportDetails(Map<String, String> out) {

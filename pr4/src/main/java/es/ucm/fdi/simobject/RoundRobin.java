@@ -16,11 +16,11 @@ public class RoundRobin extends Junction {
 	}
 	
 	public void newIncoming(Road r) {
-		IncomingRoad ir = new IncomingRoad(r.getId(),maxTime);
-		if (entrantes.isEmpty())
-			ir.semaforoVerde = true;
+		RoundRobin.IncomingRoad ir = new IncomingRoad(r.getId(),maxTime);
 		saberInc.put(r, ir);
 		entrantes.add(ir);
+		semaforo = entrantes.size()-1;
+		entrantes.get(semaforo).semaforoVerde = true;
 	}
 	
 	public void avanza() {
@@ -34,13 +34,13 @@ public class RoundRobin extends Junction {
 				moveToNextRoad(lucky);
 			}
 			
-			roadGreen.timeUnitsUsed++;
 			if(roadGreen.timeUnitsUsed == roadGreen.timeInterval)
 				avanzaSemaforo();
+			else roadGreen.timeUnitsUsed++;
 		}
 	}
 	
-	public void avanzaSemaforo(){
+	protected void avanzaSemaforo(){
 		IncomingRoad roadGreen = (IncomingRoad) entrantes.get(semaforo);
 		roadGreen.semaforoVerde = false;
 		
@@ -59,10 +59,6 @@ public class RoundRobin extends Junction {
 		entrantes.get(semaforo).semaforoVerde = true;
 	}
 	
-	public void preparaSemaforo(){
-
-	}
-	
 	protected void fillReportDetails(Map<String, String> out) {
 		super.fillReportDetails(out);
 		out.put("type", type);
@@ -77,7 +73,7 @@ public class RoundRobin extends Junction {
 		public IncomingRoad(String r, int maxTime) {
 			super(r);
 			this.timeInterval = maxTime;
-			this.timeUnitsUsed = 0;
+			this.timeUnitsUsed = -1;
 			this.used = 0;
 		}
 		

@@ -42,11 +42,9 @@ public class TrafficSimulator {
 			List<Junction> junctions = objects.getJunctions();
 			
 			for (Junction j : junctions)
-				if (timeCounter != 0)
-					j.avanza();
-				else j.preparaSemaforo();
+				j.avanza();
 			timeCounter++;
-			generateReport(out);;
+			generateReport(out);
 		}
 	}
 	

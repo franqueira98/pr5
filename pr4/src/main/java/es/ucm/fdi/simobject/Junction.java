@@ -32,8 +32,6 @@ public class Junction extends SimObject {
 
 	public void newIncoming(Road r) {
 		IncomingRoad ir = new IncomingRoad(r.getId());
-		if (entrantes.isEmpty())
-			ir.semaforoVerde = true;
 		saberInc.put(r, ir);
 		entrantes.add(ir);
 		semaforo = entrantes.size()-1;
@@ -63,17 +61,13 @@ public class Junction extends SimObject {
 		}
 	}
 	
-	public void avanzaSemaforo(){
+	protected void avanzaSemaforo(){
 		IncomingRoad roadGreen = entrantes.get(semaforo);
 		roadGreen.semaforoVerde = false;
 		semaforo++;
 		if (semaforo == entrantes.size())
 			semaforo = 0;
 		entrantes.get(semaforo).semaforoVerde = true;
-	}
-	
-	public void preparaSemaforo(){
-
 	}
 
 	protected void fillReportDetails(Map<String, String> out) {
