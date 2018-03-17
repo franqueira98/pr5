@@ -50,6 +50,10 @@ public class Vehicle extends SimObject {
 		return tiempoAveria;
 	}
 
+	public int getVelocidadActual() {
+		return velActual;
+	}
+
 	public void setVelocidadActual(int vel) {
 		if (vel > velMaxima)
 			velActual = velMaxima;
@@ -65,7 +69,7 @@ public class Vehicle extends SimObject {
 				kilometrage += actual.getLongitud() - localizacion;
 				localizacion = actual.getLongitud();
 				velActual = 0;
-				
+
 				actual.getFinal().newVehicle(this);
 			} else {
 				kilometrage += velActual;
@@ -73,8 +77,8 @@ public class Vehicle extends SimObject {
 			}
 		}
 	}
-	
-	public void moveToNextRoad(Road r){
+
+	public void moveToNextRoad(Road r) {
 		r.newVehicleR(this);
 		proxCruce++;
 		actual = r;
@@ -82,7 +86,11 @@ public class Vehicle extends SimObject {
 		velActual = 0;
 	}
 
-	public void arrived(){
+	public boolean getArrived() {
+		return haLlegado;
+	}
+
+	public void arrived() {
 		haLlegado = true;
 	}
 
@@ -91,8 +99,7 @@ public class Vehicle extends SimObject {
 		out.put("kilometrage", "" + kilometrage);
 		out.put("faulty", "" + tiempoAveria);
 		if (!haLlegado)
-			out.put("location", "(" + actual.getId() + "," + localizacion
-					+ ")");
+			out.put("location", "(" + actual.getId() + "," + localizacion + ")");
 		else
 			out.put("location", "arrived");
 	}
