@@ -17,7 +17,7 @@ public class RoadTest {
 		Vehicle v=new Vehicle(5,itinerary,"v1");
 		Vehicle v1=new Vehicle(15,itinerary,"v2");
 		Road r1= new Road("r1",30,10,itinerary.get(0),itinerary.get(1));
-		Road r2= new Road("r1",15,20,itinerary.get(1),itinerary.get(2));
+		Road r2= new Road("r2",15,20,itinerary.get(1),itinerary.get(2));
 		itinerary.get(1).newIncoming(r1);
 		itinerary.get(1).newOutgoing(r2);
 		v.moveToNextRoad(r1);

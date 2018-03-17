@@ -15,7 +15,7 @@ public class DirtTest {
 		Vehicle v1=new Vehicle(15,itinerary,"v2");
 		Vehicle v2=new Vehicle(15,itinerary,"v3");
 		Dirt r1= new Dirt("r1",30,10,itinerary.get(0),itinerary.get(1),"Dirt");
-		Dirt r2= new Dirt("r1",15,20,itinerary.get(1),itinerary.get(2),"Dirt");
+		Dirt r2= new Dirt("r2",15,20,itinerary.get(1),itinerary.get(2),"Dirt");
 		itinerary.get(1).newIncoming(r1);
 		itinerary.get(1).newOutgoing(r2);
 		itinerary.get(2).newIncoming(r2);

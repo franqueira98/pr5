@@ -14,7 +14,7 @@ public class JunctionTest {
 		Vehicle v1=new Vehicle(15,itinerary,"v2");
 		Vehicle v2=new Vehicle(15,itinerary,"v3");
 		Road r1= new Road("r1",30,10,itinerary.get(0),itinerary.get(1));
-		Road r2= new Road("r1",15,20,itinerary.get(1),itinerary.get(2));
+		Road r2= new Road("r2",15,20,itinerary.get(1),itinerary.get(2));
 		itinerary.get(1).newIncoming(r1);
 		itinerary.get(1).newOutgoing(r2);
 		itinerary.get(2).newIncoming(r2);
