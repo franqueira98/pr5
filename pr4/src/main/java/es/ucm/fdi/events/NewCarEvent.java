@@ -46,7 +46,7 @@ public class NewCarEvent extends NewVehicleEvent {
 		//Esto vuelve a ser comun:
 		
 		things.addVehicle(v);
-		things.getJunction(junctions[0]).moveToNextRoad(v);
+		things.getJunction(junctions[0]).moveVehicleToNextRoad(v);
 	}
 
 	public static class Builder implements Event.Builder {
@@ -73,6 +73,8 @@ public class NewCarEvent extends NewVehicleEvent {
 				double faultProbability = Double.parseDouble(map.get("fault_probability"));
 				if (faultProbability < 0)
 					throw new IllegalArgumentException("Negative fault_probability");
+				if (faultProbability > 1)
+					throw new IllegalArgumentException("Imposible fault_probability");
 				
 				int maxFaultDuration = checkPositiveInt("max_fault_duration", map);
 				

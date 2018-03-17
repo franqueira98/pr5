@@ -37,13 +37,13 @@ public class Junction extends SimObject {
 		semaforo = entrantes.size()-1;
 	}
 
-	public void moveToNextRoad(Vehicle v) { //vehicle
+	public void moveVehicleToNextRoad(Vehicle v) {
 		Junction nextJunction = v.getProxCruce();
 		if (nextJunction != null) {
 			Road r = saberSaliente.get(nextJunction);
 			if (r == null)
 				throw new SimulatorException("A vehicle goes over ghost roads");
-			r.newVehicle(v);
+			v.moveToNextRoad(r);
 		} else
 			v.arrived();
 	}
@@ -55,7 +55,7 @@ public class Junction extends SimObject {
 				Vehicle lucky = roadGreen.cola.getFirst();
 				lucky.getRoad().removeVehicle(lucky);
 				roadGreen.cola.pop();
-				moveToNextRoad(lucky);
+				moveVehicleToNextRoad(lucky);
 			}
 			avanzaSemaforo();
 		}

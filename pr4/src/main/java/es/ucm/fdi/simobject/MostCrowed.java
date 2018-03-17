@@ -25,7 +25,7 @@ public class MostCrowed extends Junction {
 				Vehicle lucky = roadGreen.cola.getFirst();
 				lucky.getRoad().removeVehicle(lucky);
 				roadGreen.cola.pop();
-				moveToNextRoad(lucky);
+				moveVehicleToNextRoad(lucky);
 			}
 			
 			roadGreen.timeUnitsUsed++;

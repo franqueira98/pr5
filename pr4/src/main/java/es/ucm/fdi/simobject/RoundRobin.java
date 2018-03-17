@@ -31,7 +31,7 @@ public class RoundRobin extends Junction {
 				lucky.getRoad().removeVehicle(lucky);
 				roadGreen.cola.pop();
 				roadGreen.used++;
-				moveToNextRoad(lucky);
+				moveVehicleToNextRoad(lucky);
 			}
 			
 			roadGreen.timeUnitsUsed++;

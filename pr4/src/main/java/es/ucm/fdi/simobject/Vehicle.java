@@ -73,8 +73,9 @@ public class Vehicle extends SimObject {
 			}
 		}
 	}
-
-	public void changeRoad(Road r) {
+	
+	public void moveToNextRoad(Road r){
+		r.newVehicleR(this);
 		proxCruce++;
 		actual = r;
 		localizacion = 0;

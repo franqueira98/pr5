@@ -37,7 +37,7 @@ public class NewVehicleEvent extends Event {
 
 		Vehicle v = new Vehicle(maxSpeed, it, id);
 		things.addVehicle(v);
-		things.getJunction(junctions[0]).moveToNextRoad(v);
+		things.getJunction(junctions[0]).moveVehicleToNextRoad(v);
 	}
 
 	public static class Builder implements Event.Builder {

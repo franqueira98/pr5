@@ -36,7 +36,7 @@ public class NewBikeEvent extends NewVehicleEvent {
 		//Esto vuelve a ser comun:
 		
 		things.addVehicle(v);
-		things.getJunction(junctions[0]).moveToNextRoad(v);
+		things.getJunction(junctions[0]).moveVehicleToNextRoad(v);
 	}
 
 	public static class Builder implements Event.Builder {

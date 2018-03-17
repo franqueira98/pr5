@@ -27,9 +27,8 @@ public class Road extends SimObject {
 		return longitud;
 	}
 
-	public void newVehicle(Vehicle v) {
+	public void newVehicleR(Vehicle v) {
 		vehicles.putValue(0, v);
-		v.changeRoad(this);
 	}
 
 	public void removeVehicle(Vehicle v) {
