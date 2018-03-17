@@ -3,7 +3,7 @@ package es.ucm.fdi.events;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
-import es.ucm.fdi.exceptions.SimulatorError;
+import es.ucm.fdi.exceptions.SimulatorException;
 import es.ucm.fdi.simobject.RoundRobin;
 
 public class NewRoundRobinEvent extends NewJunctionEvent {
@@ -20,7 +20,7 @@ public class NewRoundRobinEvent extends NewJunctionEvent {
 	@Override
 	public void execute(RoadMap things) {
 		if (things.getObject(id) != null)
-			throw new SimulatorError("Ups, " + id + " already exists");
+			throw new SimulatorException("Ups, " + id + " already exists");
 		//Hasta aqui es igual
 		things.addJunction(new RoundRobin(id,minTime,maxTime, "rr"));
 	}
@@ -33,30 +33,16 @@ public class NewRoundRobinEvent extends NewJunctionEvent {
 
 		public Event fill(Map<String, String> map) {
 			try {
-				String id = map.get("id");
-				if (!isValidId(id))
-					throw new IllegalArgumentException("Invalid id");
+				String id = checkId(map);
 
-				int time = 0;
-				if (map.containsKey("time"))
-					time = Integer.parseInt(map.get("time"));
-				if (time < 0)
-					throw new IllegalArgumentException("Negative time");
+				int time = checkNoNegativeIntOptional("time", map);
 				
 				//Hasta aqui es igual
-				if (!map.containsKey("max_time_slice"))
-					throw new IllegalArgumentException("Missing max_time_slice");
-				int maxTime = Integer.parseInt(map.get("max_time_slice"));
-				if (maxTime <= 0)
-					throw new IllegalArgumentException("No positive max time");
+				int maxTime = checkPositiveInt("max_time_slice", map);
 				
-				if (!map.containsKey("min_time_slice"))
-					throw new IllegalArgumentException("Missing min_time_slice");
-				int minTime = Integer.parseInt(map.get("min_time_slice"));
-				if (minTime <= 0)
-					throw new IllegalArgumentException("No positive min time");
+				int minTime = checkPositiveInt("min_time_slice", map);
 				
-				if(minTime > maxTime) throw new IllegalArgumentException("Max time must be greater than Min time");
+				if(minTime > maxTime) throw new IllegalArgumentException("max_time must be greater than min_time");
 
 				return new NewRoundRobinEvent(time, id, minTime, maxTime);
 			} catch (IllegalArgumentException e) {

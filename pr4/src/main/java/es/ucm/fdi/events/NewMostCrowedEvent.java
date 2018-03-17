@@ -3,7 +3,7 @@ package es.ucm.fdi.events;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
-import es.ucm.fdi.exceptions.SimulatorError;
+import es.ucm.fdi.exceptions.SimulatorException;
 import es.ucm.fdi.simobject.MostCrowed;
 
 public class NewMostCrowedEvent extends NewJunctionEvent {
@@ -15,7 +15,7 @@ public class NewMostCrowedEvent extends NewJunctionEvent {
 	@Override
 	public void execute(RoadMap things) {
 		if (things.getObject(id) != null)
-			throw new SimulatorError("Ups, " + id + " already exists");
+			throw new SimulatorException("Ups, " + id + " already exists");
 		//Hasta aqui es igual
 		things.addJunction(new MostCrowed(id,"mc"));
 	}
@@ -28,15 +28,9 @@ public class NewMostCrowedEvent extends NewJunctionEvent {
 
 		public Event fill(Map<String, String> map) {
 			try {
-				String id = map.get("id");
-				if (!isValidId(id))
-					throw new IllegalArgumentException("Invalid id");
+				String id = checkId(map);
 
-				int time = 0;
-				if (map.containsKey("time"))
-					time = Integer.parseInt(map.get("time"));
-				if (time < 0)
-					throw new IllegalArgumentException("Negative time");
+				int time = checkNoNegativeIntOptional("time", map);
 				
 				//Hasta aqui es igual
 

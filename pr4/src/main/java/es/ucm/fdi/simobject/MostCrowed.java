@@ -38,18 +38,18 @@ public class MostCrowed extends Junction {
 	protected void avanzaSemaforo(){
 		IncomingRoad roadGreen = (IncomingRoad) entrantes.get(semaforo);
 		roadGreen.semaforoVerde = false;
-
-		IncomingRoad moreVehicles = (IncomingRoad) entrantes.get(0);
-		int max = 0;
-		for (int i = 0; i < entrantes.size(); i++) {
-			IncomingRoad ir = (IncomingRoad) entrantes.get(i);
-			if (ir.cola.size() > moreVehicles.cola.size()) {
-				moreVehicles = (IncomingRoad) ir;
+		
+		IncomingRoad moreVehicles = roadGreen;
+		int max = semaforo;
+		for(int i = 0; i<entrantes.size(); i++){
+			IncomingRoad r = (IncomingRoad) entrantes.get(i);
+			if((r.cola.size() > moreVehicles.cola.size() && i!=semaforo) || max == semaforo){
+				moreVehicles = r;
 				max = i;
 			}
 		}
-		semaforo = max;
 		
+		semaforo = max;
 		moreVehicles.semaforoVerde = true;
 		moreVehicles.timeInterval = Math.max(moreVehicles.cola.size() / 2, 1);
 		moreVehicles.timeUnitsUsed = 0;

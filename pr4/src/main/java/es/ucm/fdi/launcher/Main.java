@@ -20,7 +20,7 @@ import org.apache.commons.cli.ParseException;
 import es.ucm.fdi.controller.Controller;
 import es.ucm.fdi.ini.Ini;
 
-public class ExampleMain {
+public class Main {
 
 	private final static Integer _timeLimitDefaultValue = 10;
 	private static Integer _timeLimit = null;
@@ -79,7 +79,7 @@ public class ExampleMain {
 	private static void parseHelpOption(CommandLine line, Options cmdLineOptions) {
 		if (line.hasOption("h")) {
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp(ExampleMain.class.getCanonicalName(), cmdLineOptions, true);
+			formatter.printHelp(Main.class.getCanonicalName(), cmdLineOptions, true);
 			System.exit(0);
 		}
 	}
@@ -113,7 +113,7 @@ public class ExampleMain {
 	 * 
 	 * @throws IOException
 	 */
-	private static void test(String path) throws IOException {
+	public static void test(String path) throws IOException {
 
 		File dir = new File(path);
 
@@ -127,10 +127,10 @@ public class ExampleMain {
 				return name.endsWith(".ini");
 			}
 		});
-		File file =files[3];
-		//for (File file : files) {
+		
+		for (File file : files) {
 			test(file.getAbsolutePath(), file.getAbsolutePath() + ".out", file.getAbsolutePath() + ".eout",10);
-		//}
+		}
 
 	}
 
@@ -179,12 +179,12 @@ public class ExampleMain {
 
 		// Call test in order to test the simulator on all examples in a directory.
 		//
-	    	//test("src/main/resources/examples/basic");
-	    	//test("src/main/resources/examples/err");
-	    	test("src/main/resources/examples/advanced");
+	    	//test("src/test/resources/examples/basic");
+	    	//test("src/test/resources/examples/err");
+	    	//test("src/test/resources/examples/advanced");
 
 		// Call start to start the simulator from command line, etc.
-		//start(args);
+		start(args);
 
 	}
 

@@ -30,9 +30,26 @@ public class Car extends Vehicle {
 				&& numRand.nextDouble() < faultProbability) {
 			setTiempoAveria(numRand.nextInt(maxFaultDuration) + 1);
 		}
-		super.avanza();
+
+		if (tiempoAveria > 0) {
+			tiempoAveria--;
+			kmSinceFault = 0;
+		} else {
+			if (localizacion + velActual >= actual.getLongitud()) {
+				kilometrage += actual.getLongitud() - localizacion;
+				kmSinceFault += actual.getLongitud() - localizacion;
+				localizacion = actual.getLongitud();
+				velActual = 0;
+
+				actual.getFinal().newVehicle(this);
+			} else {
+				kilometrage += velActual;
+				kmSinceFault += velActual;
+				localizacion += velActual;
+			}
+		}
 	}
-	
+
 	public void fillReportDetails(Map<String, String> out) {
 		out.put("type", type);
 		super.fillReportDetails(out);

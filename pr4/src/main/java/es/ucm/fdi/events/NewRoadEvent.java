@@ -3,7 +3,7 @@ package es.ucm.fdi.events;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
-import es.ucm.fdi.exceptions.SimulatorError;
+import es.ucm.fdi.exceptions.SimulatorException;
 import es.ucm.fdi.simobject.Junction;
 import es.ucm.fdi.simobject.Road;
 
@@ -28,12 +28,12 @@ public class NewRoadEvent extends Event {
 	@Override
 	public void execute(RoadMap things) {
 		if (things.getObject(id) != null)
-			throw new SimulatorError("Ups, " + id + " already exists");
+			throw new SimulatorException("Ups, " + id + " already exists");
 
 		Junction a = things.getJunction(src);
 		Junction b = things.getJunction(dest);
 		if (a == null || b == null)
-			throw new SimulatorError("Roads are not rainbows!: " + id + "=("
+			throw new SimulatorException("Roads are not rainbows!: " + id + "=("
 					+ src + "," + dest + ")");
 
 		Road r = new Road(id, length, maxSpeed, a, b);
@@ -50,30 +50,17 @@ public class NewRoadEvent extends Event {
 
 		public Event fill(Map<String, String> map) {
 			try {
-				String id = map.get("id");
-				if (!isValidId(id))
-					throw new IllegalArgumentException("Invalid id");
+				String id = checkId(map);
 
-				int time = 0;
-				if (map.containsKey("time"))
-					time = Integer.parseInt(map.get("time"));
-				if (time < 0)
-					throw new IllegalArgumentException("Negative time");
+				int time = checkNoNegativeIntOptional("time", map);
 
-				if (!map.containsKey("src"))
-					throw new Exception();
-				String ideJunctionSurc = map.get("src");
-				if (!map.containsKey("dest"))
-					throw new Exception();
-				String ideJunctionDest = map.get("dest");
+				String ideJunctionSurc = checkContains("src",map);
 
-				int maxSpeed = Integer.parseInt(map.get("max_speed"));
-				if (maxSpeed <= 0)
-					throw new IllegalArgumentException("No positive max speed");
+				String ideJunctionDest = checkContains("dest",map);
+
+				int maxSpeed = checkPositiveInt("max_speed", map);
 				
-				int length = Integer.parseInt(map.get("length"));
-				if (length <= 0)
-					throw new IllegalArgumentException("No positive length");
+				int length = checkPositiveInt("length", map);
 
 				return new NewRoadEvent(time, id, maxSpeed, length,
 						ideJunctionSurc, ideJunctionDest);

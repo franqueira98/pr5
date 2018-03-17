@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import es.ucm.fdi.exceptions.SimulatorError;
+import es.ucm.fdi.exceptions.SimulatorException;
 
 public class Junction extends SimObject {
 	protected Map<Road, IncomingRoad> saberInc;
@@ -42,7 +42,7 @@ public class Junction extends SimObject {
 		if (nextJunction != null) {
 			Road r = saberSaliente.get(nextJunction);
 			if (r == null)
-				throw new SimulatorError("A vehicle goes over ghost roads");
+				throw new SimulatorException("A vehicle goes over ghost roads");
 			r.newVehicle(v);
 		} else
 			v.arrived();

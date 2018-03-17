@@ -3,7 +3,7 @@ package es.ucm.fdi.events;
 import java.util.Map;
 
 import es.ucm.fdi.controller.RoadMap;
-import es.ucm.fdi.exceptions.SimulatorError;
+import es.ucm.fdi.exceptions.SimulatorException;
 import es.ucm.fdi.simobject.Vehicle;
 
 public class MakeVehicleFaultyEvent extends Event {
@@ -24,7 +24,7 @@ public class MakeVehicleFaultyEvent extends Event {
 		for (String vehicle : arrayVehicles) {
 			Vehicle unlucky = things.getVehicle(vehicle);
 			if (unlucky == null)
-				throw new SimulatorError("Hitting the air");
+				throw new SimulatorException("Hitting the air");
 			unlucky.setTiempoAveria(tiempoAveria);
 		}
 	}
@@ -37,20 +37,12 @@ public class MakeVehicleFaultyEvent extends Event {
 
 		public Event fill(Map<String, String> map) {
 			try {
-				int time = 0;
-				if (map.containsKey("time"))
-					time = Integer.parseInt(map.get("time"));
-				if (time < 0)
-					throw new IllegalArgumentException("Negative time");
 				
+				int time = checkNoNegativeIntOptional("time", map);
+				
+				int tiempoAveria = checkPositiveInt("duration", map);
 
-				int tiempoAveria = Integer.parseInt(map.get("duration"));
-				if (tiempoAveria <= 0)
-					throw new IllegalArgumentException("No positive duration");
-
-				if (!map.containsKey("vehicles"))
-					throw new Exception();
-				String listaIds = map.get("vehicles");
+				String listaIds = checkContains("vehicles", map);
 
 				return new MakeVehicleFaultyEvent(time, tiempoAveria, listaIds);
 			} catch (Exception e) {

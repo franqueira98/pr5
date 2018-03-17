@@ -42,7 +42,6 @@ public class Controller {
 			System.out.println("Problems loading/saving: " + e.getMessage());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}
 	}
 

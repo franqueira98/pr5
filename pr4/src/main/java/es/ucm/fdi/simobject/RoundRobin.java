@@ -34,9 +34,10 @@ public class RoundRobin extends Junction {
 				moveToNextRoad(lucky);
 			}
 			
+			roadGreen.timeUnitsUsed++;
+			
 			if(roadGreen.timeUnitsUsed == roadGreen.timeInterval)
 				avanzaSemaforo();
-			else roadGreen.timeUnitsUsed++;
 		}
 	}
 	
