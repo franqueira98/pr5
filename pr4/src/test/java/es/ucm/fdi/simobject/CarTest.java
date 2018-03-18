@@ -16,7 +16,6 @@ public class CarTest {
 		itinerary.add(new Junction("j3"));
 		Car c = new Car(10, itinerary, "v1", "car", 0, 1, 3, 32);
 		Road r1 = new Road("r1", 100, 20, itinerary.get(0), itinerary.get(1));
-		Road r2 = new Road("r2", 15, 20, itinerary.get(1), itinerary.get(2));
 		c.moveToNextRoad(r1);
 		c.avanza();
 		assertTrue("Debería haberse estropeado", c.getTiempoAveria() != 0);

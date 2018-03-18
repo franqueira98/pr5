@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import static org.junit.Assert.*;
 
@@ -29,17 +27,17 @@ public class VehicleTest {
 		v1.moveToNextRoad(r1);
 
 		assertTrue("Fallo en moveToNextRoad", v.getRoad() == r1);
-	
+
 		v.setVelocidadActual(10);
 		v1.setVelocidadActual(15);
 		v.avanza();
 		v1.avanza();
 		assertTrue("No van a buena velocidad",
 				v.getLocation() == 5 && v1.getLocation() == 15);
-		
+
 		v.setTiempoAveria(2);
 		v.avanza();
 		assertTrue("No hace lo que debería hacer con los estropeados",
-				v.getTiempoAveria() == 1 );
+				v.getTiempoAveria() == 1);
 	}
 }

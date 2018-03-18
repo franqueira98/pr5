@@ -2,8 +2,6 @@ package es.ucm.fdi.events;
 
 import static org.junit.Assert.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,9 +10,6 @@ import java.util.Map;
 import org.junit.Test;
 
 import es.ucm.fdi.controller.RoadMap;
-import es.ucm.fdi.ini.Ini;
-import es.ucm.fdi.ini.IniSection;
-import es.ucm.fdi.simobject.Car;
 import es.ucm.fdi.simobject.Junction;
 import es.ucm.fdi.simobject.Road;
 import es.ucm.fdi.simobject.Vehicle;

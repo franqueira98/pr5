@@ -16,7 +16,6 @@ public class HighwayTest {
 		itinerary.add(new Junction("j3"));
 		Vehicle v = new Vehicle(5, itinerary, "v1");
 		Vehicle v1 = new Vehicle(15, itinerary, "v2");
-		Vehicle v2 = new Vehicle(15, itinerary, "v3");
 		Highway r1 = new Highway("r1", 30, 10, itinerary.get(0),
 				itinerary.get(1), "highway", 2);
 		Highway r2 = new Highway("r2", 15, 20, itinerary.get(1),
