@@ -19,11 +19,12 @@ public class BikeTest {
 		Bike v = new Bike(10, itinerary, "v1", "bike");
 		Bike v1 = new Bike(15, itinerary, "v2", "bike");
 		v.setVelocidadActual(10);
-		v1.setVelocidadActual(5);
-		v.setTiempoAveria(2);
-		v1.setTiempoAveria(4);
-		assertTrue("No pone bien el tiempo de averia", v.getTiempoAveria() != 2
-				|| v1.getTiempoAveria() == 4);
+		v1.setVelocidadActual(2);
+		v.setTiempoAveria(1);
+		v1.setTiempoAveria(1);
+
+		assertTrue("No pone bien el tiempo de averia",v1.getTiempoAveria()!=0);
+		assertTrue("No pone bien el tiempo de averia", v.getTiempoAveria()==0);
 	}
 
 }

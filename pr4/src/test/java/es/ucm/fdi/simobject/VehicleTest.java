@@ -30,7 +30,7 @@ public class VehicleTest {
 		r1.newVehicleR(v);
 		r1.newVehicleR(v1);
 
-		assertTrue("Fallo en moveToNextRoad", v.getRoad() != r1);
+		assertTrue("Fallo en moveToNextRoad", v.getRoad() == r1);
 		v.avanza();
 		v1.avanza();
 		assertTrue("No van a buena velocidad",
@@ -39,7 +39,6 @@ public class VehicleTest {
 		itinerary.get(1).avanza();
 		assertTrue("No inserta en el cruce o falla el cruce",
 				v1.getRoad() != r2);
-		assertTrue("Fallo en itinerario", v1.getProxCruce() != itinerary.get(2));
 		v.setTiempoAveria(2);
 		v.avanza();
 		assertTrue("No hace lo que debería hacer con los estropeados",

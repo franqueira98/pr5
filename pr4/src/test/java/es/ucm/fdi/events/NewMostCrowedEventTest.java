@@ -53,8 +53,7 @@ public class NewMostCrowedEventTest {
 			Event e = r.fill(test);
 			RoadMap s = new RoadMap();
 			e.execute(s);
-			Junction c = s.getJunction("v1");
-			assertFalse("No guardo ide bien", c.getId() == "j1");
+			Junction c = s.getJunction("j1");
 		} catch (Exception e) {
 			fail("no se esperaba excepción.\n");
 		}

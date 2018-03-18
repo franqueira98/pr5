@@ -16,6 +16,7 @@ import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.simobject.Car;
 import es.ucm.fdi.simobject.Junction;
+import es.ucm.fdi.simobject.Road;
 import es.ucm.fdi.simobject.Vehicle;
 
 public class NewVehicleEventTest {
@@ -69,12 +70,13 @@ public class NewVehicleEventTest {
 			NewVehicleEvent.Builder r = new NewVehicleEvent.Builder();
 			Event e = r.fill(test);
 			RoadMap s = new RoadMap();
-			s.addJunction(new Junction("j1"));
+			Junction J1=new Junction("j1");
+			J1.newOutgoing(new Road("r1",10,5,J1,new Junction("j2")));
+			s.addJunction(J1);
 			s.addJunction(new Junction("j2"));
 			s.addJunction(new Junction("j3"));
 			e.execute(s);
 			Vehicle c = s.getVehicle("v1");
-			assertFalse("No guardo ide bien", c.getId() == "v1");
 			assertFalse("No guardo velocidad máxima bien",
 					c.getVelocidadActual() == 10);
 		} catch (Exception e) {

@@ -1,7 +1,6 @@
 package es.ucm.fdi.events;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -87,7 +86,6 @@ public class NewDirtEventTest {
 			s.addJunction(new Junction("j3"));
 			e.execute(s);
 			Road c = s.getRoad("r1");
-			assertFalse("No guardo ide bien", c.getId() == "r1");
 		} catch (Exception e) {
 			fail("no se esperaba excepción.\n");
 		}
