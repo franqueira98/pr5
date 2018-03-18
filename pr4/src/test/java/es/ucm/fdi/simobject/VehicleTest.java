@@ -27,8 +27,6 @@ public class VehicleTest {
 		itinerary.get(1).newOutgoing(r2);
 		v.moveToNextRoad(r1);
 		v1.moveToNextRoad(r1);
-		r1.newVehicleR(v);
-		r1.newVehicleR(v1);
 
 		assertTrue("Fallo en moveToNextRoad", v.getRoad() == r1);
 	

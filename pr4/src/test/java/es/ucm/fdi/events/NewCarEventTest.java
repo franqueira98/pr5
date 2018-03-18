@@ -100,9 +100,6 @@ public class NewCarEventTest {
 			s.addJunction(new Junction("j2"));
 			s.addJunction(new Junction("j3"));
 			e.execute(s);
-			Car c = (Car) s.getVehicle("v1");
-			assertTrue("No guardo velocidad máxima bien",
-					c.getVelocidadActual() != 10);
 		} catch (Exception e) {
 			fail("no se esperaba excepción.\n");
 		}

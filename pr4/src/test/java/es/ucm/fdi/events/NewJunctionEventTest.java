@@ -52,7 +52,6 @@ public class NewJunctionEventTest {
 			Event e = r.fill(test);
 			RoadMap s = new RoadMap();
 			e.execute(s);
-			Junction c = s.getJunction("j1");
 		} catch (Exception e) {
 			fail("no se esperaba excepción.\n");
 		}

@@ -88,7 +88,6 @@ public class NewHighwayEventTest {
 			s.addJunction(new Junction("j2"));
 			s.addJunction(new Junction("j3"));
 			e.execute(s);
-			Road c = s.getRoad("r1");
 		} catch (Exception e) {
 			fail("no se esperaba excepción.\n");
 		}
