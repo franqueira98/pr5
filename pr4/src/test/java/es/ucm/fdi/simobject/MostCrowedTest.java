@@ -47,7 +47,6 @@ public class MostCrowedTest {
 		assertTrue("No ha cambiado el semáforo", c.getRoad() == r3);
 		j1.avanza();
 		assertTrue("No ha cambiado el semáforo", v2.getRoad() == r1);
-		// no se si quieres probarlo más
 
 	}
 
