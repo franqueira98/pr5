@@ -2,10 +2,13 @@ package es.ucm.fdi.simobject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class HighwayTest {
-
+	@Test
 	public void highwayTest() {
 		List<Junction> itinerary = new ArrayList<>();
 		itinerary.add(new Junction("j1"));
@@ -26,7 +29,7 @@ public class HighwayTest {
 		v.setTiempoAveria(2);
 		r1.avanza();
 		assertTrue("Velocidad inadecuada",
-				v.getVelocidadActual() != 0 || v1.getVelocidadActual() != 10);
+				v.getVelocidadActual() == 0 && v1.getVelocidadActual() == 10);
 	}
 
 }

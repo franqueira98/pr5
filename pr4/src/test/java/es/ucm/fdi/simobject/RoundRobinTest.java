@@ -42,16 +42,14 @@ public class RoundRobinTest {
 		r1.avanza();
 		r1.avanza();
 		r1.avanza();
-		// aqui debería tener todos los coches de r1 en la rotonda
-		// lso de r3 sin moverse
 		j1.avanza();
 		j1.avanza();
 		assertTrue("No espera 2 ciclos para cambiar el semáforo", v1.getRoad()
 				.getLongitud() == 30 || v2.getRoad().getLongitud() == 30);
 		j1.avanza();
 		j1.avanza();
-		assertTrue("Mal cambio de semáforo", v1.getRoad() != r2
-				|| v2.getRoad() != r2);
+		assertTrue("Mal cambio de semáforo", v1.getRoad() == r2
+				&& v2.getRoad() == r2);
 		j1.newVehicle(c);
 		j1.avanza();
 		assertTrue("Debería pasar el coche",c.getRoad()!=r2);

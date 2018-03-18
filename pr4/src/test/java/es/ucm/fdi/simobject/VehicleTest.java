@@ -31,17 +31,17 @@ public class VehicleTest {
 		r1.newVehicleR(v1);
 
 		assertTrue("Fallo en moveToNextRoad", v.getRoad() == r1);
+	
+		v.setVelocidadActual(10);
+		v1.setVelocidadActual(15);
 		v.avanza();
 		v1.avanza();
 		assertTrue("No van a buena velocidad",
-				v1.getLocation() != 5 || v.getLocation() != 15);
-		v1.avanza();
-		itinerary.get(1).avanza();
-		assertTrue("No inserta en el cruce o falla el cruce",
-				v1.getRoad() != r2);
+				v.getLocation() == 5 && v1.getLocation() == 15);
+		
 		v.setTiempoAveria(2);
 		v.avanza();
 		assertTrue("No hace lo que debería hacer con los estropeados",
-				v.getTiempoAveria() != 1 || v.getLocation() != 5);
+				v.getTiempoAveria() == 1 );
 	}
 }

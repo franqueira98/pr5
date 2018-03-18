@@ -2,10 +2,13 @@ package es.ucm.fdi.simobject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class JunctionTest {
-
+	@Test
 	public void junctionTest() {
 		List<Junction> itinerary = new ArrayList<>();
 		itinerary.add(new Junction("j1"));
@@ -28,15 +31,16 @@ public class JunctionTest {
 		test.newVehicle(v2);
 		test.avanza();
 		assertTrue("El método avanza no funciona bien",
-				v.getRoad() != r2 || v1.getRoad() != r1 || v2.getRoad() != r1);
+				v.getRoad() == r2 && v1.getRoad() == r1 && v2.getRoad() == r1);
 		test.avanza();
-		assertTrue("El método avanza no funciona bien", v1.getRoad() != r2
-				|| v2.getRoad() != r1);
+		assertTrue("El método avanza no funciona bien", v1.getRoad() == r2
+				&& v2.getRoad() == r1);
 		test = itinerary.get(2);
 		test.newVehicle(v);
 		test.newVehicle(v1);
+		test.avanza();
 		assertTrue("No hace que un vehículo llegue",
-				!v.getArrived() || v1.getArrived());
+				v.getArrived() && !v1.getArrived());
 	}
 
 }

@@ -19,17 +19,15 @@ public class RoadTest {
 		Road r2 = new Road("r2", 15, 20, itinerary.get(1), itinerary.get(2));
 		itinerary.get(1).newIncoming(r1);
 		itinerary.get(1).newOutgoing(r2);
-		v.moveToNextRoad(r1);
 		v1.moveToNextRoad(r1);
-		r1.newVehicleR(v);
 		r1.newVehicleR(v1);
 		r1.avanza();
 		assertTrue("Los vehiculos no van a velocidad adecuada",
-				v.getLocation() != 5 || v1.getLocation() != 10);
-		v.setTiempoAveria(2);
+				 v1.getLocation() == 10);
+		v1.setTiempoAveria(2);
 		r1.avanza();
-		assertTrue("Los vehiculos no van a velocidad adecuada",
-				v.getLocation() != 5 || v1.getLocation() != 20);
+		assertTrue("El vehículo se mueve aún estando estropeado",
+				v1.getLocation() ==10);
 
 	}
 
