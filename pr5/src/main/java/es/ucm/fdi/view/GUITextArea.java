@@ -16,7 +16,7 @@ import es.ucm.fdi.ini.*;
 public class GUITextArea extends JPanel {
 	private JTextArea area;
 	private OutputStream out;
-	private static final String ini="src\\main\\resources\\Events.ini";
+	private static final String iniResourceName="Events.ini";
 	public GUITextArea(boolean modifiable, String title,JTextArea area,SimulatorAction... actions)throws IOException {
 		super(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(title));
@@ -67,7 +67,8 @@ public class GUITextArea extends JPanel {
 				"New Junction", "New Dirt Road", "New Lanes Road", "New Road",
 				"New Bike", "New Car", "New Vehicle", "Make Vehicle Faulty" };
 		try {
-			Ini init=new Ini(this.ini);
+			Ini init=new Ini();
+			init.load(getClass().getClassLoader().getResourceAsStream(iniResourceName));
 			List<IniSection> list = init.getSections();
 			
 			for(IniSection i:list){
@@ -82,7 +83,7 @@ public class GUITextArea extends JPanel {
 				j++;
 			}
 		} catch (IOException e) {
-			throw new IOException("Failure reading the auxiliar template ini:\n"+ini);
+			throw new IOException("Failure reading the auxiliar template ini:\n"+iniResourceName, e);
 		}
 	
 		
